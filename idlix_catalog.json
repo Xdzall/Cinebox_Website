@@ -1,6 +1,6 @@
 {
-  "version": 1787896093021,
-  "lastUpdated": 1787896093021,
+  "version": 1788419588453,
+  "lastUpdated": 1788419588453,
   "rawMovies": [
     {
       "id": "tt37287335",
@@ -1178,6 +1178,24 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt33301434",
+      "title": "Mile End Kicks",
+      "year": "2026",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.8",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt33301434/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt33301434/img",
+      "desc": "A 24-year-old music critic gets romantically involved with members of an indie band she decides to publicize.",
+      "genre": [
+        "Comedy",
+        "Drama",
+        "Music"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt34966562",
       "title": "The Christophers",
       "year": "2026",
@@ -1441,23 +1459,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt27811632",
-      "title": "Silent Friend",
-      "year": "2025",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "8.5",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt27811632/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt27811632/img",
-      "desc": "Tales told from the perspective of a lonely old tree standing in the middle of a botanical garden.",
-      "genre": [
-        "Cinebox",
-        "Populer"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt10676052",
       "title": "The Fantastic Four: First Steps",
       "year": "2025",
@@ -1601,23 +1602,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt39316472",
-      "title": "Jackass: Best and Last",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.7",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt39316472/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt39316472/img",
-      "desc": "Follows the Jackass crew as they perform their final series of dangerous stunts and pranks, marking the end of the franchise.",
-      "genre": [
-        "Documentary",
-        "Comedy"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt0047086",
       "title": "The High and the Mighty",
       "year": "1954",
@@ -1690,41 +1674,6 @@
       "trailer_yt": "V75dMMIW2B4"
     },
     {
-      "id": "tt34685692",
-      "title": "Over Your Dead Body",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.5",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt34685692/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt34685692/img",
-      "desc": "A dysfunctional married couple retreats to a secluded cabin to repair their relationship, but each secretly plots to murder the other.",
-      "genre": [
-        "Action",
-        "Comedy",
-        "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt1745960",
-      "title": "Top Gun: Maverick",
-      "year": "2022",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "8.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt1745960/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt1745960/img",
-      "desc": "The story involves Maverick confronting his past while training a group of younger Top Gun graduates, including the son of his deceased best friend, for a dangerous mission.",
-      "genre": [
-        "Action",
-        "Drama"
-      ],
-      "trailer_yt": "qEVUtrk8_B4"
-    },
-    {
       "id": "tt0848228",
       "title": "The Avengers",
       "year": "2012",
@@ -1758,6 +1707,42 @@
         "Comedy"
       ],
       "trailer_yt": "73_1biulkYk"
+    },
+    {
+      "id": "tt15940132",
+      "title": "War Machine",
+      "year": "2026",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.3",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt15940132/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt15940132/img",
+      "desc": "Follow the final recruits of a grueling special ops boot camp who encounter a mysterious deadly force.",
+      "genre": [
+        "Action",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt34685692",
+      "title": "Over Your Dead Body",
+      "year": "2026",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.5",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt34685692/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt34685692/img",
+      "desc": "A dysfunctional married couple retreats to a secluded cabin to repair their relationship, but each secretly plots to murder the other.",
+      "genre": [
+        "Action",
+        "Comedy",
+        "Thriller"
+      ],
+      "trailer_yt": ""
     },
     {
       "id": "tt0371746",
@@ -1849,24 +1834,6 @@
       "trailer_yt": "Way9Dexny3w"
     },
     {
-      "id": "tt15940132",
-      "title": "War Machine",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.3",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt15940132/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt15940132/img",
-      "desc": "Follow the final recruits of a grueling special ops boot camp who encounter a mysterious deadly force.",
-      "genre": [
-        "Action",
-        "Sci-Fi",
-        "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt1160419",
       "title": "Dune: Part One",
       "year": "2021",
@@ -1921,6 +1888,41 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt0133093",
+      "title": "The Matrix",
+      "year": "1999",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "8.7",
+      "quality": "4K",
+      "poster": "https://images.metahub.space/poster/small/tt0133093/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt0133093/img",
+      "desc": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+      "genre": [
+        "Action",
+        "Sci-Fi"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt1345836",
+      "title": "The Dark Knight Rises",
+      "year": "2012",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "8.4",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt1345836/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt1345836/img",
+      "desc": "Bane, an imposing terrorist, attacks Gotham City and disrupts its eight-year-long period of peace. This forces Bruce Wayne to come out of hiding and don the cape and cowl of Batman again.",
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt12300742",
       "title": "Bugonia",
       "year": "2025",
@@ -1939,23 +1941,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt0133093",
-      "title": "The Matrix",
-      "year": "1999",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "8.7",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt0133093/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt0133093/img",
-      "desc": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
-      "genre": [
-        "Action",
-        "Sci-Fi"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt0413300",
       "title": "Spider-Man 3",
       "year": "2007",
@@ -1966,24 +1951,6 @@
       "poster": "https://images.metahub.space/poster/small/tt0413300/img",
       "backdrop": "https://images.metahub.space/background/medium/tt0413300/img",
       "desc": "A strange black entity from another world bonds with Peter Parker and causes inner turmoil as he contends with new villains, temptations, and revenge.",
-      "genre": [
-        "Action",
-        "Adventure",
-        "Sci-Fi"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt1392170",
-      "title": "The Hunger Games",
-      "year": "2012",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "7.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt1392170/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt1392170/img",
-      "desc": "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
       "genre": [
         "Action",
         "Adventure",
@@ -2117,6 +2084,24 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt1392170",
+      "title": "The Hunger Games",
+      "year": "2012",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "7.2",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt1392170/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt1392170/img",
+      "desc": "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt0458339",
       "title": "Captain America: The First Avenger",
       "year": "2011",
@@ -2130,6 +2115,24 @@
       "genre": [
         "Action",
         "Adventure",
+        "Sci-Fi"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt8879928",
+      "title": "Cold Storage",
+      "year": "2026",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.1",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt8879928/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt8879928/img",
+      "desc": "When a highly dangerous fungus escapes from a secret laboratory, a former bioterrorism agent is called back into action. Alongside two young employees, he must confront an invisible and out-of-control threat.",
+      "genre": [
+        "Comedy",
+        "Horror",
         "Sci-Fi"
       ],
       "trailer_yt": ""
@@ -2349,24 +2352,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt8879928",
-      "title": "Cold Storage",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.1",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt8879928/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt8879928/img",
-      "desc": "When a highly dangerous fungus escapes from a secret laboratory, a former bioterrorism agent is called back into action. Alongside two young employees, he must confront an invisible and out-of-control threat.",
-      "genre": [
-        "Comedy",
-        "Horror",
-        "Sci-Fi"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt1228705",
       "title": "Iron Man 2",
       "year": "2010",
@@ -2394,6 +2379,24 @@
       "poster": "https://images.metahub.space/poster/small/tt0119116/img",
       "backdrop": "https://images.metahub.space/background/medium/tt0119116/img",
       "desc": "In the colorful future, cabdriver Korben Dallas unwittingly becomes the central figure in the search for a legendary cosmic weapon to keep the great evil and Jean-Baptiste Emmanuel Zorg at bay.",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt1392190",
+      "title": "Mad Max: Fury Road",
+      "year": "2015",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "8.1",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt1392190/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt1392190/img",
+      "desc": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshipper and a drifter named Max.",
       "genre": [
         "Action",
         "Adventure",
@@ -2474,24 +2477,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt31227572",
-      "title": "Predator: Badlands",
-      "year": "2025",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "7.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt31227572/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt31227572/img",
-      "desc": "A young Predator outcast from his clan finds an unlikely ally on his journey in search of the ultimate adversary.",
-      "genre": [
-        "Action",
-        "Adventure",
-        "Sci-Fi"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt26581740",
       "title": "Weapons",
       "year": "2025",
@@ -2509,22 +2494,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt32612507",
-      "title": "Lee Cronin's The Mummy",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt32612507/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt32612507/img",
-      "desc": "Eight years after her sudden disappearance in Egypt, a severely traumatized teenager is returned to her shattered family in New Mexico, triggering a visceral nightmare as they realize she is hosting an ancient, demonic parasite.",
-      "genre": [
-        "Horror"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt10374610",
       "title": "The Long Walk",
       "year": "2025",
@@ -2538,6 +2507,22 @@
       "genre": [
         "Horror",
         "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt32612507",
+      "title": "Lee Cronin's The Mummy",
+      "year": "2026",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.2",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt32612507/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt32612507/img",
+      "desc": "Eight years after her sudden disappearance in Egypt, a severely traumatized teenager is returned to her shattered family in New Mexico, triggering a visceral nightmare as they realize she is hosting an ancient, demonic parasite.",
+      "genre": [
+        "Horror"
       ],
       "trailer_yt": ""
     },
@@ -2596,24 +2581,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt7798634",
-      "title": "Ready or Not",
-      "year": "2019",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.9",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt7798634/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt7798634/img",
-      "desc": "A bride's wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
-      "genre": [
-        "Action",
-        "Comedy",
-        "Horror"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt15791034",
       "title": "Barbarian",
       "year": "2022",
@@ -2660,6 +2627,24 @@
       "poster": "https://images.metahub.space/poster/small/tt31728330/img",
       "backdrop": "https://images.metahub.space/background/medium/tt31728330/img",
       "desc": "A woman takes a job as a housekeeper in a NYC high-rise, unaware of the building's history of disappearances. She soon realizes the community is shrouded in mystery.",
+      "genre": [
+        "Action",
+        "Comedy",
+        "Horror"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt7798634",
+      "title": "Ready or Not",
+      "year": "2019",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.9",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt7798634/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt7798634/img",
+      "desc": "A bride's wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
       "genre": [
         "Action",
         "Comedy",
@@ -2740,54 +2725,20 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt13345606",
-      "title": "Evil Dead Rise",
-      "year": "2023",
+      "id": "tt3195644",
+      "title": "Insidious: Chapter 3",
+      "year": "2015",
       "type": "movie",
       "typeLabel": "Film",
-      "rating": "6.5",
+      "rating": "6.1",
       "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt13345606/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt13345606/img",
-      "desc": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
-      "genre": [
-        "Horror"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt3235888",
-      "title": "It Follows",
-      "year": "2014",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.8",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt3235888/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt3235888/img",
-      "desc": "A young woman is followed by an unknown supernatural force after a sexual encounter.",
+      "poster": "https://images.metahub.space/poster/small/tt3195644/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt3195644/img",
+      "desc": "A prequel set before the haunting of the Lambert family that reveals how gifted psychic Elise Rainier reluctantly agrees to use her ability to contact the dead in order to help a teenage girl who has been targeted by a dangerous s...",
       "genre": [
         "Horror",
         "Mystery",
         "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt0815245",
-      "title": "The Uninvited",
-      "year": "2009",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.3",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt0815245/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt0815245/img",
-      "desc": "Anna returns home after a stint in a mental hospital, but her recovery is jeopardized by her father's new girlfriend and ghastly visions of her dead mother.",
-      "genre": [
-        "Drama",
-        "Fantasy",
-        "Horror"
       ],
       "trailer_yt": ""
     },
@@ -2810,6 +2761,24 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt2226417",
+      "title": "Insidious: Chapter 2",
+      "year": "2013",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.6",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt2226417/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt2226417/img",
+      "desc": "The Lamberts believe that they have defeated the spirits that have haunted their family, but they soon discover that evil is not beaten so easily.",
+      "genre": [
+        "Horror",
+        "Mystery",
+        "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt0081505",
       "title": "The Shining",
       "year": "1980",
@@ -2823,24 +2792,6 @@
       "genre": [
         "Drama",
         "Horror"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt31434030",
-      "title": "Dracula",
-      "year": "2026",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "6.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt31434030/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt31434030/img",
-      "desc": "When a 15th-century prince denounces God after the loss of his wife he inherits an eternal curse: he becomes Dracula. Condemned to wander the centuries, he defies fate and death, guided by a single hope - to be reunited with his l...",
-      "genre": [
-        "Fantasy",
-        "Horror",
-        "Romance"
       ],
       "trailer_yt": ""
     },
@@ -2859,23 +2810,6 @@
         "Drama",
         "Horror",
         "Mystery"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt0078748",
-      "title": "Alien",
-      "year": "1979",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "8.5",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt0078748/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt0078748/img",
-      "desc": "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
-      "genre": [
-        "Horror",
-        "Sci-Fi"
       ],
       "trailer_yt": ""
     },
@@ -2915,20 +2849,55 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt0144084",
-      "title": "American Psycho",
-      "year": "2000",
+      "id": "tt31434030",
+      "title": "Dracula",
+      "year": "2026",
       "type": "movie",
       "typeLabel": "Film",
-      "rating": "7.6",
+      "rating": "6.2",
       "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt0144084/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt0144084/img",
-      "desc": "A wealthy New York City investment banking executive, Patrick Bateman, hides his alternate psychopathic ego from his co-workers and friends as he delves deeper into his violent, hedonistic fantasies.",
+      "poster": "https://images.metahub.space/poster/small/tt31434030/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt31434030/img",
+      "desc": "When a 15th-century prince denounces God after the loss of his wife he inherits an eternal curse: he becomes Dracula. Condemned to wander the centuries, he defies fate and death, guided by a single hope - to be reunited with his l...",
       "genre": [
-        "Crime",
-        "Drama",
-        "Horror"
+        "Fantasy",
+        "Horror",
+        "Romance"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt0078748",
+      "title": "Alien",
+      "year": "1979",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "8.5",
+      "quality": "4K",
+      "poster": "https://images.metahub.space/poster/small/tt0078748/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt0078748/img",
+      "desc": "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
+      "genre": [
+        "Horror",
+        "Sci-Fi"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt1457767",
+      "title": "The Conjuring",
+      "year": "2013",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "7.5",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt1457767/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt1457767/img",
+      "desc": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.",
+      "genre": [
+        "Horror",
+        "Mystery",
+        "Thriller"
       ],
       "trailer_yt": ""
     },
@@ -2946,6 +2915,24 @@
       "genre": [
         "Horror",
         "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt0144084",
+      "title": "American Psycho",
+      "year": "2000",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "7.6",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt0144084/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt0144084/img",
+      "desc": "A wealthy New York City investment banking executive, Patrick Bateman, hides his alternate psychopathic ego from his co-workers and friends as he delves deeper into his violent, hedonistic fantasies.",
+      "genre": [
+        "Crime",
+        "Drama",
+        "Horror"
       ],
       "trailer_yt": ""
     },
@@ -3004,6 +2991,42 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt4263482",
+      "title": "The Witch",
+      "year": "2016",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "7.0",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt4263482/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt4263482/img",
+      "desc": "An isolated Puritan family in 1630s New England comes unraveled by the forces of witchcraft and possession.",
+      "genre": [
+        "Drama",
+        "Fantasy",
+        "Horror"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt3235888",
+      "title": "It Follows",
+      "year": "2014",
+      "type": "movie",
+      "typeLabel": "Film",
+      "rating": "6.8",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt3235888/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt3235888/img",
+      "desc": "A young woman is followed by an unknown supernatural force after a sexual encounter.",
+      "genre": [
+        "Horror",
+        "Mystery",
+        "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt1396484",
       "title": "It",
       "year": "2017",
@@ -3020,56 +3043,18 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt1457767",
-      "title": "The Conjuring",
-      "year": "2013",
+      "id": "tt13345606",
+      "title": "Evil Dead Rise",
+      "year": "2023",
       "type": "movie",
       "typeLabel": "Film",
-      "rating": "7.5",
+      "rating": "6.5",
       "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt1457767/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt1457767/img",
-      "desc": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.",
+      "poster": "https://images.metahub.space/poster/small/tt13345606/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt13345606/img",
+      "desc": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
       "genre": [
-        "Horror",
-        "Mystery",
-        "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt7984734",
-      "title": "The Lighthouse",
-      "year": "2019",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "7.4",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt7984734/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt7984734/img",
-      "desc": "Two lighthouse keepers try to maintain their sanity while living on a remote and mysterious New England island in the 1890s.",
-      "genre": [
-        "Drama",
-        "Fantasy",
         "Horror"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt0084787",
-      "title": "The Thing",
-      "year": "1982",
-      "type": "movie",
-      "typeLabel": "Film",
-      "rating": "8.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt0084787/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt0084787/img",
-      "desc": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
-      "genre": [
-        "Horror",
-        "Mystery",
-        "Sci-Fi"
       ],
       "trailer_yt": ""
     }
@@ -3481,6 +3466,24 @@
         "Crime",
         "Drama",
         "Thriller"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt27543562",
+      "title": "The Shards",
+      "year": "2026",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "5.8",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt27543562/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt27543562/img",
+      "desc": "The Shards is part teenage coming of age, erotic thriller and exploration of the untamed and mysterious era of Los Angeles 1981, tracking a group of privileged high school friends as a serial killer strikes across the city.",
+      "genre": [
+        "Crime",
+        "Drama",
+        "Horror"
       ],
       "trailer_yt": ""
     },
@@ -4068,19 +4071,123 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt4236770",
-      "title": "Yellowstone",
-      "year": "2018",
+      "id": "tt32213668",
+      "title": "Leanne",
+      "year": "2025",
       "type": "tv",
       "typeLabel": "Serial TV",
-      "rating": "8.6",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt4236770/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt4236770/img",
-      "desc": "A ranching family in Montana faces off against others encroaching on their land.",
+      "rating": "7.1",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt32213668/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt32213668/img",
+      "desc": "A grandmother's life is upended when her husband leaves her after 33 years of marriage. She navigates this new chapter with the help of her family, grace, dignity, and jello salad.",
+      "genre": [
+        "Comedy"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt10982034",
+      "title": "Trying",
+      "year": "2020",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.0",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt10982034/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt10982034/img",
+      "desc": "All Jason and Nikki want is a baby, but it's the one thing they just can't have. So, they decide to adopt. With their dysfunctional friends, screwball family and chaotic lives will the adoption panel think they're ready to be pare...",
+      "genre": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt22640400",
+      "title": "The Traitors Australia",
+      "year": "2022",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "7.9",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt22640400/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt22640400/img",
+      "desc": "Deception, lies and betrayal are the name of the game as four Traitors infiltrate a group of 24 players and use their skills to eradicate 'loyal' contestants trying to win $250,000 in silver bars.",
+      "genre": [
+        "Game-Show",
+        "Reality-TV"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt18070984",
+      "title": "Average Joe",
+      "year": "2023",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "7.4",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt18070984/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt18070984/img",
+      "desc": "Blue-collar plumber Joe learns that his recently-deceased father lived a secret life and stole millions from dangerous people--who now think that Joe has the money. He must race against time to find the truth and the money.",
+      "genre": [
+        "Comedy",
+        "Drama"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt32066226",
+      "title": "Bookish",
+      "year": "2025",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "7.2",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt32066226/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt32066226/img",
+      "desc": "Gabriel Book, proprietor of an antiquarian bookshop, relies on his vast collection to unravel baffling cases. He nurtures a group of lovable yet troubled individuals, providing informal protection and guidance.",
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt9892936",
+      "title": "One Hundred Years of Solitude",
+      "year": "2024",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.3",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt9892936/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt9892936/img",
+      "desc": "In the timeless town of Macondo, seven generations of the Buendía family navigate love, oblivion and the inescapability of their past and their fate.",
       "genre": [
         "Drama",
-        "Western"
+        "Fantasy",
+        "History"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt9159144",
+      "title": "Dark Side of the Ring",
+      "year": "2019",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.7",
+      "quality": "4K",
+      "poster": "https://images.metahub.space/poster/small/tt9159144/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt9159144/img",
+      "desc": "From backstage controversies to mysterious deaths and unsolved homicides, this series explores the darkest stories from the golden age of professional wrestling, and tries to find truth at the intersection of fantasy and reality.",
+      "genre": [
+        "Documentary",
+        "Drama",
+        "History"
       ],
       "trailer_yt": ""
     },
@@ -4225,76 +4332,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt10982034",
-      "title": "Trying",
-      "year": "2020",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.0",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt10982034/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt10982034/img",
-      "desc": "All Jason and Nikki want is a baby, but it's the one thing they just can't have. So, they decide to adopt. With their dysfunctional friends, screwball family and chaotic lives will the adoption panel think they're ready to be pare...",
-      "genre": [
-        "Comedy",
-        "Drama",
-        "Romance"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt22640400",
-      "title": "The Traitors Australia",
-      "year": "2022",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "7.9",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt22640400/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt22640400/img",
-      "desc": "Deception, lies and betrayal are the name of the game as four Traitors infiltrate a group of 24 players and use their skills to eradicate 'loyal' contestants trying to win $250,000 in silver bars.",
-      "genre": [
-        "Game-Show",
-        "Reality-TV"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt18070984",
-      "title": "Average Joe",
-      "year": "2023",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "7.4",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt18070984/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt18070984/img",
-      "desc": "Blue-collar plumber Joe learns that his recently-deceased father lived a secret life and stole millions from dangerous people--who now think that Joe has the money. He must race against time to find the truth and the money.",
-      "genre": [
-        "Comedy",
-        "Drama"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt9159144",
-      "title": "Dark Side of the Ring",
-      "year": "2019",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.7",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt9159144/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt9159144/img",
-      "desc": "From backstage controversies to mysterious deaths and unsolved homicides, this series explores the darkest stories from the golden age of professional wrestling, and tries to find truth at the intersection of fantasy and reality.",
-      "genre": [
-        "Documentary",
-        "Drama",
-        "History"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt9128874",
       "title": "Van der Valk",
       "year": "2020",
@@ -4367,6 +4404,22 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt43673968",
+      "title": "MOURINHO",
+      "year": "2024",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "7.8",
+      "quality": "FHD",
+      "poster": "https://live.metahub.space/poster/small/tt43673968/img",
+      "backdrop": "https://live.metahub.space/background/medium/tt43673968/img",
+      "desc": "This trophy-packed, insider-fuelled documentary charts José Mourinho's iconic rise as one of the world's top footballing managers of the most elite clubs.",
+      "genre": [
+        "Documentary"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt0096563",
       "title": "Cops",
       "year": "1989",
@@ -4416,24 +4469,6 @@
       "genre": [
         "Drama",
         "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt9892936",
-      "title": "One Hundred Years of Solitude",
-      "year": "2024",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.3",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt9892936/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt9892936/img",
-      "desc": "In the timeless town of Macondo, seven generations of the Buendía family navigate love, oblivion and the inescapability of their past and their fate.",
-      "genre": [
-        "Drama",
-        "Fantasy",
-        "History"
       ],
       "trailer_yt": ""
     },
@@ -4610,74 +4645,6 @@
       "genre": [
         "Drama",
         "Thriller"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt32140872",
-      "title": "Star City",
-      "year": "2026",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.5",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt32140872/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt32140872/img",
-      "desc": "Soviet cosmonauts, engineers, and intelligence officers risk everything in an ambitious space program aiming to be the first to reach the moon.",
-      "genre": [
-        "Drama",
-        "Sci-Fi"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt35587659",
-      "title": "The Five-Star Weekend",
-      "year": "2026",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.5",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt35587659/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt35587659/img",
-      "desc": "A beloved food influencer grapples with loss and hosts four friends from different chapters of her life for a weekend in Nantucket, where hidden truths emerge and relationships evolve amid coastal luxury.",
-      "genre": [
-        "Drama"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt2431250",
-      "title": "Little House on the Prairie",
-      "year": "2025",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.5",
-      "quality": "4K",
-      "poster": "https://images.metahub.space/poster/small/tt2431250/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt2431250/img",
-      "desc": "The Ingalls family lives and works on a farm in Midwestern America during the late 19th century.",
-      "genre": [
-        "Drama",
-        "Family",
-        "Romance"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt34991493",
-      "title": "Dutton Ranch",
-      "year": "2026",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.3",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt34991493/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt34991493/img",
-      "desc": "Beth Dutton and Rip Wheeler fight to survive on their cherished 7,000-acre ranch amid tough times and stiff competition, while ensuring young Carter becomes the man he's supposed to be.",
-      "genre": [
-        "Drama",
-        "Western"
       ],
       "trailer_yt": ""
     },
@@ -4949,6 +4916,24 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt12590266",
+      "title": "Cyberpunk: Edgerunners",
+      "year": "2022",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.3",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt12590266/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt12590266/img",
+      "desc": "A Street Kid trying to survive in a technology and body modification-obsessed city of the future. Having everything to lose, he chooses to stay alive by becoming an Edgerunner, a Mercenary outlaw also known as a Cyberpunk.",
+      "genre": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt3398228",
       "title": "BoJack Horseman",
       "year": "2014",
@@ -5039,6 +5024,23 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt1561755",
+      "title": "Bob's Burgers",
+      "year": "2011",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.2",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt1561755/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt1561755/img",
+      "desc": "Bob Belcher runs a struggling burger shop with his wife and three children.",
+      "genre": [
+        "Animation",
+        "Comedy"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt7678620",
       "title": "Bluey",
       "year": "2018",
@@ -5070,23 +5072,6 @@
         "Animation",
         "Action",
         "Adventure"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt1561755",
-      "title": "Bob's Burgers",
-      "year": "2011",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.2",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt1561755/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt1561755/img",
-      "desc": "Bob Belcher runs a struggling burger shop with his wife and three children.",
-      "genre": [
-        "Animation",
-        "Comedy"
       ],
       "trailer_yt": ""
     },
@@ -5145,24 +5130,6 @@
       "trailer_yt": ""
     },
     {
-      "id": "tt12590266",
-      "title": "Cyberpunk: Edgerunners",
-      "year": "2022",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.3",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt12590266/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt12590266/img",
-      "desc": "A Street Kid trying to survive in a technology and body modification-obsessed city of the future. Having everything to lose, he chooses to stay alive by becoming an Edgerunner, a Mercenary outlaw also known as a Cyberpunk.",
-      "genre": [
-        "Animation",
-        "Action",
-        "Adventure"
-      ],
-      "trailer_yt": ""
-    },
-    {
       "id": "tt0434706",
       "title": "Monster",
       "year": "2004",
@@ -5213,24 +5180,6 @@
         "Animation",
         "Action",
         "Adventure"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt9561862",
-      "title": "Love, Death & Robots",
-      "year": "2019",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "8.4",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt9561862/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt9561862/img",
-      "desc": "A collection of animated short stories that span various genres including science fiction, fantasy, horror and comedy.",
-      "genre": [
-        "Animation",
-        "Short",
-        "Action"
       ],
       "trailer_yt": ""
     },
@@ -5325,6 +5274,24 @@
       "trailer_yt": ""
     },
     {
+      "id": "tt9561862",
+      "title": "Love, Death & Robots",
+      "year": "2019",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.4",
+      "quality": "FHD",
+      "poster": "https://images.metahub.space/poster/small/tt9561862/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt9561862/img",
+      "desc": "A collection of animated short stories that span various genres including science fiction, fantasy, horror and comedy.",
+      "genre": [
+        "Animation",
+        "Short",
+        "Action"
+      ],
+      "trailer_yt": ""
+    },
+    {
       "id": "tt11247158",
       "title": "The Legend of Vox Machina",
       "year": "2022",
@@ -5357,6 +5324,23 @@
         "Animation",
         "Action",
         "Adventure"
+      ],
+      "trailer_yt": ""
+    },
+    {
+      "id": "tt4236770",
+      "title": "Yellowstone",
+      "year": "2018",
+      "type": "tv",
+      "typeLabel": "Serial TV",
+      "rating": "8.6",
+      "quality": "4K",
+      "poster": "https://images.metahub.space/poster/small/tt4236770/img",
+      "backdrop": "https://images.metahub.space/background/medium/tt4236770/img",
+      "desc": "A ranching family in Montana faces off against others encroaching on their land.",
+      "genre": [
+        "Drama",
+        "Western"
       ],
       "trailer_yt": ""
     },
@@ -5536,24 +5520,6 @@
       "genre": [
         "Drama",
         "Romance"
-      ],
-      "trailer_yt": ""
-    },
-    {
-      "id": "tt1844624",
-      "title": "American Horror Story",
-      "year": "2011",
-      "type": "tv",
-      "typeLabel": "Serial TV",
-      "rating": "7.9",
-      "quality": "FHD",
-      "poster": "https://images.metahub.space/poster/small/tt1844624/img",
-      "backdrop": "https://images.metahub.space/background/medium/tt1844624/img",
-      "desc": "An anthology horror drama series centering on different characters and locations, showcasing different aspects of horror. Created and produced by Ryan Murphy and Brad Falchuk.",
-      "genre": [
-        "Drama",
-        "Horror",
-        "Sci-Fi"
       ],
       "trailer_yt": ""
     }
@@ -7758,7 +7724,7 @@
             "year": "2026",
             "type": "movie",
             "typeLabel": "Film",
-            "rating": "7.0",
+            "rating": "6.8",
             "quality": "FHD",
             "poster": "https://images.metahub.space/poster/small/tt26657236/img",
             "backdrop": "https://images.metahub.space/background/medium/tt26657236/img",
@@ -8417,24 +8383,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt26657236",
-            "title": "Backrooms",
-            "year": "2026",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.8",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt26657236/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt26657236/img",
-            "desc": "After a therapist's patient disappears into a dimension beyond reality, she must venture into the unknown to save him.",
-            "genre": [
-              "Horror",
-              "Sci-Fi",
-              "Thriller"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt32547691",
             "title": "Pressure",
             "year": "2026",
@@ -8448,6 +8396,24 @@
             "genre": [
               "Drama",
               "History",
+              "Thriller"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt26657236",
+            "title": "Backrooms",
+            "year": "2026",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.8",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt26657236/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt26657236/img",
+            "desc": "After a therapist's patient disappears into a dimension beyond reality, she must venture into the unknown to save him.",
+            "genre": [
+              "Horror",
+              "Sci-Fi",
               "Thriller"
             ],
             "trailer_yt": ""
@@ -9412,6 +9378,24 @@
             "trailer_yt": ""
           },
           {
+            "id": "tt15940132",
+            "title": "War Machine",
+            "year": "2026",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.3",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt15940132/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt15940132/img",
+            "desc": "Follow the final recruits of a grueling special ops boot camp who encounter a mysterious deadly force.",
+            "genre": [
+              "Action",
+              "Sci-Fi",
+              "Thriller"
+            ],
+            "trailer_yt": ""
+          },
+          {
             "id": "tt0371746",
             "title": "Iron Man",
             "year": "2008",
@@ -9465,24 +9449,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt15940132",
-            "title": "War Machine",
-            "year": "2026",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.3",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt15940132/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt15940132/img",
-            "desc": "Follow the final recruits of a grueling special ops boot camp who encounter a mysterious deadly force.",
-            "genre": [
-              "Action",
-              "Sci-Fi",
-              "Thriller"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt2395427",
             "title": "Avengers: Age of Ultron",
             "year": "2015",
@@ -9528,24 +9494,6 @@
             "poster": "https://images.metahub.space/poster/small/tt0413300/img",
             "backdrop": "https://images.metahub.space/background/medium/tt0413300/img",
             "desc": "A strange black entity from another world bonds with Peter Parker and causes inner turmoil as he contends with new villains, temptations, and revenge.",
-            "genre": [
-              "Action",
-              "Adventure",
-              "Sci-Fi"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt1392170",
-            "title": "The Hunger Games",
-            "year": "2012",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "7.2",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt1392170/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt1392170/img",
-            "desc": "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
             "genre": [
               "Action",
               "Adventure",
@@ -9671,6 +9619,24 @@
             "poster": "https://images.metahub.space/poster/small/tt14107334/img",
             "backdrop": "https://images.metahub.space/background/medium/tt14107334/img",
             "desc": "A man joins a game show in which contestants, allowed to flee anywhere in the world, are pursued by \"hunters\" hired to kill them.",
+            "genre": [
+              "Action",
+              "Adventure",
+              "Sci-Fi"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt1392170",
+            "title": "The Hunger Games",
+            "year": "2012",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "7.2",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt1392170/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt1392170/img",
+            "desc": "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
             "genre": [
               "Action",
               "Adventure",
@@ -9863,22 +9829,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt32612507",
-            "title": "Lee Cronin's The Mummy",
-            "year": "2026",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.2",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt32612507/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt32612507/img",
-            "desc": "Eight years after her sudden disappearance in Egypt, a severely traumatized teenager is returned to her shattered family in New Mexico, triggering a visceral nightmare as they realize she is hosting an ancient, demonic parasite.",
-            "genre": [
-              "Horror"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt10374610",
             "title": "The Long Walk",
             "year": "2025",
@@ -9892,6 +9842,22 @@
             "genre": [
               "Horror",
               "Thriller"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt32612507",
+            "title": "Lee Cronin's The Mummy",
+            "year": "2026",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.2",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt32612507/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt32612507/img",
+            "desc": "Eight years after her sudden disappearance in Egypt, a severely traumatized teenager is returned to her shattered family in New Mexico, triggering a visceral nightmare as they realize she is hosting an ancient, demonic parasite.",
+            "genre": [
+              "Horror"
             ],
             "trailer_yt": ""
           },
@@ -9932,24 +9898,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt34381258",
-            "title": "Heel",
-            "year": "2026",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.8",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt34381258/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt34381258/img",
-            "desc": "A 19-year-old criminal, Tommy, is kidnapped and forced into a rehabilitation process by a dysfunctional couple, Chris and Kathryn, who try to make him a \"good boy.\" Tommy must find a way to escape.",
-            "genre": [
-              "Crime",
-              "Drama",
-              "Horror"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt0102926",
             "title": "The Silence of the Lambs",
             "year": "1991",
@@ -9968,19 +9916,19 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt7798634",
-            "title": "Ready or Not",
-            "year": "2019",
+            "id": "tt34381258",
+            "title": "Heel",
+            "year": "2026",
             "type": "movie",
             "typeLabel": "Film",
-            "rating": "6.9",
+            "rating": "6.8",
             "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt7798634/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt7798634/img",
-            "desc": "A bride's wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
+            "poster": "https://images.metahub.space/poster/small/tt34381258/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt34381258/img",
+            "desc": "A 19-year-old criminal, Tommy, is kidnapped and forced into a rehabilitation process by a dysfunctional couple, Chris and Kathryn, who try to make him a \"good boy.\" Tommy must find a way to escape.",
             "genre": [
-              "Action",
-              "Comedy",
+              "Crime",
+              "Drama",
               "Horror"
             ],
             "trailer_yt": ""
@@ -10022,6 +9970,24 @@
             "trailer_yt": ""
           },
           {
+            "id": "tt8879928",
+            "title": "Cold Storage",
+            "year": "2026",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.1",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt8879928/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt8879928/img",
+            "desc": "When a highly dangerous fungus escapes from a secret laboratory, a former bioterrorism agent is called back into action. Alongside two young employees, he must confront an invisible and out-of-control threat.",
+            "genre": [
+              "Comedy",
+              "Horror",
+              "Sci-Fi"
+            ],
+            "trailer_yt": ""
+          },
+          {
             "id": "tt1312221",
             "title": "Frankenstein",
             "year": "2025",
@@ -10050,6 +10016,24 @@
             "poster": "https://images.metahub.space/poster/small/tt31728330/img",
             "backdrop": "https://images.metahub.space/background/medium/tt31728330/img",
             "desc": "A woman takes a job as a housekeeper in a NYC high-rise, unaware of the building's history of disappearances. She soon realizes the community is shrouded in mystery.",
+            "genre": [
+              "Action",
+              "Comedy",
+              "Horror"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt7798634",
+            "title": "Ready or Not",
+            "year": "2019",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.9",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt7798634/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt7798634/img",
+            "desc": "A bride's wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
             "genre": [
               "Action",
               "Comedy",
@@ -10147,36 +10131,20 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt8879928",
-            "title": "Cold Storage",
-            "year": "2026",
+            "id": "tt3195644",
+            "title": "Insidious: Chapter 3",
+            "year": "2015",
             "type": "movie",
             "typeLabel": "Film",
             "rating": "6.1",
             "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt8879928/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt8879928/img",
-            "desc": "When a highly dangerous fungus escapes from a secret laboratory, a former bioterrorism agent is called back into action. Alongside two young employees, he must confront an invisible and out-of-control threat.",
+            "poster": "https://images.metahub.space/poster/small/tt3195644/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt3195644/img",
+            "desc": "A prequel set before the haunting of the Lambert family that reveals how gifted psychic Elise Rainier reluctantly agrees to use her ability to contact the dead in order to help a teenage girl who has been targeted by a dangerous s...",
             "genre": [
-              "Comedy",
               "Horror",
-              "Sci-Fi"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt13345606",
-            "title": "Evil Dead Rise",
-            "year": "2023",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.5",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt13345606/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt13345606/img",
-            "desc": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
-            "genre": [
-              "Horror"
+              "Mystery",
+              "Thriller"
             ],
             "trailer_yt": ""
           }
@@ -10916,6 +10884,24 @@
             "trailer_yt": ""
           },
           {
+            "id": "tt27543562",
+            "title": "The Shards",
+            "year": "2026",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "5.8",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt27543562/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt27543562/img",
+            "desc": "The Shards is part teenage coming of age, erotic thriller and exploration of the untamed and mysterious era of Los Angeles 1981, tracking a group of privileged high school friends as a serial killer strikes across the city.",
+            "genre": [
+              "Crime",
+              "Drama",
+              "Horror"
+            ],
+            "trailer_yt": ""
+          },
+          {
             "id": "tt5607616",
             "title": "Re: Zero - Starting Life in Another World",
             "year": "2016",
@@ -11128,23 +11114,6 @@
               "Comedy"
             ],
             "trailer_yt": ""
-          },
-          {
-            "id": "tt0141842",
-            "title": "The Sopranos",
-            "year": "1999",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "9.2",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt0141842/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt0141842/img",
-            "desc": "New Jersey mob boss Tony Soprano deals with personal and professional issues in his home and business life that affect his mental state, leading him to seek professional psychiatric counseling.",
-            "genre": [
-              "Crime",
-              "Drama"
-            ],
-            "trailer_yt": ""
           }
         ]
       },
@@ -11152,6 +11121,217 @@
         "id": "tv_top",
         "title": "⭐ Serial TV Rating Tertinggi di IMDb",
         "items": [
+          {
+            "id": "tt12327578",
+            "title": "Star Trek: Strange New Worlds",
+            "year": "2022",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.2",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt12327578/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt12327578/img",
+            "desc": "A prequel to Star Trek (1966), this series follows the crew of the USS Enterprise under the command of Captain Christopher Pike.",
+            "genre": [
+              "Action",
+              "Adventure",
+              "Sci-Fi"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt27846061",
+            "title": "Ludwig",
+            "year": "2024",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.1",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt27846061/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt27846061/img",
+            "desc": "While seeking to unravel the mystery of his twin brother's disappearance, reclusive puzzle-designer John 'Ludwig' Taylor takes on his twin brother James's identity as DCI on Cambridge's major crimes squad.",
+            "genre": [
+              "Comedy",
+              "Crime",
+              "Drama"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt32213668",
+            "title": "Leanne",
+            "year": "2025",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "7.1",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt32213668/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt32213668/img",
+            "desc": "A grandmother's life is upended when her husband leaves her after 33 years of marriage. She navigates this new chapter with the help of her family, grace, dignity, and jello salad.",
+            "genre": [
+              "Comedy"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt27497393",
+            "title": "Stuart Fails to Save the Universe",
+            "year": "2026",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "7.0",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt27497393/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt27497393/img",
+            "desc": "Comic book store owner Stuart Bloom, from The Big Bang Theory (2007), returns in a new series where he attempts—and apparently fails—to save the universe, staying true to his unlucky nature.",
+            "genre": [
+              "Comedy",
+              "Fantasy",
+              "Sci-Fi"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt9288030",
+            "title": "Reacher",
+            "year": "2022",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.0",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt9288030/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt9288030/img",
+            "desc": "Itinerant former military policeman Jack Reacher solves crimes and metes out his own brand of street justice. Based on the novels by Lee Child.",
+            "genre": [
+              "Action",
+              "Crime",
+              "Drama"
+            ],
+            "trailer_yt": "6j0A_1gJt3M"
+          },
+          {
+            "id": "tt10982034",
+            "title": "Trying",
+            "year": "2020",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.0",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt10982034/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt10982034/img",
+            "desc": "All Jason and Nikki want is a baby, but it's the one thing they just can't have. So, they decide to adopt. With their dysfunctional friends, screwball family and chaotic lives will the adoption panel think they're ready to be pare...",
+            "genre": [
+              "Comedy",
+              "Drama",
+              "Romance"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt22640400",
+            "title": "The Traitors Australia",
+            "year": "2022",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "7.9",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt22640400/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt22640400/img",
+            "desc": "Deception, lies and betrayal are the name of the game as four Traitors infiltrate a group of 24 players and use their skills to eradicate 'loyal' contestants trying to win $250,000 in silver bars.",
+            "genre": [
+              "Game-Show",
+              "Reality-TV"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt18070984",
+            "title": "Average Joe",
+            "year": "2023",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "7.4",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt18070984/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt18070984/img",
+            "desc": "Blue-collar plumber Joe learns that his recently-deceased father lived a secret life and stole millions from dangerous people--who now think that Joe has the money. He must race against time to find the truth and the money.",
+            "genre": [
+              "Comedy",
+              "Drama"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt32066226",
+            "title": "Bookish",
+            "year": "2025",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "7.2",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt32066226/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt32066226/img",
+            "desc": "Gabriel Book, proprietor of an antiquarian bookshop, relies on his vast collection to unravel baffling cases. He nurtures a group of lovable yet troubled individuals, providing informal protection and guidance.",
+            "genre": [
+              "Crime",
+              "Drama"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt9892936",
+            "title": "One Hundred Years of Solitude",
+            "year": "2024",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.3",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt9892936/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt9892936/img",
+            "desc": "In the timeless town of Macondo, seven generations of the Buendía family navigate love, oblivion and the inescapability of their past and their fate.",
+            "genre": [
+              "Drama",
+              "Fantasy",
+              "History"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt10986410",
+            "title": "Ted Lasso",
+            "year": "2020",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.7",
+            "quality": "4K",
+            "poster": "https://images.metahub.space/poster/small/tt10986410/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt10986410/img",
+            "desc": "American college football coach Ted Lasso is hired to manage AFC Richmond, a struggling English soccer club, and must win over skeptical players, staff, and fans.",
+            "genre": [
+              "Comedy",
+              "Drama",
+              "Sport"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt9159144",
+            "title": "Dark Side of the Ring",
+            "year": "2019",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.7",
+            "quality": "4K",
+            "poster": "https://images.metahub.space/poster/small/tt9159144/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt9159144/img",
+            "desc": "From backstage controversies to mysterious deaths and unsolved homicides, this series explores the darkest stories from the golden age of professional wrestling, and tries to find truth at the intersection of fantasy and reality.",
+            "genre": [
+              "Documentary",
+              "Drama",
+              "History"
+            ],
+            "trailer_yt": ""
+          },
           {
             "id": "tt0149460",
             "title": "Futurama",
@@ -11381,24 +11561,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt12327578",
-            "title": "Star Trek: Strange New Worlds",
-            "year": "2022",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.2",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt12327578/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt12327578/img",
-            "desc": "A prequel to Star Trek (1966), this series follows the crew of the USS Enterprise under the command of Captain Christopher Pike.",
-            "genre": [
-              "Action",
-              "Adventure",
-              "Sci-Fi"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt14688458",
             "title": "Silo",
             "year": "2023",
@@ -11413,148 +11575,6 @@
               "Drama",
               "Mystery",
               "Sci-Fi"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt27846061",
-            "title": "Ludwig",
-            "year": "2024",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.1",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt27846061/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt27846061/img",
-            "desc": "While seeking to unravel the mystery of his twin brother's disappearance, reclusive puzzle-designer John 'Ludwig' Taylor takes on his twin brother James's identity as DCI on Cambridge's major crimes squad.",
-            "genre": [
-              "Comedy",
-              "Crime",
-              "Drama"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt27497393",
-            "title": "Stuart Fails to Save the Universe",
-            "year": "2026",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "7.0",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt27497393/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt27497393/img",
-            "desc": "Comic book store owner Stuart Bloom, from The Big Bang Theory (2007), returns in a new series where he attempts—and apparently fails—to save the universe, staying true to his unlucky nature.",
-            "genre": [
-              "Comedy",
-              "Fantasy",
-              "Sci-Fi"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt10986410",
-            "title": "Ted Lasso",
-            "year": "2020",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.7",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt10986410/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt10986410/img",
-            "desc": "American college football coach Ted Lasso is hired to manage AFC Richmond, a struggling English soccer club, and must win over skeptical players, staff, and fans.",
-            "genre": [
-              "Comedy",
-              "Drama",
-              "Sport"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt9288030",
-            "title": "Reacher",
-            "year": "2022",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.0",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt9288030/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt9288030/img",
-            "desc": "Itinerant former military policeman Jack Reacher solves crimes and metes out his own brand of street justice. Based on the novels by Lee Child.",
-            "genre": [
-              "Action",
-              "Crime",
-              "Drama"
-            ],
-            "trailer_yt": "6j0A_1gJt3M"
-          },
-          {
-            "id": "tt10982034",
-            "title": "Trying",
-            "year": "2020",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.0",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt10982034/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt10982034/img",
-            "desc": "All Jason and Nikki want is a baby, but it's the one thing they just can't have. So, they decide to adopt. With their dysfunctional friends, screwball family and chaotic lives will the adoption panel think they're ready to be pare...",
-            "genre": [
-              "Comedy",
-              "Drama",
-              "Romance"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt22640400",
-            "title": "The Traitors Australia",
-            "year": "2022",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "7.9",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt22640400/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt22640400/img",
-            "desc": "Deception, lies and betrayal are the name of the game as four Traitors infiltrate a group of 24 players and use their skills to eradicate 'loyal' contestants trying to win $250,000 in silver bars.",
-            "genre": [
-              "Game-Show",
-              "Reality-TV"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt18070984",
-            "title": "Average Joe",
-            "year": "2023",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "7.4",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt18070984/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt18070984/img",
-            "desc": "Blue-collar plumber Joe learns that his recently-deceased father lived a secret life and stole millions from dangerous people--who now think that Joe has the money. He must race against time to find the truth and the money.",
-            "genre": [
-              "Comedy",
-              "Drama"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt9159144",
-            "title": "Dark Side of the Ring",
-            "year": "2019",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.7",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt9159144/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt9159144/img",
-            "desc": "From backstage controversies to mysterious deaths and unsolved homicides, this series explores the darkest stories from the golden age of professional wrestling, and tries to find truth at the intersection of fantasy and reality.",
-            "genre": [
-              "Documentary",
-              "Drama",
-              "History"
             ],
             "trailer_yt": ""
           },
@@ -11591,60 +11611,6 @@
               "Crime",
               "Drama",
               "Thriller"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt14681924",
-            "title": "My Adventures with Superman",
-            "year": "2023",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "7.7",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt14681924/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt14681924/img",
-            "desc": "Clark Kent builds his secret Superman identity and embraces his role as the hero of Metropolis, while sharing adventures and falling in love with Lois Lane, a star investigative journalist, who also takes Jimmy Olsen under her wing.",
-            "genre": [
-              "Animation",
-              "Action",
-              "Adventure"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt16026746",
-            "title": "X-Men '97",
-            "year": "2024",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.7",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt16026746/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt16026746/img",
-            "desc": "A band of mutants use their uncanny gifts to protect a world that hates and fears them; they're challenged like never before, forced to face a dangerous and unexpected new future.",
-            "genre": [
-              "Animation",
-              "Action",
-              "Adventure"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt26450613",
-            "title": "A Shop for Killers",
-            "year": "2024",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.0",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt26450613/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt26450613/img",
-            "desc": "An action drama in which a niece who lost her parents and grew up in the hands of an uncle who runs a shopping mall, faces a new truth after her uncle's sudden death.",
-            "genre": [
-              "Action",
-              "Drama",
-              "Mystery"
             ],
             "trailer_yt": ""
           }
@@ -12066,6 +12032,24 @@
             "trailer_yt": ""
           },
           {
+            "id": "tt12590266",
+            "title": "Cyberpunk: Edgerunners",
+            "year": "2022",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "8.3",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt12590266/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt12590266/img",
+            "desc": "A Street Kid trying to survive in a technology and body modification-obsessed city of the future. Having everything to lose, he chooses to stay alive by becoming an Edgerunner, a Mercenary outlaw also known as a Cyberpunk.",
+            "genre": [
+              "Animation",
+              "Action",
+              "Adventure"
+            ],
+            "trailer_yt": ""
+          },
+          {
             "id": "tt3398228",
             "title": "BoJack Horseman",
             "year": "2014",
@@ -12130,24 +12114,6 @@
             "poster": "https://images.metahub.space/poster/small/tt10168312/img",
             "backdrop": "https://images.metahub.space/background/medium/tt10168312/img",
             "desc": "Exploring pivotal moments from the Marvel Cinematic Universe and turning them on their head, leading the audience into uncharted territory.",
-            "genre": [
-              "Animation",
-              "Action",
-              "Adventure"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt21209876",
-            "title": "Solo Leveling",
-            "year": "2024",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.5",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt21209876/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt21209876/img",
-            "desc": "Follows the adventures of Sung Jinwoo in a world that is constantly threatened by monsters and evil forces. In his battles Sung transforms himself from the weakest hunter of all mankind to one of the strongest hunters in existence.",
             "genre": [
               "Animation",
               "Action",
@@ -12389,6 +12355,24 @@
               "Crime",
               "Drama",
               "Thriller"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt27543562",
+            "title": "The Shards",
+            "year": "2026",
+            "type": "tv",
+            "typeLabel": "Serial TV",
+            "rating": "5.8",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt27543562/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt27543562/img",
+            "desc": "The Shards is part teenage coming of age, erotic thriller and exploration of the untamed and mysterious era of Los Angeles 1981, tracking a group of privileged high school friends as a serial killer strikes across the city.",
+            "genre": [
+              "Crime",
+              "Drama",
+              "Horror"
             ],
             "trailer_yt": ""
           },
@@ -12638,23 +12622,6 @@
               "Action",
               "Comedy",
               "Crime"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt14452776",
-            "title": "The Bear",
-            "year": "2022",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "8.5",
-            "quality": "4K",
-            "poster": "https://images.metahub.space/poster/small/tt14452776/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt14452776/img",
-            "desc": "A young chef from the fine dining world returns to Chicago to run his family's sandwich shop.",
-            "genre": [
-              "Comedy",
-              "Drama"
             ],
             "trailer_yt": ""
           }
@@ -12980,6 +12947,24 @@
             "trailer_yt": ""
           },
           {
+            "id": "tt1345836",
+            "title": "The Dark Knight Rises",
+            "year": "2012",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "8.4",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt1345836/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt1345836/img",
+            "desc": "Bane, an imposing terrorist, attacks Gotham City and disrupts its eight-year-long period of peace. This forces Bruce Wayne to come out of hiding and don the cape and cowl of Batman again.",
+            "genre": [
+              "Action",
+              "Crime",
+              "Drama"
+            ],
+            "trailer_yt": ""
+          },
+          {
             "id": "tt0413300",
             "title": "Spider-Man 3",
             "year": "2007",
@@ -13226,24 +13211,6 @@
               "Animation",
               "Action",
               "Crime"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt10168312",
-            "title": "What If...?",
-            "year": "2021",
-            "type": "tv",
-            "typeLabel": "Serial TV",
-            "rating": "7.3",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt10168312/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt10168312/img",
-            "desc": "Exploring pivotal moments from the Marvel Cinematic Universe and turning them on their head, leading the audience into uncharted territory.",
-            "genre": [
-              "Animation",
-              "Action",
-              "Adventure"
             ],
             "trailer_yt": ""
           }
@@ -13566,24 +13533,6 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt34685692",
-            "title": "Over Your Dead Body",
-            "year": "2026",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.5",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt34685692/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt34685692/img",
-            "desc": "A dysfunctional married couple retreats to a secluded cabin to repair their relationship, but each secretly plots to murder the other.",
-            "genre": [
-              "Action",
-              "Comedy",
-              "Thriller"
-            ],
-            "trailer_yt": ""
-          },
-          {
             "id": "tt6263850",
             "title": "Deadpool & Wolverine",
             "year": "2024",
@@ -13615,6 +13564,24 @@
             "genre": [
               "Action",
               "Sci-Fi",
+              "Thriller"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt34685692",
+            "title": "Over Your Dead Body",
+            "year": "2026",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.5",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt34685692/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt34685692/img",
+            "desc": "A dysfunctional married couple retreats to a secluded cabin to repair their relationship, but each secretly plots to murder the other.",
+            "genre": [
+              "Action",
+              "Comedy",
               "Thriller"
             ],
             "trailer_yt": ""
@@ -13691,36 +13658,20 @@
             "trailer_yt": ""
           },
           {
-            "id": "tt13345606",
-            "title": "Evil Dead Rise",
-            "year": "2023",
+            "id": "tt3195644",
+            "title": "Insidious: Chapter 3",
+            "year": "2015",
             "type": "movie",
             "typeLabel": "Film",
-            "rating": "6.5",
+            "rating": "6.1",
             "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt13345606/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt13345606/img",
-            "desc": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
+            "poster": "https://images.metahub.space/poster/small/tt3195644/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt3195644/img",
+            "desc": "A prequel set before the haunting of the Lambert family that reveals how gifted psychic Elise Rainier reluctantly agrees to use her ability to contact the dead in order to help a teenage girl who has been targeted by a dangerous s...",
             "genre": [
-              "Horror"
-            ],
-            "trailer_yt": ""
-          },
-          {
-            "id": "tt0815245",
-            "title": "The Uninvited",
-            "year": "2009",
-            "type": "movie",
-            "typeLabel": "Film",
-            "rating": "6.3",
-            "quality": "FHD",
-            "poster": "https://images.metahub.space/poster/small/tt0815245/img",
-            "backdrop": "https://images.metahub.space/background/medium/tt0815245/img",
-            "desc": "Anna returns home after a stint in a mental hospital, but her recovery is jeopardized by her father's new girlfriend and ghastly visions of her dead mother.",
-            "genre": [
-              "Drama",
-              "Fantasy",
-              "Horror"
+              "Horror",
+              "Mystery",
+              "Thriller"
             ],
             "trailer_yt": ""
           },
@@ -13738,6 +13689,22 @@
             "genre": [
               "Horror",
               "Sci-Fi"
+            ],
+            "trailer_yt": ""
+          },
+          {
+            "id": "tt13345606",
+            "title": "Evil Dead Rise",
+            "year": "2023",
+            "type": "movie",
+            "typeLabel": "Film",
+            "rating": "6.5",
+            "quality": "FHD",
+            "poster": "https://images.metahub.space/poster/small/tt13345606/img",
+            "backdrop": "https://images.metahub.space/background/medium/tt13345606/img",
+            "desc": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
+            "genre": [
+              "Horror"
             ],
             "trailer_yt": ""
           },

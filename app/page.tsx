@@ -89,6 +89,17 @@ export default function CineboxNetflixHomePage() {
   const [selectedSeason, setSelectedSeason] = useState<number>(1);
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
 
+  // AdBlock Alert Banner & Modal States
+  const [showAdblockAlert, setShowAdblockAlert] = useState<boolean>(true);
+  const [showAdblockModal, setShowAdblockModal] = useState<boolean>(false);
+
+  const handleDismissAdblockAlert = () => {
+    setShowAdblockAlert(false);
+    try {
+      localStorage.setItem('cinebox_adblock_dismissed', 'true');
+    } catch (e) {}
+  };
+
   // Toast System
   const [toasts, setToasts] = useState<{ id: string; msg: string; type: string }[]>([]);
 
@@ -123,6 +134,9 @@ export default function CineboxNetflixHomePage() {
 
       const savedHistory = localStorage.getItem('cinebox_netflix_watch_history');
       if (savedHistory) setWatchHistory(JSON.parse(savedHistory));
+
+      const dismissedAdblock = localStorage.getItem('cinebox_adblock_dismissed');
+      if (dismissedAdblock === 'true') setShowAdblockAlert(false);
     } catch (e) {}
   }, []);
 
@@ -1160,15 +1174,64 @@ export default function CineboxNetflixHomePage() {
 
             {/* Seamless Stream Status Bar (Shown ONLY when streaming) */}
             {isPlaying && (
-              <div className="player-stream-status-bar">
-                <button
-                  className="btn-ganti-server"
-                  onClick={handleNextServerFailover}
-                  title="Klik untuk beralih ke server cadangan jika video bermasalah"
-                >
-                  <i className="fa-solid fa-rotate"></i> Ganti Server ({activeServerIndex + 1}/{servers.length})
-                </button>
-              </div>
+              <>
+                {showAdblockAlert && (
+                  <div className="adblock-alert-banner">
+                    <div className="adblock-alert-left">
+                      <i className="fa-solid fa-shield-halved adblock-shield-icon"></i>
+                      <div className="adblock-alert-text">
+                        <span className="adblock-alert-title">Muncul iklan atau tab redirect saat memutar video?</span>
+                        <span className="adblock-alert-desc">
+                          Server video pihak ketiga menyisipkan iklan. Pasang ekstensi AdBlock resmi terpercaya untuk pengalaman menonton 100% bebas gangguan:
+                        </span>
+                      </div>
+                    </div>
+                    <div className="adblock-alert-actions">
+                      <a
+                        href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-adblock-action-primary"
+                        title="Pasang uBlock Origin di Chrome Web Store"
+                      >
+                        <i className="fa-brands fa-chrome"></i> Pasang uBlock Origin (Gratis)
+                      </a>
+                      <button
+                        className="btn-adblock-action-secondary"
+                        onClick={() => setShowAdblockModal(true)}
+                        title="Lihat panduan lengkap pemblokir iklan"
+                      >
+                        <i className="fa-solid fa-circle-info"></i> Panduan Lengkap
+                      </button>
+                      <button
+                        className="btn-adblock-close"
+                        onClick={handleDismissAdblockAlert}
+                        aria-label="Tutup notifikasi"
+                        title="Tutup notifikasi"
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="player-stream-status-bar">
+                  <button
+                    className="btn-adblock-pill"
+                    onClick={() => setShowAdblockModal(true)}
+                    title="Buka panduan pemblokir iklan terpercaya"
+                  >
+                    <i className="fa-solid fa-shield-halved text-gold"></i> Tips Bebas Iklan
+                  </button>
+                  <button
+                    className="btn-ganti-server"
+                    onClick={handleNextServerFailover}
+                    title="Klik untuk beralih ke server cadangan jika video bermasalah"
+                  >
+                    <i className="fa-solid fa-rotate"></i> Ganti Server ({activeServerIndex + 1}/{servers.length})
+                  </button>
+                </div>
+              </>
             )}
 
             {/* 6. Netflix Modal Detail Layout */}
@@ -1431,6 +1494,124 @@ export default function CineboxNetflixHomePage() {
           </div>
         </div>
       </footer>
+
+      {/* AdBlock Trusted Extensions Guide Modal */}
+      {showAdblockModal && (
+        <div className="adblock-guide-overlay" onClick={() => setShowAdblockModal(false)}>
+          <div className="adblock-guide-modal" onClick={e => e.stopPropagation()}>
+            <div className="adblock-guide-header">
+              <div className="adblock-guide-title-wrap">
+                <i className="fa-solid fa-shield-halved adblock-header-icon"></i>
+                <div>
+                  <h3>Panduan Nonton Bebas Iklan di Browser</h3>
+                  <p>Hapus 100% iklan pop-up & redirect saat streaming di Cinebox</p>
+                </div>
+              </div>
+              <button
+                className="adblock-guide-close-btn"
+                onClick={() => setShowAdblockModal(false)}
+                aria-label="Tutup"
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div className="adblock-guide-body">
+              <div className="adblock-info-note">
+                <i className="fa-solid fa-circle-info"></i>
+                <span>
+                  Karena batasan keamanan browser (Same-Origin Policy), server pemutar video pihak ketiga memuat iklan secara independen. Memasang ekstensi adblocker terpercaya adalah cara <strong>paling ampuh, aman, dan permanen</strong> untuk menghilangkan seluruh iklan.
+                </span>
+              </div>
+
+              <div className="adblock-cards-list">
+                {/* 1. uBlock Origin */}
+                <div className="adblock-option-card recommended">
+                  <div className="adblock-card-badge">Paling Direkomendasikan</div>
+                  <div className="adblock-card-top">
+                    <div className="adblock-card-logo ublock-logo">
+                      <i className="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div className="adblock-card-info">
+                      <h4>uBlock Origin</h4>
+                      <p>Ekstensi open-source paling ringan, cepat, hemat RAM, dan 100% terbukti efektif memblokir pop-up streaming.</p>
+                    </div>
+                  </div>
+                  <div className="adblock-card-footer">
+                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> 100% Gratis & Open Source</span>
+                    <a
+                      href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-install-extension"
+                    >
+                      <i className="fa-brands fa-chrome"></i> Pasang di Chrome
+                    </a>
+                  </div>
+                </div>
+
+                {/* 2. AdGuard */}
+                <div className="adblock-option-card">
+                  <div className="adblock-card-top">
+                    <div className="adblock-card-logo adguard-logo">
+                      <i className="fa-solid fa-shield"></i>
+                    </div>
+                    <div className="adblock-card-info">
+                      <h4>AdGuard AdBlocker</h4>
+                      <p>Proteksi lengkap terhadap iklan video, pelacak, dan pengalihan link malware dengan filter yang selalu diperbarui.</p>
+                    </div>
+                  </div>
+                  <div className="adblock-card-footer">
+                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> Populer & Terpercaya</span>
+                    <a
+                      href="https://chromewebstore.google.com/detail/adguard-adblocker/bgnkhhnnamicmpeenaelnjfhikgbkllg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-install-extension secondary"
+                    >
+                      <i className="fa-brands fa-chrome"></i> Pasang di Chrome
+                    </a>
+                  </div>
+                </div>
+
+                {/* 3. Brave Browser */}
+                <div className="adblock-option-card">
+                  <div className="adblock-card-top">
+                    <div className="adblock-card-logo brave-logo">
+                      <i className="fa-solid fa-globe"></i>
+                    </div>
+                    <div className="adblock-card-info">
+                      <h4>Brave Browser (Tanpa Pasang Ekstensi)</h4>
+                      <p>Browser berbasis Chromium dengan fitur Brave Shields bawaan yang memblokir semua iklan video secara otomatis.</p>
+                    </div>
+                  </div>
+                  <div className="adblock-card-footer">
+                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> Browser Bawaan Adblock</span>
+                    <a
+                      href="https://brave.com/download/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-install-extension secondary"
+                    >
+                      <i className="fa-solid fa-arrow-up-right-from-square"></i> Unduh Brave
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="adblock-instructions">
+                <h5><i className="fa-solid fa-list-check text-gold"></i> Langkah Mudah:</h5>
+                <ol>
+                  <li>Klik tombol <strong>"Pasang di Chrome"</strong> pada uBlock Origin di atas.</li>
+                  <li>Di halaman Chrome Web Store, klik tombol biru <strong>"Tambahkan ke Chrome"</strong> (*Add to Chrome*).</li>
+                  <li>Setelah terpasang, kembali ke halaman Cinebox ini dan tekan tombol <strong>Refresh (F5)</strong>.</li>
+                  <li>Video siap ditonton dengan nyaman tanpa iklan satupun!</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
