@@ -385,7 +385,30 @@ img, .poster-wrap, .cinebox-card {
 
 .nav-menu {
     display: flex;
+    align-items: center;
     gap: 20px;
+    position: relative;
+}
+
+.nav-active-indicator {
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--accent-red);
+    box-shadow: 0 0 14px rgba(229, 9, 20, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 160ms ease;
+}
+
+.nav-active-indicator.visible { opacity: 1; }
+
+.nav-view-enter { animation: navViewEnter 300ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes navViewEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .nav-link {
@@ -418,9 +441,14 @@ img, .poster-wrap, .cinebox-card {
     transition: var(--transition);
     z-index: 600;
 }
-.nav-dropdown:hover .dropdown-panel {
+.nav-dropdown:has(> .dropdown-toggle[aria-expanded="true"]) .dropdown-panel {
     opacity: 1; visibility: visible;
     transform: translateY(0);
+}
+.dropdown-toggle { cursor: pointer; }
+.dropdown-toggle:focus-visible, .genre-grid button:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 3px;
 }
 .genre-grid, .network-panel { display: flex; flex-direction: column; gap: 8px; }
 .genre-grid button, .network-panel button { background: transparent; color: var(--text-secondary); text-align: left; }
@@ -820,16 +848,23 @@ img, .poster-wrap, .cinebox-card {
 .inplayer-quick-controls { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 50; }
 .inplayer-btn { background: rgba(0,0,0,0.6); color: white; padding: 6px 12px; border-radius: 4px; font-size: 14px; }
 
-.player-stream-status-bar { 
-    padding: 12px 24px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    background: var(--bg-elevated); 
-    gap: 12px;
-    flex-wrap: wrap;
+.player-stream-status-bar {
+    padding: 14px 24px;
+    display: grid;
+    gap: 8px;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--bg-border);
+    border-bottom: 1px solid var(--bg-border);
+    box-sizing: border-box;
 }
-.btn-ganti-server { background: transparent; border: 1px solid white; color: white; padding: 8px 16px; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: var(--transition); }
+.player-server-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.player-server-controls label { color: var(--text-primary); font-size: 13px; font-weight: 700; }
+.player-server-controls .cinebox-select { min-width: 190px; }
+.player-subtitle-note { color: var(--text-secondary); font-size: 12.5px; line-height: 1.5; }
+.player-subtitle-note i { color: var(--accent-green); margin-right: 4px; }
+.player-source-help { color: var(--text-muted); font-size: 12px; line-height: 1.4; }
+.episode-empty-state { color: var(--text-secondary); font-size: 13px; line-height: 1.5; padding: 16px; }
+.btn-ganti-server { background: transparent; border: 1px solid white; color: white; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 700; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: var(--transition); }
 .btn-ganti-server:hover { background: rgba(255, 255, 255, 0.15); }
 
 /* ==========================================================================
@@ -1267,13 +1302,17 @@ img, .poster-wrap, .cinebox-card {
 .cinebox-select { background: var(--bg-card); color: white; padding: 8px 12px; border: 1px solid var(--bg-border); border-radius: 4px; }
 
 .netflix-episodes-list { display: flex; flex-direction: column; gap: 16px; }
-.netflix-ep-card { display: grid; grid-template-columns: 40px 130px 1fr; gap: 16px; align-items: center; padding: 16px; background: var(--bg-card); border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-.netflix-ep-card:hover, .netflix-ep-card.active { background: var(--bg-card-hover); }
+.netflix-ep-card { display: grid; grid-template-columns: 40px 130px 1fr; gap: 16px; align-items: center; padding: 16px; background: var(--bg-card); border: 1px solid transparent; border-radius: 8px; color: var(--text-primary); text-align: left; width: 100%; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.netflix-ep-card:hover, .netflix-ep-card.active { background: var(--bg-card-hover); border-color: var(--bg-border); }
+.netflix-ep-card:focus-visible, .inplayer-btn:focus-visible, .btn-ganti-server:focus-visible, .ep-btn:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+}
 .ep-index-num { font-size: 24px; font-weight: 700; color: var(--text-secondary); text-align: center; }
 .ep-thumb-wrap { width: 100%; aspect-ratio: 16/9; position: relative; border-radius: 4px; overflow: hidden; }
 .ep-thumb { width: 100%; height: 100%; object-fit: cover; }
 .ep-play-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; font-size: 24px; opacity: 0; transition: 0.3s; }
-.netflix-ep-card:hover .ep-play-overlay { opacity: 1; }
+.netflix-ep-card:hover .ep-play-overlay, .netflix-ep-card.active .ep-play-overlay { opacity: 1; }
 .ep-info-col { display: flex; flex-direction: column; gap: 8px; }
 .ep-title-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; }
 .ep-duration { color: var(--text-secondary); font-size: 14px; }
@@ -1299,12 +1338,12 @@ img, .poster-wrap, .cinebox-card {
 .about-val { font-size: 14px; }
 
 /* In-Player Episode Drawer */
-.inplayer-episode-drawer { position: absolute; top:0; right:0; width: 350px; height: 100%; background: rgba(20,20,20,0.95); z-index: 100; padding: 24px; overflow-y: auto; transform: translateX(100%); transition: 0.3s; }
+.inplayer-episode-drawer { position: absolute; top:0; right:0; width: 350px; max-width: 85vw; height: 100%; background: rgba(20,20,20,0.95); z-index: 100; padding: 24px; overflow-y: auto; animation: slideInRight 0.25s ease; box-sizing: border-box; }
 .drawer-ep-head { display: flex; justify-content: space-between; margin-bottom: 24px; }
 .drawer-close-pill { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 16px; font-size: 12px; }
 .drawer-ep-list { display: flex; flex-direction: column; gap: 12px; }
-.ep-btn { background: var(--bg-card); padding: 12px; border-radius: 4px; text-align: left; color: white; font-size: 14px; }
-.ep-btn.active { border-left: 4px solid var(--accent-red); background: var(--bg-card-hover); }
+.ep-btn { background: var(--bg-card); padding: 12px; border: 1px solid transparent; border-radius: 4px; text-align: left; color: white; font-size: 14px; display: flex; flex-direction: column; gap: 4px; width: 100%; }
+.ep-btn:hover, .ep-btn.active { border-color: var(--accent-red); background: var(--bg-card-hover); }
 
 .netflix-up-next-popup { position: absolute; bottom: 24px; right: 24px; background: rgba(20,20,20,0.9); padding: 16px; border-radius: 8px; width: 300px; z-index: 100; animation: slideUpFade 0.3s; }
 .popup-top-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
@@ -1446,6 +1485,11 @@ img, .poster-wrap, .cinebox-card {
     
     .cinebox-player-modal { padding: 0; align-items: center; }
     .modal-inner { height: 100vh; border-radius: 0; }
+    .player-stream-status-bar { padding: 12px 14px; }
+    .player-server-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .player-server-controls label { grid-column: 1 / -1; }
+    .player-server-controls .cinebox-select { min-width: 0; width: 100%; }
+    .btn-ganti-server { width: 100%; min-height: 44px; justify-content: center; padding: 8px; }
     .detail-header-row { grid-template-columns: 1fr; }
     .netflix-ep-card { grid-template-columns: 30px 100px 1fr; padding: 12px; }
     
@@ -1458,4 +1502,9 @@ img, .poster-wrap, .cinebox-card {
 @media (max-width: 400px) {
     .cinebox-card { flex: 0 0 110px; }
     .top10-card-wrapper { flex: 0 0 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-view-enter, .inplayer-episode-drawer { animation: none; }
+    .nav-active-indicator { transition: none; }
 }

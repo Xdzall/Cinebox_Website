@@ -1,6 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { getStreamServers, type StreamServer } from '../lib/stream-servers';
+
+interface TvEpisode {
+  episode: number;
+  title: string;
+}
+
+interface TvDetails {
+  season_numbers?: number[];
+  seasons?: Record<string, { season: number; episodes: TvEpisode[] }>;
+}
 
 interface MovieItem {
   id: string;
@@ -39,8 +50,13 @@ export default function CineboxNetflixHomePage() {
   // Navigation & Catalog States
   const [currentView, setCurrentView] = useState<'home' | 'movie' | 'tv' | 'popular' | 'mylist' | 'genre'>('home');
   const [activeGenre, setActiveGenre] = useState<string>('Semua');
+  const [genreMenuOpen, setGenreMenuOpen] = useState<boolean>(false);
+  const genreMenuRef = useRef<HTMLDivElement>(null);
+  const desktopNavRef = useRef<HTMLElement>(null);
+  const [navIndicator, setNavIndicator] = useState({ left: 0, width: 0, visible: false });
   const [catalog, setCatalog] = useState<CatalogData>({ featured: [], sections: [] });
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const catalogRequestRef = useRef(0);
 
   // Mobile Drawer State
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
@@ -69,25 +85,24 @@ export default function CineboxNetflixHomePage() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Cinema Watch Modal States (Primary VidAPI + Auto Failover)
+  // Cinema Watch Modal States
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieItem | null>(null);
   const [modalTrailerId, setModalTrailerId] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isModalMuted, setIsModalMuted] = useState<boolean>(true);
-  const [servers, setServers] = useState<{ name: string; url: string }[]>([]);
+  const [servers, setServers] = useState<StreamServer[]>([]);
   const [activeServerIndex, setActiveServerIndex] = useState<number>(0);
 
-  // Netflix In-Player Features: Next Ep Countdown, Movie Rec Popup, Ep Drawer
-  const [showNextEpCountdown, setShowNextEpCountdown] = useState<boolean>(false);
-  const [nextEpTimer, setNextEpTimer] = useState<number>(10);
-  const [showMovieRecPopup, setShowMovieRecPopup] = useState<boolean>(false);
+  // In-player episode navigation
   const [inplayerEpDrawerOpen, setInplayerEpDrawerOpen] = useState<boolean>(false);
 
   // TV Series Seasons/Episodes States
-  const [tvDetails, setTvDetails] = useState<any>(null);
+  const [tvDetails, setTvDetails] = useState<TvDetails | null>(null);
+  const [tvDetailsLoading, setTvDetailsLoading] = useState<boolean>(false);
   const [selectedSeason, setSelectedSeason] = useState<number>(1);
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
+  const modalRequestRef = useRef(0);
 
   // AdBlock Alert Banner & Modal States
   const [showAdblockAlert, setShowAdblockAlert] = useState<boolean>(true);
@@ -113,7 +128,7 @@ export default function CineboxNetflixHomePage() {
 
   // Body Scroll Lock for Modal and Mobile Drawer
   useEffect(() => {
-    if (modalOpen || mobileDrawerOpen) {
+    if (modalOpen || mobileDrawerOpen || showAdblockModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -121,7 +136,16 @@ export default function CineboxNetflixHomePage() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [modalOpen, mobileDrawerOpen]);
+  }, [modalOpen, mobileDrawerOpen, showAdblockModal]);
+
+  useEffect(() => {
+    if (!genreMenuOpen) return;
+    const handleOutsideClick = (event: PointerEvent) => {
+      if (!genreMenuRef.current?.contains(event.target as Node)) setGenreMenuOpen(false);
+    };
+    document.addEventListener('pointerdown', handleOutsideClick);
+    return () => document.removeEventListener('pointerdown', handleOutsideClick);
+  }, [genreMenuOpen]);
 
   // Load Saved Data from LocalStorage on mount
   useEffect(() => {
@@ -192,28 +216,81 @@ export default function CineboxNetflixHomePage() {
 
   // Fetch Multi-Catalog from Next.js API
   const loadCatalog = useCallback(async (type = 'home', genre = 'Semua') => {
+    const requestId = ++catalogRequestRef.current;
     try {
       setIsLoading(true);
-      let url = `/api/catalog?type=${encodeURIComponent(type)}`;
-      if (genre && genre !== 'Semua') {
-        url += `&genre=${encodeURIComponent(genre)}`;
+      if (type === 'popular') {
+        const [movieRes, tvRes] = await Promise.all([
+          fetch('/api/catalog?type=movie'),
+          fetch('/api/catalog?type=tv')
+        ]);
+        if (!movieRes.ok || !tvRes.ok) throw new Error('Katalog populer tidak tersedia');
+        const [movieData, tvData]: CatalogData[] = await Promise.all([movieRes.json(), tvRes.json()]);
+        const moviePopular = movieData.sections?.find(section => section.id === 'movie_pop')?.items || movieData.featured || [];
+        const tvPopular = tvData.sections?.find(section => section.id === 'tv_pop')?.items || tvData.featured || [];
+        const uniqueItems = Array.from(new Map<string, MovieItem>([...moviePopular, ...tvPopular].map(item => [item.id, item] as const)).values());
+        const latestItems = [...uniqueItems].sort((a, b) =>
+          Number(b.year || 0) - Number(a.year || 0) || Number(b.rating || 0) - Number(a.rating || 0)
+        );
+        if (requestId !== catalogRequestRef.current) return;
+        setCatalog({
+          view: 'popular',
+          title: 'Terbaru & Populer',
+          featured: [...moviePopular.slice(0, 4), ...tvPopular.slice(0, 4)],
+          sections: [
+            { id: 'latest', title: 'Terbaru di Pilihan Populer', items: latestItems.slice(0, 28) },
+            { id: 'popular_movies', title: 'Film Populer', items: moviePopular },
+            { id: 'popular_series', title: 'Serial TV Populer', items: tvPopular }
+          ]
+        });
+      } else {
+        let url = `/api/catalog?type=${encodeURIComponent(type)}`;
+        if (genre && genre !== 'Semua') {
+          url += `&genre=${encodeURIComponent(genre)}`;
+        }
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Katalog tidak tersedia');
+        const data: CatalogData = await res.json();
+        if (requestId !== catalogRequestRef.current) return;
+        setCatalog(data);
       }
-
-      const res = await fetch(url);
-      const data: CatalogData = await res.json();
-      setCatalog(data);
       setHeroIndex(0);
     } catch (err) {
-      console.error('Error fetching catalog:', err);
+      if (requestId === catalogRequestRef.current) console.error('Error fetching catalog:', err);
     } finally {
-      setIsLoading(false);
+      if (requestId === catalogRequestRef.current) setIsLoading(false);
     }
   }, []);
 
   // Initial Load
   useEffect(() => {
-    loadCatalog(currentView === 'popular' ? 'home' : currentView, activeGenre);
+    loadCatalog(currentView, activeGenre);
   }, [currentView, activeGenre, loadCatalog]);
+
+  // Keep the desktop active indicator aligned while labels and viewport sizes change.
+  useEffect(() => {
+    const nav = desktopNavRef.current;
+    if (!nav) return;
+    const updateIndicator = () => {
+      const active = nav.querySelector<HTMLElement>('.nav-link.active');
+      if (!active || nav.getBoundingClientRect().width === 0) {
+        setNavIndicator(previous => ({ ...previous, visible: false }));
+        return;
+      }
+      const navBounds = nav.getBoundingClientRect();
+      const activeBounds = active.getBoundingClientRect();
+      setNavIndicator({ left: activeBounds.left - navBounds.left, width: activeBounds.width, visible: true });
+    };
+    const frame = requestAnimationFrame(updateIndicator);
+    const observer = new ResizeObserver(updateIndicator);
+    observer.observe(nav);
+    window.addEventListener('resize', updateIndicator);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [currentView, activeGenre, searchQuery, myList.length]);
 
   // Dynamically resolve exact Hero Trailer whenever hero changes
   const currentHero = catalog.featured && catalog.featured[heroIndex] ? catalog.featured[heroIndex] : null;
@@ -260,6 +337,7 @@ export default function CineboxNetflixHomePage() {
   const handleNavSwitch = (target: 'home' | 'movie' | 'tv' | 'popular' | 'mylist') => {
     setCurrentView(target);
     setActiveGenre('Semua');
+    setGenreMenuOpen(false);
     setSearchQuery('');
     setSearchResults([]);
     setMobileDrawerOpen(false);
@@ -271,6 +349,7 @@ export default function CineboxNetflixHomePage() {
   // Focus Search from Mobile Bottom Nav
   const handleFocusSearch = () => {
     setMobileDrawerOpen(false);
+    setGenreMenuOpen(false);
     if (searchInputRef.current) {
       searchInputRef.current.focus();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -281,6 +360,7 @@ export default function CineboxNetflixHomePage() {
   const handleGenreSelect = (genreName: string) => {
     setCurrentView('genre');
     setActiveGenre(genreName);
+    setGenreMenuOpen(false);
     setSearchQuery('');
     setSearchResults([]);
     setMobileDrawerOpen(false);
@@ -291,6 +371,7 @@ export default function CineboxNetflixHomePage() {
   // Live Search Handler
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
+    setGenreMenuOpen(false);
     setSearchQuery(val);
 
     if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
@@ -324,30 +405,9 @@ export default function CineboxNetflixHomePage() {
       .finally(() => setIsSearching(false));
   };
 
-  // Generate Servers with VidAPI as Primary (Server 1)
-  const getInstantServers = (id: string, type = 'movie', s = 1, e = 1) => {
-    const isTv = type === 'tv';
-    return isTv
-      ? [
-          { name: 'Server 1 (VidAPI Sub Indo)', url: `https://vaplayer.ru/embed/tv/${id}/${s}/${e}?ds_lang=id` },
-          { name: 'Server 2 (VidLink VIP)', url: `https://vidlink.pro/tv/${id}/${s}/${e}` },
-          { name: 'Server 3 (2Embed HD)', url: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}` },
-          { name: 'Server 4 (AutoEmbed Fast)', url: `https://autoembed.co/tv/imdb/${id}/${s}/${e}` },
-          { name: 'Server 5 (VidSrc HD)', url: `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}` },
-          { name: 'Server 6 (MultiEmbed)', url: `https://multiembed.mov/?video_id=${id}&s=${s}&e=${e}` }
-        ]
-      : [
-          { name: 'Server 1 (VidAPI Sub Indo)', url: `https://vaplayer.ru/embed/movie/${id}?ds_lang=id` },
-          { name: 'Server 2 (VidLink VIP)', url: `https://vidlink.pro/movie/${id}` },
-          { name: 'Server 3 (2Embed HD)', url: `https://www.2embed.cc/embed/${id}` },
-          { name: 'Server 4 (AutoEmbed Fast)', url: `https://autoembed.co/movie/imdb/${id}` },
-          { name: 'Server 5 (VidSrc HD)', url: `https://vidsrc.xyz/embed/movie/${id}` },
-          { name: 'Server 6 (MultiEmbed)', url: `https://multiembed.mov/?video_id=${id}` }
-        ];
-  };
-
   // Open Cinema Watch Modal
-  const handleOpenWatchModal = async (item: MovieItem, autoPlay = false) => {
+  const handleOpenWatchModal = (item: MovieItem, autoPlay = false) => {
+    const requestId = ++modalRequestRef.current;
     setSelectedMovie(item);
     setIsPlaying(autoPlay);
     setIsModalMuted(true);
@@ -356,85 +416,89 @@ export default function CineboxNetflixHomePage() {
     const startE = item.lastEpisode || 1;
     setSelectedSeason(startS);
     setSelectedEpisode(startE);
-    setShowNextEpCountdown(false);
-    setShowMovieRecPopup(false);
     setInplayerEpDrawerOpen(false);
-    setServers(getInstantServers(item.id, item.type || 'movie', startS, startE));
+    setServers(getStreamServers(item.id, item.type === 'tv' ? 'tv' : 'movie', startS, startE));
+    setTvDetails(null);
+    setTvDetailsLoading(item.type === 'tv');
+    setModalTrailerId('');
     setModalOpen(true);
 
     if (autoPlay) {
       recordWatchHistory(item, startS, startE);
     }
 
-    // Fetch exact trailer for modal
-    try {
-      const trailerRes = await fetch(`/api/trailer?title=${encodeURIComponent(item.title)}&id=${item.id}&type=${item.type || 'movie'}`);
-      const tData = await trailerRes.json();
-      setModalTrailerId(tData.trailer_id || item.trailer_yt || '73_1biulkYk');
-    } catch {
-      setModalTrailerId(item.trailer_yt || '73_1biulkYk');
-    }
+    // Ignore stale responses when another title is opened before these requests finish.
+    fetch(`/api/trailer?title=${encodeURIComponent(item.title)}&id=${item.id}&type=${item.type || 'movie'}`)
+      .then(res => res.json())
+      .then(data => {
+        if (modalRequestRef.current === requestId) {
+          setModalTrailerId(data.trailer_id || item.trailer_yt || '');
+        }
+      })
+      .catch(() => {
+        if (modalRequestRef.current === requestId) setModalTrailerId(item.trailer_yt || '');
+      });
 
     // Fetch TV Details if series
     if (item.type === 'tv') {
-      try {
-        const tvRes = await fetch(`/api/tv/details?id=${item.id}`);
-        const tvData = await tvRes.json();
-        setTvDetails(tvData);
-        if (tvData.season_numbers && tvData.season_numbers.length > 0 && !item.lastSeason) {
-          setSelectedSeason(tvData.season_numbers[0]);
-        }
-      } catch (err) {
-        console.error('TV details error:', err);
-      }
-    } else {
-      setTvDetails(null);
+      fetch(`/api/tv/details?id=${item.id}`)
+        .then(res => res.json())
+        .then((tvData: TvDetails) => {
+          if (modalRequestRef.current !== requestId) return;
+          setTvDetails(tvData);
+          const seasonNumbers = tvData.season_numbers || [];
+          if (seasonNumbers.length > 0) {
+            const season = seasonNumbers.includes(startS) ? startS : seasonNumbers[0];
+            const episodeNumbers = tvData.seasons?.[String(season)]?.episodes?.map(ep => ep.episode) || [];
+            const episode = episodeNumbers.includes(startE) ? startE : (episodeNumbers[0] || startE);
+            setSelectedSeason(season);
+            setSelectedEpisode(episode);
+            setServers(getStreamServers(item.id, 'tv', season, episode));
+          }
+        })
+        .catch(err => console.error('TV details error:', err))
+        .finally(() => {
+          if (modalRequestRef.current === requestId) setTvDetailsLoading(false);
+        });
     }
   };
 
   // Close Modal
   const handleCloseModal = () => {
+    modalRequestRef.current += 1;
     setModalOpen(false);
     setIsPlaying(false);
-    setShowNextEpCountdown(false);
-    setShowMovieRecPopup(false);
     setInplayerEpDrawerOpen(false);
     setSelectedMovie(null);
   };
 
   // Start Playing Stream
   const handleStartStream = () => {
+    if (isPlaying) {
+      document.getElementById('cinemaPlayerArea')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     setIsPlaying(true);
-    setShowNextEpCountdown(false);
-    setShowMovieRecPopup(false);
     if (selectedMovie) {
       recordWatchHistory(selectedMovie, selectedSeason, selectedEpisode);
     }
-    showToast('Memutar melalui Server Utama (Sub Indo)', 'success');
-
-    // Schedule automated Next Episode or Movie Recommendation trigger
-    if (selectedMovie?.type === 'tv') {
-      setTimeout(() => {
-        setShowNextEpCountdown(true);
-        setNextEpTimer(10);
-      }, 45000);
-    } else {
-      setTimeout(() => {
-        setShowMovieRecPopup(true);
-      }, 55000);
-    }
+    showToast('Pemutar dibuka. Pilih subtitle melalui tombol CC di dalam video jika tersedia.', 'info');
   };
 
   // Global Keyboard Shortcuts (Esc to close, F for fullscreen, M for mute)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (inplayerEpDrawerOpen) {
+        if (showAdblockModal) {
+          setShowAdblockModal(false);
+        } else if (inplayerEpDrawerOpen) {
           setInplayerEpDrawerOpen(false);
         } else if (modalOpen) {
           handleCloseModal();
         } else if (mobileDrawerOpen) {
           setMobileDrawerOpen(false);
+        } else if (genreMenuOpen) {
+          setGenreMenuOpen(false);
         }
       } else if (e.key === 'f' || e.key === 'F') {
         if (modalOpen && !document.fullscreenElement) {
@@ -453,22 +517,9 @@ export default function CineboxNetflixHomePage() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [modalOpen, mobileDrawerOpen, inplayerEpDrawerOpen, isPlaying]);
+  }, [modalOpen, mobileDrawerOpen, inplayerEpDrawerOpen, isPlaying, showAdblockModal, genreMenuOpen]);
 
-  // Netflix Next Episode Countdown Timer
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (showNextEpCountdown && nextEpTimer > 0) {
-      timer = setTimeout(() => {
-        setNextEpTimer(prev => prev - 1);
-      }, 1000);
-    } else if (showNextEpCountdown && nextEpTimer === 0) {
-      handleEpisodeChange(selectedEpisode + 1);
-    }
-    return () => clearTimeout(timer);
-  }, [showNextEpCountdown, nextEpTimer, selectedEpisode]);
-
-  // Auto-Failover to next backup server
+  // Explicit server switching: iframe failures cannot be detected reliably.
   const handleNextServerFailover = () => {
     if (servers.length <= 1) return;
     const nextIdx = (activeServerIndex + 1) % servers.length;
@@ -477,27 +528,32 @@ export default function CineboxNetflixHomePage() {
   };
 
   // Change TV Season
-  const handleSeasonChange = async (sNum: number) => {
+  const handleSeasonChange = (sNum: number) => {
+    const firstEpisode = tvDetails?.seasons?.[String(sNum)]?.episodes?.[0]?.episode || 1;
     setSelectedSeason(sNum);
-    setSelectedEpisode(1);
+    setSelectedEpisode(firstEpisode);
     setActiveServerIndex(0);
-    setShowNextEpCountdown(false);
     if (selectedMovie) {
-      setServers(getInstantServers(selectedMovie.id, 'tv', sNum, 1));
+      setServers(getStreamServers(selectedMovie.id, 'tv', sNum, firstEpisode));
+      if (isPlaying) recordWatchHistory(selectedMovie, sNum, firstEpisode);
     }
   };
 
-  // Change TV Episode (Instant Seamless Progression)
-  const handleEpisodeChange = async (epNum: number) => {
+  // Change TV episode only when it appears in the fetched episode list.
+  const handleEpisodeChange = (epNum: number) => {
+    const episodes = tvDetails?.seasons?.[String(selectedSeason)]?.episodes || [];
+    if (!episodes.some(ep => ep.episode === epNum)) {
+      showToast('Episode ini belum tersedia dalam daftar.', 'error');
+      return;
+    }
     setSelectedEpisode(epNum);
     setActiveServerIndex(0);
-    setShowNextEpCountdown(false);
     setInplayerEpDrawerOpen(false);
     if (selectedMovie) {
-      setServers(getInstantServers(selectedMovie.id, 'tv', selectedSeason, epNum));
+      setServers(getStreamServers(selectedMovie.id, 'tv', selectedSeason, epNum));
       setIsPlaying(true);
       recordWatchHistory(selectedMovie, selectedSeason, epNum);
-      showToast(`Memutar Season ${selectedSeason} • Episode ${epNum}`, 'success');
+      showToast(`Membuka Season ${selectedSeason} • Episode ${epNum}`, 'info');
     }
   };
 
@@ -522,7 +578,7 @@ export default function CineboxNetflixHomePage() {
           : (it.genre || '').split(',').map(s => s.trim());
 
         const matchCount = itGenres.filter(g => currentGenres.includes(g)).length;
-        const matchScore = 88 + Math.min(10, matchCount * 4) + (Math.abs(it.title.length * 3) % 3);
+        const matchScore = matchCount;
 
         uniqueMap.set(it.id, {
           ...it,
@@ -532,12 +588,14 @@ export default function CineboxNetflixHomePage() {
     });
 
     return Array.from(uniqueMap.values())
-      .sort((a, b) => (b.matchScore || 90) - (a.matchScore || 90))
+      .sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0))
       .slice(0, 12);
   }, [selectedMovie, catalog]);
 
-  // Top Recommendation for Post-Play
-  const topRecommendation = moreLikeThisItems[0] || null;
+  const availableEpisodes = tvDetails?.seasons?.[String(selectedSeason)]?.episodes || [];
+  const nextEpisode = availableEpisodes
+    .filter(ep => ep.episode > selectedEpisode)
+    .sort((a, b) => a.episode - b.episode)[0];
 
   return (
     <div className="cinebox-theme">
@@ -559,7 +617,12 @@ export default function CineboxNetflixHomePage() {
             </div>
 
             {/* Desktop / Tablet Menu */}
-            <nav className="nav-menu">
+            <nav className="nav-menu" ref={desktopNavRef} aria-label="Navigasi utama">
+              <span
+                className={`nav-active-indicator ${navIndicator.visible ? 'visible' : ''}`}
+                style={{ transform: `translateX(${navIndicator.left}px)`, width: navIndicator.width }}
+                aria-hidden="true"
+              />
               <button
                 className={`nav-link ${currentView === 'home' && activeGenre === 'Semua' && !searchQuery ? 'active' : ''}`}
                 onClick={() => handleNavSwitch('home')}
@@ -592,11 +655,17 @@ export default function CineboxNetflixHomePage() {
               </button>
 
               {/* Genre Dropdown */}
-              <div className="nav-dropdown">
-                <span className={`nav-link dropdown-toggle ${activeGenre !== 'Semua' ? 'active' : ''}`}>
+              <div className="nav-dropdown" ref={genreMenuRef}>
+                <button
+                  type="button"
+                  className={`nav-link dropdown-toggle ${activeGenre !== 'Semua' ? 'active' : ''}`}
+                  aria-expanded={genreMenuOpen}
+                  aria-controls="genre-dropdown-panel"
+                  onClick={() => setGenreMenuOpen(open => !open)}
+                >
                   {activeGenre !== 'Semua' ? `Genre: ${activeGenre}` : 'Kategori Genre'} <i className="fa-solid fa-chevron-down nav-arrow"></i>
-                </span>
-                <div className="dropdown-panel">
+                </button>
+                <div className="dropdown-panel" id="genre-dropdown-panel">
                   <div className="genre-grid">
                     {[
                       'Aksi', 'Petualangan', 'Sci-Fi', 'Drama',
@@ -615,20 +684,6 @@ export default function CineboxNetflixHomePage() {
                   </div>
                 </div>
               </div>
-
-              {/* Network Dropdown */}
-              <div className="nav-dropdown">
-                <span className="nav-link dropdown-toggle">
-                  Platform <i className="fa-solid fa-chevron-down nav-arrow"></i>
-                </span>
-                <div className="dropdown-panel network-panel">
-                  {['Netflix', 'HBO Max', 'Disney+', 'Prime Video', 'Apple TV+'].map(net => (
-                    <button key={net} onClick={() => setSearchQuery(net)}>
-                      <i className="fa-solid fa-circle-play text-red"></i> {net}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </nav>
           </div>
 
@@ -638,6 +693,7 @@ export default function CineboxNetflixHomePage() {
               <input
                 ref={searchInputRef}
                 type="text"
+                onFocus={() => setGenreMenuOpen(false)}
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Judul, orang, genre..."
@@ -726,7 +782,7 @@ export default function CineboxNetflixHomePage() {
       </aside>
 
       {/* 2. Main Content Container */}
-      <main className="cinebox-main">
+      <main className="cinebox-main nav-view-enter" key={searchQuery ? 'search' : `${currentView}:${activeGenre}`}>
         {searchQuery ? (
           /* Search View */
           <section className="cinebox-search-view">
@@ -841,22 +897,16 @@ export default function CineboxNetflixHomePage() {
                 <div className="hero-content">
                   <div className="hero-badges">
                     <span className="badge-top10-tag"><i className="fa-solid fa-trophy"></i> TOP 10</span>
-                    <span className="badge-match">98% Cocok</span>
-                    <span className="badge-quality">4K Ultra HD</span>
-                    <span className="badge-rating"><i className="fa-solid fa-star text-gold"></i> {currentHero.rating || '8.8'}</span>
-                    <span className="badge-sub-indo"><i className="fa-solid fa-closed-captioning"></i> Sub Indo</span>
+                    {currentHero.rating && <span className="badge-rating"><i className="fa-solid fa-star text-gold"></i> {currentHero.rating}</span>}
                   </div>
 
                   <h1 className="hero-title">{currentHero.title}</h1>
 
                   <div className="hero-meta">
-                    <span>{currentHero.year || '2026'}</span>
-                    <span className="dot-separator">•</span>
-                    <span>18+</span>
-                    <span className="dot-separator">•</span>
+                    {currentHero.year && <><span>{currentHero.year}</span><span className="dot-separator">•</span></>}
                     <span id="heroType">{currentHero.type === 'tv' ? 'Serial TV' : 'Film'}</span>
                     <span className="dot-separator">•</span>
-                    <span>{Array.isArray(currentHero.genre) ? currentHero.genre.join(', ') : (currentHero.genre || 'Aksi')}</span>
+                    {currentHero.genre && <span>{Array.isArray(currentHero.genre) ? currentHero.genre.join(', ') : currentHero.genre}</span>}
                   </div>
 
                   <p className="hero-synopsis">{currentHero.desc}</p>
@@ -988,12 +1038,11 @@ export default function CineboxNetflixHomePage() {
               {isPlaying ? (
                 <div className="video-wrapper">
                   <iframe
+                    key={`player-v2-${selectedMovie.id}-${selectedSeason}-${selectedEpisode}-${servers[activeServerIndex]?.id || 'none'}`}
                     src={servers[activeServerIndex]?.url || 'about:blank'}
-                    frameBorder="0"
-                    scrolling="no"
+                    title={`Pemutar ${selectedMovie.title} melalui ${servers[activeServerIndex]?.name || 'server'}`}
                     allowFullScreen
-                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture *"
-                    onError={handleNextServerFailover}
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                   ></iframe>
 
                   {/* In-Player TV Quick Controls */}
@@ -1006,15 +1055,12 @@ export default function CineboxNetflixHomePage() {
                         >
                           <i className="fa-solid fa-list-ol"></i> Episode ({selectedEpisode})
                         </button>
-                        <button
+                        {nextEpisode && <button
                           className="inplayer-btn"
-                          onClick={() => {
-                            setShowNextEpCountdown(true);
-                            setNextEpTimer(10);
-                          }}
+                          onClick={() => handleEpisodeChange(nextEpisode.episode)}
                         >
                           <i className="fa-solid fa-forward"></i> Ep Berikutnya
-                        </button>
+                        </button>}
                       </>
                     )}
                   </div>
@@ -1029,7 +1075,7 @@ export default function CineboxNetflixHomePage() {
                         </button>
                       </div>
                       <div className="drawer-ep-list">
-                        {((tvDetails?.seasons && tvDetails.seasons[String(selectedSeason)]?.episodes) || Array.from({ length: 12 }, (_, i) => ({ episode: i + 1, title: `Episode ${i + 1}` }))).map((ep: any) => (
+                        {availableEpisodes.map(ep => (
                           <button
                             key={ep.episode}
                             className={`ep-btn ${ep.episode === selectedEpisode ? 'active' : ''}`}
@@ -1042,99 +1088,9 @@ export default function CineboxNetflixHomePage() {
                             <span className="ep-title-sub" style={{ fontSize: '11px', color: '#888' }}>{ep.title}</span>
                           </button>
                         ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Netflix Next Episode Countdown Card */}
-                  {showNextEpCountdown && selectedMovie.type === 'tv' && (
-                    <div className="netflix-up-next-popup">
-                      <div className="popup-top-row">
-                        <span className="popup-badge">
-                          <i className="fa-solid fa-forward-step"></i> Episode Selanjutnya
-                        </span>
-                        <button className="popup-close" onClick={() => setShowNextEpCountdown(false)} aria-label="Tutup">
-                          <i className="fa-solid fa-xmark"></i>
-                        </button>
-                      </div>
-
-                      <div className="popup-content-box">
-                        <img
-                          className="popup-thumb"
-                          src={selectedMovie.backdrop || selectedMovie.poster}
-                          alt="Next Episode"
-                        />
-                        <div className="popup-info">
-                          <span className="popup-ep-num">Season {selectedSeason} • Episode {selectedEpisode + 1}</span>
-                          <h5 className="popup-title">Episode {selectedEpisode + 1}</h5>
-                          <span className="popup-match">98% Cocok</span>
-                        </div>
-                      </div>
-
-                      <div className="popup-timer-bar">
-                        <div
-                          className="popup-timer-fill"
-                          style={{ width: `${(nextEpTimer / 10) * 100}%` }}
-                        ></div>
-                      </div>
-
-                      <div className="popup-action-row">
-                        <button
-                          className="btn-play-next"
-                          onClick={() => handleEpisodeChange(selectedEpisode + 1)}
-                        >
-                          <i className="fa-solid fa-play"></i> Putar Sekarang ({nextEpTimer}s)
-                        </button>
-                        <button
-                          className="btn-dismiss-next"
-                          onClick={() => setShowNextEpCountdown(false)}
-                        >
-                          Batal
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Netflix Movie Recommendation Post-Play Card */}
-                  {showMovieRecPopup && selectedMovie.type !== 'tv' && topRecommendation && (
-                    <div className="netflix-up-next-popup">
-                      <div className="popup-top-row">
-                        <span className="popup-badge">
-                          <i className="fa-solid fa-sparkles"></i> Rekomendasi Selanjutnya
-                        </span>
-                        <button className="popup-close" onClick={() => setShowMovieRecPopup(false)} aria-label="Tutup">
-                          <i className="fa-solid fa-xmark"></i>
-                        </button>
-                      </div>
-
-                      <div className="popup-content-box">
-                        <img
-                          className="popup-thumb"
-                          src={topRecommendation.backdrop || topRecommendation.poster}
-                          alt={topRecommendation.title}
-                        />
-                        <div className="popup-info">
-                          <h5 className="popup-title">{topRecommendation.title}</h5>
-                          <span className="popup-match">{topRecommendation.matchScore || 98}% Cocok</span>
-                          <span className="popup-ep-num">{topRecommendation.year} • {topRecommendation.quality || 'HD'}</span>
-                        </div>
-                      </div>
-
-                      <div className="popup-action-row">
-                        <button
-                          className="btn-play-next"
-                          onClick={() => {
-                            handleOpenWatchModal(topRecommendation, true);
-                          }}
-                        >
-                          <i className="fa-solid fa-play"></i> Tonton Berikutnya
-                        </button>
-                        <button
-                          className="btn-dismiss-next"
-                          onClick={() => setShowMovieRecPopup(false)}
-                        >
-                          Tutup
-                        </button>
+                        {availableEpisodes.length === 0 && (
+                          <p className="episode-empty-state">{tvDetailsLoading ? 'Memuat daftar episode…' : 'Daftar episode belum tersedia untuk judul ini.'}</p>
+                        )}
                       </div>
                     </div>
                   )}
@@ -1172,66 +1128,63 @@ export default function CineboxNetflixHomePage() {
               )}
             </div>
 
-            {/* Seamless Stream Status Bar (Shown ONLY when streaming) */}
-            {isPlaying && (
-              <>
-                {showAdblockAlert && (
-                  <div className="adblock-alert-banner">
-                    <div className="adblock-alert-left">
-                      <i className="fa-solid fa-shield-halved adblock-shield-icon"></i>
-                      <div className="adblock-alert-text">
-                        <span className="adblock-alert-title">Muncul iklan atau tab redirect saat memutar video?</span>
-                        <span className="adblock-alert-desc">
-                          Server video pihak ketiga menyisipkan iklan. Pasang ekstensi AdBlock resmi terpercaya untuk pengalaman menonton 100% bebas gangguan:
-                        </span>
-                      </div>
-                    </div>
-                    <div className="adblock-alert-actions">
-                      <a
-                        href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-adblock-action-primary"
-                        title="Pasang uBlock Origin di Chrome Web Store"
-                      >
-                        <i className="fa-brands fa-chrome"></i> Pasang uBlock Origin (Gratis)
-                      </a>
-                      <button
-                        className="btn-adblock-action-secondary"
-                        onClick={() => setShowAdblockModal(true)}
-                        title="Lihat panduan lengkap pemblokir iklan"
-                      >
-                        <i className="fa-solid fa-circle-info"></i> Panduan Lengkap
-                      </button>
-                      <button
-                        className="btn-adblock-close"
-                        onClick={handleDismissAdblockAlert}
-                        aria-label="Tutup notifikasi"
-                        title="Tutup notifikasi"
-                      >
-                        <i className="fa-solid fa-xmark"></i>
-                      </button>
-                    </div>
+            {isPlaying && showAdblockAlert && (
+              <div className="adblock-alert-banner">
+                <div className="adblock-alert-left">
+                  <i className="fa-solid fa-shield-halved adblock-shield-icon" aria-hidden="true"></i>
+                  <div className="adblock-alert-text">
+                    <span className="adblock-alert-title">Tab iklan atau redirect muncul dari pemutar?</span>
+                    <span className="adblock-alert-desc">
+                      Ekstensi Cinebox Player Guard dapat mengurangi pop-up dari pemutar yang dikenali. Hasilnya bergantung pada aturan dan penyedia video.
+                    </span>
                   </div>
-                )}
-
-                <div className="player-stream-status-bar">
-                  <button
-                    className="btn-adblock-pill"
-                    onClick={() => setShowAdblockModal(true)}
-                    title="Buka panduan pemblokir iklan terpercaya"
-                  >
-                    <i className="fa-solid fa-shield-halved text-gold"></i> Tips Bebas Iklan
+                </div>
+                <div className="adblock-alert-actions">
+                  <button className="btn-adblock-action-primary" onClick={() => setShowAdblockModal(true)}>
+                    <i className="fa-solid fa-circle-info" aria-hidden="true"></i> Panduan ekstensi
                   </button>
+                  <button className="btn-adblock-close" onClick={handleDismissAdblockAlert} aria-label="Tutup notifikasi">
+                    <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Server and subtitle controls apply to both movies and episodes. */}
+            {servers.length > 0 && (
+              <div className="player-stream-status-bar">
+                <div className="player-server-controls">
+                  <label htmlFor="stream-server-select">Sumber video</label>
+                  <select
+                    id="stream-server-select"
+                    className="cinebox-select"
+                    value={activeServerIndex}
+                    onChange={event => setActiveServerIndex(Number(event.target.value))}
+                    aria-describedby="stream-subtitle-note"
+                  >
+                    {servers.map((server, index) => (
+                      <option key={server.id} value={index}>{server.name}</option>
+                    ))}
+                  </select>
                   <button
                     className="btn-ganti-server"
                     onClick={handleNextServerFailover}
-                    title="Klik untuk beralih ke server cadangan jika video bermasalah"
+                    title="Beralih ke sumber video berikutnya jika pemutar bermasalah"
                   >
-                    <i className="fa-solid fa-rotate"></i> Ganti Server ({activeServerIndex + 1}/{servers.length})
+                    <i className="fa-solid fa-rotate"></i> Server berikutnya
                   </button>
                 </div>
-              </>
+                <p className="player-subtitle-note" id="stream-subtitle-note" role="status">
+                  <i className="fa-solid fa-closed-captioning" aria-hidden="true"></i>{' '}
+                  {servers[activeServerIndex]?.subtitle.disclosure} Pilih bahasa lewat menu CC pada pemutar jika tersedia.
+                </p>
+                {isPlaying && <p className="player-source-help">Jika layar tetap kosong atau berpindah ke iklan, coba sumber video lainnya.</p>}
+                {isPlaying && (
+                  <button className="btn-adblock-pill" onClick={() => setShowAdblockModal(true)}>
+                    <i className="fa-solid fa-shield-halved text-gold" aria-hidden="true"></i> Panduan ekstensi
+                  </button>
+                )}
+              </div>
             )}
 
             {/* 6. Netflix Modal Detail Layout */}
@@ -1239,7 +1192,7 @@ export default function CineboxNetflixHomePage() {
               {/* Primary Action Buttons Row (Placed Ergonomically in Modal Body) */}
               <div className="modal-action-bar">
                 <button className="btn-modal-main-play" onClick={handleStartStream}>
-                  <i className="fa-solid fa-play"></i> {isPlaying ? 'Lanjutkan Menonton' : (selectedMovie.type === 'tv' ? `Putar Season ${selectedSeason} • Episode ${selectedEpisode}` : 'Putar Film')}
+                  <i className="fa-solid fa-play"></i> {isPlaying ? 'Kembali ke Pemutar' : (selectedMovie.type === 'tv' ? `Putar Season ${selectedSeason} • Episode ${selectedEpisode}` : 'Putar Film')}
                 </button>
 
                 <div className="modal-sub-actions">
@@ -1266,12 +1219,10 @@ export default function CineboxNetflixHomePage() {
               <div className="detail-header-row">
                 <div className="detail-left">
                   <div className="detail-tags-row">
-                    <span className="tag-match">98% Cocok</span>
-                    <span className="tag-year">{selectedMovie.year || '2026'}</span>
-                    <span className="tag-quality">4K Ultra HD</span>
-                    <span className="tag-rating"><i className="fa-solid fa-star text-gold"></i> {selectedMovie.rating || '8.5'}</span>
+                    {selectedMovie.year && <span className="tag-year">{selectedMovie.year}</span>}
+                    {selectedMovie.rating && <span className="tag-rating"><i className="fa-solid fa-star text-gold"></i> {selectedMovie.rating}</span>}
                     <span className="tag-type">{selectedMovie.type === 'tv' ? 'Serial TV' : 'Film'}</span>
-                    <span className="tag-sub">Sub Indo</span>
+                    <span className="tag-sub">Subtitle via pemutar</span>
                   </div>
                   <p className="detail-synopsis">{selectedMovie.desc}</p>
                 </div>
@@ -1279,15 +1230,11 @@ export default function CineboxNetflixHomePage() {
                 <div className="detail-right">
                   <div className="meta-item">
                     <span className="meta-label">Pemeran:</span>
-                    <span className="meta-val">{selectedMovie.cast || 'Aktor & Aktris Terkemuka'}</span>
+                    <span className="meta-val">{selectedMovie.cast || 'Belum tersedia'}</span>
                   </div>
                   <div className="meta-item">
                     <span className="meta-label">Genre:</span>
                     <span className="meta-val">{Array.isArray(selectedMovie.genre) ? selectedMovie.genre.join(', ') : selectedMovie.genre}</span>
-                  </div>
-                  <div className="meta-item">
-                    <span className="meta-label">Acara ini:</span>
-                    <span className="meta-val">Menegangkan, Penuh Aksi, Gelap</span>
                   </div>
                 </div>
               </div>
@@ -1305,7 +1252,7 @@ export default function CineboxNetflixHomePage() {
                         onChange={e => handleSeasonChange(Number(e.target.value))}
                         aria-label="Pilih Musim"
                       >
-                        {(tvDetails?.season_numbers || [1]).map((s: number) => (
+                        {(tvDetails?.season_numbers?.length ? tvDetails.season_numbers : [selectedSeason]).map((s: number) => (
                           <option key={s} value={s}>Musim {s}</option>
                         ))}
                       </select>
@@ -1313,34 +1260,34 @@ export default function CineboxNetflixHomePage() {
                   </div>
 
                   <div className="netflix-episodes-list">
-                    {((tvDetails?.seasons && tvDetails.seasons[String(selectedSeason)]?.episodes) || Array.from({ length: 12 }, (_, i) => ({ episode: i + 1, title: `Episode ${i + 1}` }))).map((ep: any) => (
-                      <div
+                    {availableEpisodes.map(ep => (
+                      <button
                         key={ep.episode}
                         className={`netflix-ep-card ${ep.episode === selectedEpisode ? 'active' : ''}`}
                         onClick={() => handleEpisodeChange(ep.episode)}
+                        aria-current={ep.episode === selectedEpisode ? 'true' : undefined}
                       >
                         <span className="ep-index-num">{ep.episode}</span>
-                        <div className="ep-thumb-wrap">
+                        <span className="ep-thumb-wrap">
                           <img
                             className="ep-thumb"
                             src={selectedMovie.backdrop || selectedMovie.poster}
                             alt={ep.title}
                           />
-                          <div className="ep-play-overlay">
+                          <span className="ep-play-overlay">
                             <i className="fa-solid fa-play"></i>
-                          </div>
-                        </div>
-                        <div className="ep-info-col">
-                          <div className="ep-title-row">
-                            <h4 className="ep-title-bold">{ep.title}</h4>
-                            <span className="ep-duration">54m</span>
-                          </div>
-                          <p className="ep-synopsis-text">
-                            Kelanjutan kisah menarik di Episode {ep.episode} Musim {selectedSeason}.
-                          </p>
-                        </div>
-                      </div>
+                          </span>
+                        </span>
+                        <span className="ep-info-col">
+                          <span className="ep-title-row">
+                            <strong className="ep-title-bold">{ep.title}</strong>
+                          </span>
+                        </span>
+                      </button>
                     ))}
+                    {availableEpisodes.length === 0 && (
+                      <p className="episode-empty-state">{tvDetailsLoading ? 'Memuat daftar episode…' : `Daftar episode belum tersedia. Anda dapat mencoba pemutar Musim ${selectedSeason} • Episode ${selectedEpisode}.`}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -1380,7 +1327,7 @@ export default function CineboxNetflixHomePage() {
                         </div>
                         <div className="more-like-body">
                           <div className="more-like-meta-row">
-                            <span className="more-like-match">{item.matchScore || 98}% Cocok</span>
+                            <span className="more-like-match">{item.matchScore ? 'Genre serupa' : 'Pilihan lainnya'}</span>
                             <span className="more-like-year">{item.year}</span>
                           </div>
                           <h4 className="more-like-title">{item.title}</h4>
@@ -1397,24 +1344,12 @@ export default function CineboxNetflixHomePage() {
                 <h3>Tentang {selectedMovie.title}</h3>
                 <div className="about-grid">
                   <div className="about-item">
-                    <span className="about-label">Sutradara & Rumah Produksi:</span>
-                    <span className="about-val">IMDb Official Production</span>
-                  </div>
-                  <div className="about-item">
                     <span className="about-label">Pemeran:</span>
-                    <span className="about-val">{selectedMovie.cast || 'Bintang film terkemuka'}</span>
+                    <span className="about-val">{selectedMovie.cast || 'Belum tersedia'}</span>
                   </div>
                   <div className="about-item">
                     <span className="about-label">Genre:</span>
                     <span className="about-val">{Array.isArray(selectedMovie.genre) ? selectedMovie.genre.join(', ') : selectedMovie.genre}</span>
-                  </div>
-                  <div className="about-item">
-                    <span className="about-label">Klasifikasi Usia:</span>
-                    <span className="about-val">18+ (Kekerasan, Bahasa, Ketegangan)</span>
-                  </div>
-                  <div className="about-item">
-                    <span className="about-label">Kualitas Audio & Video:</span>
-                    <span className="about-val text-red">4K Ultra HD • 5.1 Dolby Surround Sound</span>
                   </div>
                 </div>
               </div>
@@ -1478,7 +1413,7 @@ export default function CineboxNetflixHomePage() {
           <div className="cinebox-logo" onClick={() => handleNavSwitch('home')}>
             <span className="logo-netflix-text">CINEBOX</span>
           </div>
-          <p className="footer-tagline">Nonton Film, Serial TV, Anime, Drama Korea Subtitle Bahasa Indonesia gratis dengan kenyamanan antarmuka premium.</p>
+          <p className="footer-tagline">Temukan film dan serial pilihan. Ketersediaan video serta subtitle mengikuti sumber pemutar.</p>
           <div className="footer-links-row">
             <button onClick={() => handleNavSwitch('home')}>Beranda</button>
             <button onClick={() => handleNavSwitch('movie')}>Film</button>
@@ -1495,16 +1430,16 @@ export default function CineboxNetflixHomePage() {
         </div>
       </footer>
 
-      {/* AdBlock Trusted Extensions Guide Modal */}
+      {/* Optional browser extension guide */}
       {showAdblockModal && (
         <div className="adblock-guide-overlay" onClick={() => setShowAdblockModal(false)}>
-          <div className="adblock-guide-modal" onClick={e => e.stopPropagation()}>
+          <div className="adblock-guide-modal" role="dialog" aria-modal="true" aria-labelledby="adblock-guide-title" onClick={e => e.stopPropagation()}>
             <div className="adblock-guide-header">
               <div className="adblock-guide-title-wrap">
-                <i className="fa-solid fa-shield-halved adblock-header-icon"></i>
+                <i className="fa-solid fa-shield-halved adblock-header-icon" aria-hidden="true"></i>
                 <div>
-                  <h3>Panduan Nonton Bebas Iklan di Browser</h3>
-                  <p>Hapus 100% iklan pop-up & redirect saat streaming di Cinebox</p>
+                  <h3 id="adblock-guide-title">Panduan Cinebox Player Guard</h3>
+                  <p>Ekstensi Chromium opsional untuk mengurangi tab pop-up dan redirect dari pemutar.</p>
                 </div>
               </div>
               <button
@@ -1518,94 +1453,45 @@ export default function CineboxNetflixHomePage() {
 
             <div className="adblock-guide-body">
               <div className="adblock-info-note">
-                <i className="fa-solid fa-circle-info"></i>
+                <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
                 <span>
-                  Karena batasan keamanan browser (Same-Origin Policy), server pemutar video pihak ketiga memuat iklan secara independen. Memasang ekstensi adblocker terpercaya adalah cara <strong>paling ampuh, aman, dan permanen</strong> untuk menghilangkan seluruh iklan.
+                  Pemutar berasal dari situs lain. Cinebox tidak dapat mengendalikan isi iframe atau menjamin semua iklan dan pengalihan terblokir. Ekstensi ini bekerja hanya pada origin Cinebox dan domain redirect yang Anda atur.
                 </span>
               </div>
 
               <div className="adblock-cards-list">
-                {/* 1. uBlock Origin */}
                 <div className="adblock-option-card recommended">
-                  <div className="adblock-card-badge">Paling Direkomendasikan</div>
+                  <div className="adblock-card-badge">Ekstensi proyek ini</div>
                   <div className="adblock-card-top">
                     <div className="adblock-card-logo ublock-logo">
-                      <i className="fa-solid fa-shield-halved"></i>
+                      <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
                     </div>
                     <div className="adblock-card-info">
-                      <h4>uBlock Origin</h4>
-                      <p>Ekstensi open-source paling ringan, cepat, hemat RAM, dan 100% terbukti efektif memblokir pop-up streaming.</p>
+                      <h4>Cinebox Player Guard</h4>
+                      <p>Menutup tab baru dari iframe penyedia yang dikenali dan dapat memblokir domain redirect yang Anda tambahkan di halaman Options.</p>
                     </div>
                   </div>
                   <div className="adblock-card-footer">
-                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> 100% Gratis & Open Source</span>
+                    <span className="adblock-free-tag"><i className="fa-solid fa-check" aria-hidden="true"></i> Konfigurasi tersimpan di browser</span>
                     <a
-                      href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
+                      href="https://github.com/Xdzall/Cinebox_Website/blob/main/browser-extension/README.md"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-install-extension"
                     >
-                      <i className="fa-brands fa-chrome"></i> Pasang di Chrome
-                    </a>
-                  </div>
-                </div>
-
-                {/* 2. AdGuard */}
-                <div className="adblock-option-card">
-                  <div className="adblock-card-top">
-                    <div className="adblock-card-logo adguard-logo">
-                      <i className="fa-solid fa-shield"></i>
-                    </div>
-                    <div className="adblock-card-info">
-                      <h4>AdGuard AdBlocker</h4>
-                      <p>Proteksi lengkap terhadap iklan video, pelacak, dan pengalihan link malware dengan filter yang selalu diperbarui.</p>
-                    </div>
-                  </div>
-                  <div className="adblock-card-footer">
-                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> Populer & Terpercaya</span>
-                    <a
-                      href="https://chromewebstore.google.com/detail/adguard-adblocker/bgnkhhnnamicmpeenaelnjfhikgbkllg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-install-extension secondary"
-                    >
-                      <i className="fa-brands fa-chrome"></i> Pasang di Chrome
-                    </a>
-                  </div>
-                </div>
-
-                {/* 3. Brave Browser */}
-                <div className="adblock-option-card">
-                  <div className="adblock-card-top">
-                    <div className="adblock-card-logo brave-logo">
-                      <i className="fa-solid fa-globe"></i>
-                    </div>
-                    <div className="adblock-card-info">
-                      <h4>Brave Browser (Tanpa Pasang Ekstensi)</h4>
-                      <p>Browser berbasis Chromium dengan fitur Brave Shields bawaan yang memblokir semua iklan video secara otomatis.</p>
-                    </div>
-                  </div>
-                  <div className="adblock-card-footer">
-                    <span className="adblock-free-tag"><i className="fa-solid fa-check"></i> Browser Bawaan Adblock</span>
-                    <a
-                      href="https://brave.com/download/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-install-extension secondary"
-                    >
-                      <i className="fa-solid fa-arrow-up-right-from-square"></i> Unduh Brave
+                      <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Buka panduan ekstensi
                     </a>
                   </div>
                 </div>
               </div>
 
               <div className="adblock-instructions">
-                <h5><i className="fa-solid fa-list-check text-gold"></i> Langkah Mudah:</h5>
+                <h5><i className="fa-solid fa-list-check text-gold" aria-hidden="true"></i> Instalasi lokal:</h5>
                 <ol>
-                  <li>Klik tombol <strong>"Pasang di Chrome"</strong> pada uBlock Origin di atas.</li>
-                  <li>Di halaman Chrome Web Store, klik tombol biru <strong>"Tambahkan ke Chrome"</strong> (*Add to Chrome*).</li>
-                  <li>Setelah terpasang, kembali ke halaman Cinebox ini dan tekan tombol <strong>Refresh (F5)</strong>.</li>
-                  <li>Video siap ditonton dengan nyaman tanpa iklan satupun!</li>
+                  <li>Unduh dan ekstrak repositori Cinebox dari tautan panduan di atas.</li>
+                  <li>Buka <code>chrome://extensions</code> atau <code>edge://extensions</code>, aktifkan Developer mode, lalu pilih Load unpacked dan folder <code>browser-extension</code>.</li>
+                  <li>Di Options ekstensi, masukkan origin situs Cinebox Anda. Tambahkan hanya domain redirect yang sudah Anda kenali bila diperlukan.</li>
+                  <li>Muat ulang tab Cinebox untuk mencoba pemutar. Jangan tambahkan domain penyedia video ke daftar blokir karena dapat menghentikan pemutaran.</li>
                 </ol>
               </div>
             </div>
@@ -1645,9 +1531,7 @@ function MovieCard({
             (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80';
           }}
         />
-        <span className="card-rating-badge"><i className="fa-solid fa-star"></i> {item.rating || '8.4'}</span>
-        <span className="card-quality-badge">{item.quality || 'HD'}</span>
-        <span className="card-sub-badge"><i className="fa-solid fa-closed-captioning"></i> Sub Indo</span>
+        {item.rating && <span className="card-rating-badge"><i className="fa-solid fa-star"></i> {item.rating}</span>}
 
         {/* Netflix Card Hover Actions */}
         <div className="card-hover-actions">
@@ -1705,15 +1589,14 @@ function MovieCard({
           </div>
 
           <div className="hover-meta-row">
-            <span className="hover-match">{item.matchScore || 98}% Cocok</span>
-            <span style={{ color: '#aaa' }}>{item.year || '2026'}</span>
-            <span style={{ border: '1px solid #666', padding: '0 3px', borderRadius: '2px', fontSize: '9px' }}>HD</span>
+            <span className="hover-match">Lihat detail</span>
+            {item.year && <span style={{ color: '#aaa' }}>{item.year}</span>}
           </div>
         </div>
       </div>
       <div className="card-caption">
         <h4 className="card-title">{item.title}</h4>
-        <span className="card-year-type">{item.year || '2026'} • {item.type === 'tv' ? 'Serial TV' : 'Film'}</span>
+        <span className="card-year-type">{item.year && `${item.year} • `}{item.type === 'tv' ? 'Serial TV' : 'Film'}</span>
       </div>
     </div>
   );
@@ -1752,9 +1635,7 @@ function Top10MovieCard({
             (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80';
           }}
         />
-        <span className="card-rating-badge"><i className="fa-solid fa-star"></i> {item.rating || '8.4'}</span>
-        <span className="card-quality-badge">{item.quality || 'HD'}</span>
-        <span className="card-sub-badge"><i className="fa-solid fa-closed-captioning"></i> Sub Indo</span>
+        {item.rating && <span className="card-rating-badge"><i className="fa-solid fa-star"></i> {item.rating}</span>}
 
         <div className="card-hover-actions">
           <div className="hover-btn-row">
@@ -1795,8 +1676,8 @@ function Top10MovieCard({
             )}
           </div>
           <div className="hover-meta-row">
-            <span className="hover-match">{item.matchScore || 98}% Cocok</span>
-            <span style={{ color: '#aaa' }}>{item.year || '2026'}</span>
+            <span className="hover-match">Lihat detail</span>
+            {item.year && <span style={{ color: '#aaa' }}>{item.year}</span>}
           </div>
         </div>
       </div>

@@ -32,23 +32,20 @@ export async function GET(request: Request) {
       const qType = it.q || 'feature';
       const isSeries = ['TV series', 'TV mini-series', 'series', 'TV episode'].includes(qType);
       const cleanName = it.l || 'Unknown Title';
-      const ratingNum = '8.' + (Math.abs(cleanName.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)) % 7 + 2);
 
       results.push({
         id: mid,
         title: cleanName,
-        year: String(it.y || '2024'),
+        year: it.y ? String(it.y) : undefined,
         type: isSeries ? 'tv' : 'movie',
         typeLabel: isSeries ? 'Serial TV' : 'Film',
         poster: posterUrl,
         backdrop: posterUrl,
-        rating: ratingNum,
-        quality: 'FHD',
         cast: it.s || '',
         genre: ['Cinebox', 'Populer'],
         desc: it.s
           ? `Karya sinematik dibintangi oleh ${it.s}.`
-          : 'Nonton streaming kualitas HD Subtitle Indonesia gratis di Cinebox.'
+          : `Jelajahi ${cleanName} di Cinebox.`
       });
     }
 

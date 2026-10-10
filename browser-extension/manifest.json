@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Cinebox Player Guard",
+  "version": "1.0.0",
+  "description": "Closes popup tabs from Cinebox player frames and blocks user-listed redirect domains in configured Cinebox tabs.",
+  "minimum_chrome_version": "101",
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "declarativeNetRequest"
+  ],
+  "background": {
+    "service_worker": "service-worker.mjs",
+    "type": "module"
+  },
+  "options_page": "options.html"
+}
