@@ -174,8 +174,8 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const imdbId = (searchParams.get('id') || '').trim();
 
-  if (!imdbId) {
-    return NextResponse.json({ error: 'IMDb ID required' }, { status: 400 });
+  if (!/^tt\d{7,12}$/.test(imdbId)) {
+    return NextResponse.json({ error: 'A valid IMDb title ID is required' }, { status: 400 });
   }
 
   // 1. Check curated accurate dictionary first
@@ -208,8 +208,9 @@ export async function GET(request: Request) {
         const seasonsDict: Record<string, { season: number; episodes: { episode: number; title: string }[] }> = {};
 
         for (const ep of episodes) {
-          const sNum = String(ep.season || 1);
-          const epNum = ep.number || 1;
+          if (!Number.isInteger(ep.season) || ep.season < 1 || !Number.isInteger(ep.number) || ep.number < 1) continue;
+          const sNum = String(ep.season);
+          const epNum = ep.number;
           const epName = ep.name || `Episode ${epNum}`;
 
           if (!seasonsDict[sNum]) {
@@ -232,25 +233,22 @@ export async function GET(request: Request) {
           seasons: seasonsDict
         };
 
-        tvCache.set(imdbId, result);
-        return NextResponse.json(result);
+        if (sortedSeasons.length > 0) {
+          tvCache.set(imdbId, result);
+          return NextResponse.json(result);
+        }
       }
     }
   } catch (err) {
     console.error(`TVMaze fetch error for ${imdbId}:`, err);
   }
 
-  // Fallback
+  // If the episode source is unavailable, do not present guessed episodes as facts.
   const fallback = {
     imdb_id: imdbId,
-    total_seasons: 1,
-    season_numbers: [1],
-    seasons: {
-      '1': {
-        season: 1,
-        episodes: Array.from({ length: 12 }, (_, i) => ({ episode: i + 1, title: `Episode ${i + 1}` }))
-      }
-    }
+    total_seasons: 0,
+    season_numbers: [],
+    seasons: {}
   };
   return NextResponse.json(fallback);
 }

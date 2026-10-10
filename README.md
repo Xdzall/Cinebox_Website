@@ -1,87 +1,36 @@
-# 🎬 Cinebox Web Edition (Netflix OTT Streaming Platform)
+# Cinebox Web
 
-Platform streaming film, serial TV, anime, dan drama Korea modern dengan antarmuka dan alur pengguna (*user flow*) 1:1 identik dengan Netflix.
+Antarmuka katalog film dan serial dengan pemutar dari penyedia pihak ketiga. Proyek memakai Next.js 14, React 18, dan TypeScript.
 
----
+Catatan inspeksi visual referensi IDLIX dan alur Cinebox tersedia di [`docs/ux-audit.md`](docs/ux-audit.md).
 
-## ✨ Fitur Utama (*Key Features*)
+## Menjalankan proyek
 
-- **🔥 Top 10 Film & Serial TV Hari Ini di Indonesia (IMDb Official)**:
-  - Angka peringkat raksasa (`1` s/d `10`) dengan desain tipografi *outlined* dan poster tumpang tindih (*overlapping*).
-  - Peringkat tersusun secara dinamis berdasarkan rating & skor popularitas resmi IMDb.
-- **🌸 Drama Korea & Serial Asia Terpopuler (Sub Indo)**:
-  - Kurasi 100% akurat untuk judul drama Korea dan anime terpopuler (*Squid Game, All of Us Are Dead, Shōgun, Jujutsu Kaisen, Demon Slayer, Solo Leveling, dsb.*).
-- **🍿 Billboard Hero Spotlight**:
-  - Pratinjau *trailer* otomatis dengan tombol *audio toggle* `[🔊]/[🔇]` dan indikator navigasi *pill pagination*.
-- **📺 Pemutar Video Tanpa Tabrakan Tombol**:
-  - Modal tontonan khusus dengan tombol `[← Kembali]` dan judul di bagian atas.
-  - Trailer pratinjau 100% bersih tanpa tombol aksi yang menutupi video.
-  - Tombol aksi (`[▶ Putar Film]`, `[+ Daftar Saya]`, `[👍 Suka]`) diletakkan rapi di bawah area video.
-- **⚡ Smart Multi-Server Streaming (6 Server Cadangan)**:
-  - Server utama **VidAPI (Sub Indo)** dengan dukungan 5 server cadangan (*VidLink VIP, 2Embed HD, AutoEmbed Fast, VidSrc HD, MultiEmbed*).
-- **📱 Mobile Ergonomics & Bottom Navigation**:
-  - Bilah navigasi bawah 1 jempol (`Beranda`, `Serial TV`, `Film`, `Daftar Saya`, `Cari`) dan *Trending Search Chips*.
-- **💾 Penyimpanan Otomatis (*Persistent Storage*)**:
-  - Riwayat tontonan (*Continue Watching*) dan *Daftar Saya (My List)* tersimpan otomatis di *localStorage*.
-
----
-
-## 🛠️ Teknologi yang Digunakan (*Tech Stack*)
-
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-- **Frontend Library**: React 18 & TypeScript
-- **Styling**: Vanilla CSS3 Modern (Custom Netflix OTT Theme)
-- **Icons**: FontAwesome 6 Pro CDN
-- **API Endpoints**: Next.js Serverless Route Handlers (`/api/catalog`, `/api/search`, `/api/servers`, `/api/trailer`, `/api/tv/details`)
-
----
-
-## 🚀 Panduan Menjalankan Proyek (*Getting Started*)
-
-### 1. Prasyarat
-- [Node.js](https://nodejs.org/) versi 18.x atau lebih baru.
-- npm atau yarn.
-
-### 2. Instalasi Dependensi
 ```bash
-npm install
-```
-
-### 3. Menjalankan Server Pengembangan (*Development Server*)
-```bash
+npm ci
 npm run dev
 ```
-Buka peramban di [http://localhost:3000](http://localhost:3000).
 
-### 4. Membangun untuk Produksi (*Production Build*)
-```bash
-npm run build
-npm start
-```
+Buka `http://localhost:3000`. Untuk memeriksa build produksi, jalankan `npm run build`.
 
----
+## Pemutar, subtitle, dan server
 
-## 📂 Struktur Direktori (*Directory Structure*)
+- Film dan episode memakai komponen pemutar serta pilihan server yang sama. Enam URL penyedia disusun di `lib/stream-servers.ts` dan dipakai juga oleh `/api/servers`.
+- Server pertama meminta bahasa Indonesia lewat parameter penyedia. Semua subtitle tetap dikelola pemutar penyedia. Cinebox belum memiliki berkas subtitle atau kontrol CC lintas server, sehingga ketersediaan dan bahasa subtitle tidak dapat dijamin.
+- Pilih **Sumber video** atau **Server berikutnya** bila pemutar gagal atau dialihkan ke iklan di dalam frame. Kegagalan iframe tidak dapat dideteksi secara andal, jadi pergantian server dilakukan secara manual.
+- Daftar episode diambil dari `/api/tv/details`. Jika data episode tidak tersedia, situs menampilkan keadaan kosong dan tetap dapat mencoba Season 1 Episode 1 tanpa membuat daftar episode fiktif.
+- Iframe video tidak memakai sandbox karena penyedia dapat menolak frame yang dibatasi. Gunakan ekstensi opsional di bawah untuk mengurangi popup dan redirect tertentu; iklan dalam pemutar mungkin tetap muncul.
 
-```
-cinebox-web/
-├── app/
-│   ├── api/
-│   │   ├── catalog/route.ts      # API Katalog IMDb & Top 10
-│   │   ├── search/route.ts       # API Pencarian Cepat
-│   │   ├── servers/route.ts      # API Multi-Server Embed
-│   │   ├── trailer/route.ts      # API Trailer YouTube
-│   │   └── tv/details/route.ts   # API Musim & Episode TV Akurat
-│   ├── globals.css               # Gaya Master Netflix OTT Theme
-│   ├── layout.tsx                # Metadata & Root Layout
-│   └── page.tsx                  # Antarmuka Utama & Player Client
-├── idlix_catalog.json            # Database Katalog Film & Serial
-├── next.config.js                # Konfigurasi Next.js
-├── package.json                  # Dependensi Node.js
-└── tsconfig.json                 # Konfigurasi TypeScript
-```
+## Ekstensi opsional
 
----
+Folder [`browser-extension`](browser-extension/README.md) berisi **Cinebox Player Guard** untuk Chrome/Edge (Manifest V3). Ekstensi dapat menutup popup dari frame penyedia yang dikenali dan memblokir domain redirect yang Anda masukkan sendiri pada tab Cinebox yang dikonfigurasi. Ekstensi perlu dipasang pengguna lewat **Load unpacked**; situs tidak bisa memasangnya otomatis. Baca petunjuk instalasi dan batasannya di README folder tersebut.
 
-## 📄 Lisensi
-Hak Cipta © 2026 Cinebox Streaming Platform.
+## Struktur penting
+
+- `app/page.tsx`: katalog, navigasi, detail, dan pemutar.
+- `app/api/catalog`, `search`, `tv/details`, `trailer`, `servers`: API Next.js.
+- `lib/stream-servers.ts`: konfigurasi bersama URL server dan informasi subtitle.
+- `idlix_catalog.json`: cache katalog lokal. API dapat membacanya, tetapi tidak menimpanya saat melayani permintaan.
+- `browser-extension/`: ekstensi opsional.
+
+Kualitas stream, hak tayang, iklan dalam player, dan pilihan subtitle bergantung pada penyedia masing-masing.

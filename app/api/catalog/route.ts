@@ -35,7 +35,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.8",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt10919420/img",
     backdrop: "https://images.metahub.space/background/medium/tt10919420/img",
     desc: "Ratusan pemain yang terlilit hutang menerima undangan aneh untuk bertanding dalam permainan anak-anak dengan taruhan mematikan berhadiah 45,6 miliar won.",
@@ -49,7 +48,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.5",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt14169960/img",
     backdrop: "https://images.metahub.space/background/medium/tt14169960/img",
     desc: "Sebuah SMA menjadi titik nol penyebaran virus zombi yang mengerikan. Murid-murid yang terperangkap harus berjuang mati-matian mencari jalan keluar.",
@@ -63,7 +61,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.9",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt2788316/img",
     backdrop: "https://images.metahub.space/background/medium/tt2788316/img",
     desc: "Di Jepang tahun 1600 pada masa fajar perang saudara yang menentukan abad tersebut, Lord Yoshii Toranaga bertarung demi bertahan hidup.",
@@ -77,7 +74,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.7",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt12343534/img",
     backdrop: "https://images.metahub.space/background/medium/tt12343534/img",
     desc: "Seorang anak laki-laki menelan jimat terkutuk—jari iblis—dan menjadi terkutuk sendiri. Dia masuk sekolah dukun untuk bisa menemukan bagian tubuh iblis lainnya.",
@@ -91,7 +87,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.4",
-    quality: "FHD",
     poster: "https://images.metahub.space/poster/small/tt15211974/img",
     backdrop: "https://images.metahub.space/background/medium/tt15211974/img",
     desc: "Ketika parasit tak dikenal dengan kejam mengambil alih tubuh manusia dan meraih kekuasaan, umat manusia harus bangkit untuk melawan ancaman tersebut.",
@@ -105,7 +100,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.3",
-    quality: "FHD",
     poster: "https://images.metahub.space/poster/small/tt1160419/img",
     backdrop: "https://images.metahub.space/background/medium/tt1160419/img",
     desc: "Seorang remaja penyendiri yang pindah ke apartemen baru harus berjuang bersama penghuni lain saat manusia mulai berubah menjadi monster mengerikan.",
@@ -119,7 +113,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.8",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt9335498/img",
     backdrop: "https://images.metahub.space/background/medium/tt9335498/img",
     desc: "Sebuah keluarga diserang oleh iblis dan hanya dua anggota yang selamat—Tanjiro dan adiknya Nezuko, yang perlahan berubah menjadi iblis.",
@@ -133,7 +126,6 @@ const KDRAMA_ASIAN_TITLES = [
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.6",
-    quality: "4K",
     poster: "https://images.metahub.space/poster/small/tt21209876/img",
     backdrop: "https://images.metahub.space/background/medium/tt21209876/img",
     desc: "Hunter terlemah dari seluruh umat manusia, Sung Jin-woo, terbangun dalam pencarian tersembunyi yang memberinya kemampuan unik untuk naik level tanpa batas.",
@@ -183,12 +175,13 @@ async function fetchCinemetaCatalog(url: string, mtype = 'movie') {
       if (!it.poster) continue;
 
       const title = it.name || 'Unknown';
-      const rawYear = String(it.year || '2024');
+      const rawYear = String(it.year || '');
       const cleanYear = rawYear.slice(0, 4);
       const rawRating = it.imdbRating;
-      const rating = rawRating ? Number(rawRating).toFixed(1) : '8.5';
+      const parsedRating = Number(rawRating);
+      const rating = rawRating && Number.isFinite(parsedRating) ? parsedRating.toFixed(1) : undefined;
       const genres = it.genres && it.genres.length > 0 ? it.genres : ['Cinebox', 'Populer'];
-      const desc = it.description || `Nonton streaming ${title} (${cleanYear}) kualitas HD Subtitle Indonesia gratis di Cinebox.`;
+      const desc = it.description || `Jelajahi ${title}${cleanYear ? ` (${cleanYear})` : ''} di Cinebox.`;
 
       items.push({
         id: mid,
@@ -197,7 +190,6 @@ async function fetchCinemetaCatalog(url: string, mtype = 'movie') {
         type: mtype,
         typeLabel: mtype === 'tv' ? 'Serial TV' : 'Film',
         rating,
-        quality: Number(rating) >= 8.5 ? '4K' : 'FHD',
         poster: it.poster,
         backdrop: it.background || it.poster,
         desc,
@@ -314,12 +306,12 @@ async function syncCatalog(force = false) {
 
       cachedState.home = {
         view: 'home',
-        title: 'Beranda Cinebox (IMDb Official Charts)',
+        title: 'Beranda Cinebox',
         featured: homeFeatured,
         sections: [
-          { id: 'top_10_movies_today', title: '🔥 Top 10 Film Hari Ini di Indonesia (IMDb Official)', isTop10: true, items: top10Movies },
-          { id: 'top_10_series_today', title: '👑 Top 10 Serial TV Hari Ini di Indonesia (IMDb Official)', isTop10: true, items: top10Series },
-          { id: 'kdrama_asian_curated', title: '🌸 Drama Korea & Serial Asia Terpopuler Sub Indo', items: KDRAMA_ASIAN_TITLES },
+          { id: 'top_10_movies_today', title: '🔥 10 Film Pilihan', isTop10: true, items: top10Movies },
+          { id: 'top_10_series_today', title: '👑 10 Serial TV Pilihan', isTop10: true, items: top10Series },
+          { id: 'kdrama_asian_curated', title: '🌸 Drama Korea & Serial Asia Terpopuler', items: KDRAMA_ASIAN_TITLES },
           { id: 'trending_action', title: '⚡ Film & Serial Aksi Penuh Ketegangan', items: filterByKeywords([...allMovies, ...allSeries], ['action', 'adventure']).slice(0, 20) },
           { id: 'trending_horror', title: '👻 Horor & Thriller Menegangkan', items: filterByKeywords([...allMovies, ...allSeries], ['horror', 'mystery', 'thriller']).slice(0, 20) },
           { id: 'trending_scifi', title: '🚀 Petualangan Fantasi & Sci-Fi', items: filterByKeywords([...allMovies, ...allSeries], ['sci-fi', 'fantasy', 'animation']).slice(0, 20) }
@@ -328,10 +320,10 @@ async function syncCatalog(force = false) {
 
       cachedState.movie = {
         view: 'movie',
-        title: 'Film Streaming Cinebox (IMDb Official Charts)',
+        title: 'Film di Cinebox',
         featured: top10Movies.slice(0, 6),
         sections: [
-          { id: 'top_10_movies_today', title: '🔥 Top 10 Film Hari Ini di Indonesia (IMDb Official)', isTop10: true, items: top10Movies },
+          { id: 'top_10_movies_today', title: '🔥 10 Film Pilihan', isTop10: true, items: top10Movies },
           { id: 'movie_pop', title: '💥 Film Paling Populer di IMDb (IMDb Most Popular Movies)', items: popMovies.slice(0, 28) },
           { id: 'movie_top', title: '⭐ Film Rating Tertinggi di IMDb (IMDb Top 250 Movies)', items: topMovies.slice(0, 28) },
           { id: 'movie_action', title: '⚡ Film Aksi & Petualangan Pilihan IMDb', items: (actMovies.length ? actMovies : filterByKeywords(allMovies, ['action', 'adventure'])).slice(0, 28) },
@@ -342,11 +334,11 @@ async function syncCatalog(force = false) {
 
       cachedState.tv = {
         view: 'tv',
-        title: 'Serial TV Streaming Cinebox (IMDb Official Charts)',
+        title: 'Serial TV di Cinebox',
         featured: top10Series.slice(0, 6),
         sections: [
-          { id: 'top_10_series_today', title: '👑 Top 10 Serial TV Hari Ini di Indonesia (IMDb Official)', isTop10: true, items: top10Series },
-          { id: 'kdrama_asian_curated', title: '🌸 Drama Korea & Serial Asia Terpopuler Sub Indo', items: KDRAMA_ASIAN_TITLES },
+          { id: 'top_10_series_today', title: '👑 10 Serial TV Pilihan', isTop10: true, items: top10Series },
+          { id: 'kdrama_asian_curated', title: '🌸 Drama Korea & Serial Asia Terpopuler', items: KDRAMA_ASIAN_TITLES },
           { id: 'tv_pop', title: '📺 Serial TV Paling Populer di IMDb', items: popSeries.slice(0, 28) },
           { id: 'tv_top', title: '⭐ Serial TV Rating Tertinggi di IMDb', items: topSeries.slice(0, 28) },
           { id: 'tv_anime', title: '⚡ Serial Anime & Animasi Terpopuler IMDb', items: (animeSeries.length ? animeSeries : filterByKeywords(allSeries, ['animation', 'anime'])).slice(0, 28) },
@@ -356,7 +348,7 @@ async function syncCatalog(force = false) {
 
       cachedState.collection = {
         view: 'collection',
-        title: 'Koleksi Sinematik & Franchise Terpopuler IMDb',
+        title: 'Koleksi Sinematik & Franchise',
         featured: homeFeatured.slice(0, 4),
         sections: [
           { id: 'col_marvel_dc', title: '🛡️ Franchise Superhero & Komik Terpopuler IMDb', items: filterByKeywords([...allMovies, ...allSeries], ['deadpool', 'wolverine', 'superman', 'batman', 'marvel', 'spider', 'x-men', 'boys']).slice(0, 28) },
@@ -368,11 +360,6 @@ async function syncCatalog(force = false) {
       cachedState.version = now;
       cachedState.lastUpdated = now;
 
-      try {
-        fs.writeFileSync(path.join(process.cwd(), 'idlix_catalog.json'), JSON.stringify(cachedState, null, 2));
-      } catch (err) {
-        // Ignore
-      }
     }
   } finally {
     isSyncing = false;
@@ -406,7 +393,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       view: `genre_${genre}`,
-      title: `Genre ${genre} di IMDb`,
+      title: `Genre ${genre} di Cinebox`,
       version: state.version,
       featured: feat.length > 0 ? feat : (state.home?.featured || []).slice(0, 4),
       sections: [

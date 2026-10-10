@@ -150,6 +150,22 @@ img, .poster-wrap, .cinebox-card {
     display: flex;
     align-items: center;
     gap: 16px;
+    position: relative;
+}
+.nav-active-indicator {
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--netflix-red);
+    box-shadow: 0 0 14px rgba(229, 9, 20, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 160ms ease;
+}
+.nav-active-indicator.visible {
+    opacity: 1;
 }
 
 .nav-link {
@@ -169,6 +185,12 @@ img, .poster-wrap, .cinebox-card {
 .nav-link.active {
     color: #ffffff;
     font-weight: 800;
+}
+
+.nav-view-enter { animation: navViewEnter 300ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes navViewEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .nav-dropdown { position: relative; }
@@ -1538,18 +1560,37 @@ body.pip-mode .video-preview-screen {
     border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Modal Stream Status Bar - Minimalist (Only Ganti Server when Streaming) */
+/* Video source and subtitle information */
 .player-stream-status-bar {
     background: #111111;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 10px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
+    padding: 14px 36px;
+    display: grid;
+    gap: 8px;
     box-sizing: border-box;
 }
+
+.player-server-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.player-server-controls label {
+    color: #e5e5e5;
+    font-size: 13px;
+    font-weight: 700;
+}
+.player-server-controls .cinebox-select { min-width: 190px; }
+.player-subtitle-note {
+    color: #bdbdbd;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+.player-subtitle-note i { color: #6ee7b7; margin-right: 4px; }
+.player-source-help { color: #9ca3af; font-size: 12px; line-height: 1.4; }
+.episode-empty-state { color: #bdbdbd; font-size: 13px; line-height: 1.5; padding: 16px; }
 
 .btn-ganti-server {
     background: #222222;
@@ -1647,10 +1688,17 @@ body.pip-mode .video-preview-screen {
     cursor: pointer;
     transition: var(--transition);
     border: 1px solid transparent;
+    color: #fff;
+    width: 100%;
+    text-align: left;
 }
 .netflix-ep-card:hover, .netflix-ep-card.active {
     background: #2f2f2f;
     border-color: rgba(255, 255, 255, 0.3);
+}
+.netflix-ep-card:focus-visible, .inplayer-btn:focus-visible, .btn-ganti-server:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
 }
 .ep-index-num {
     font-size: 20px;
@@ -1877,12 +1925,31 @@ body.pip-mode .video-preview-screen {
     min-width: 54px;
     min-height: 46px;
     transition: var(--transition);
+    position: relative;
 }
+.bottom-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--netflix-red);
+    opacity: 0;
+    transform: scaleX(0.25);
+    transition: transform 260ms ease, opacity 260ms ease;
+}
+.bottom-nav-item.active::after { opacity: 1; transform: scaleX(1); }
 .bottom-nav-item i { font-size: 16px; }
 .bottom-nav-item.active, .bottom-nav-item:hover {
     color: #ffffff;
 }
 .bottom-nav-item.active i { color: var(--netflix-red); }
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-view-enter { animation: none; }
+    .nav-active-indicator, .bottom-nav-item::after { transition: none; }
+}
 
 /* Footer */
 .cinebox-footer { background: #141414; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 48px 40px 48px; margin-top: auto; }
@@ -1990,8 +2057,11 @@ body.pip-mode .video-preview-screen {
         padding: 12px;
     }
 
-    .player-stream-status-bar { padding: 10px 14px; justify-content: center; }
-    .btn-ganti-server { width: 100%; justify-content: center; min-height: 44px; }
+    .player-stream-status-bar { padding: 12px 14px; }
+    .player-server-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .player-server-controls label { grid-column: 1 / -1; }
+    .player-server-controls .cinebox-select { min-width: 0; width: 100%; }
+    .btn-ganti-server { width: 100%; justify-content: center; min-height: 44px; padding: 8px; }
 
     .netflix-modal-body { padding: 16px 14px; }
     .detail-header-row { grid-template-columns: 1fr; gap: 16px; }

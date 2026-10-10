@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cinebox / Nonton Film, Serial TV, Anime, Drama Korea Subtitle Bahasa Indonesia',
-  description: 'Streaming film, serial TV, anime, drama Korea kualitas HD Subtitle Indonesia gratis tanpa iklan di Cinebox.',
+  title: 'Cinebox / Jelajahi Film, Serial TV, Anime, dan Drama Korea',
+  description: 'Jelajahi pilihan film dan serial di Cinebox. Sumber video dan pilihan subtitle tersedia melalui pemutar pihak ketiga.',
 };
 
 export default function RootLayout({
