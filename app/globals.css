@@ -464,7 +464,21 @@ img { display: block; max-width: 100%; }
 .ep-pill { flex-shrink: 0; padding: 2px 7px; border-radius: 4px; background: var(--red); font-size: 12px; font-weight: 800; }
 
 .player-stage { position: relative; aspect-ratio: 16 / 9; background: #000; }
-.player-stage:fullscreen { aspect-ratio: auto; }
+.player-stage:fullscreen { aspect-ratio: auto; width: 100%; height: 100%; }
+/* iPhone fallback: no element fullscreen for iframes, so the stage covers the viewport instead. */
+.player-stage.is-expanded {
+    position: fixed; inset: 0; z-index: 3500; aspect-ratio: auto;
+    width: 100vw; height: 100vh; height: 100dvh;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+.player-stage.is-expanded > iframe { inset: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px) 0; height: auto; }
+.stage-exit {
+    position: absolute; z-index: 2; top: calc(env(safe-area-inset-top, 0px) + 6px); left: 50%; transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 99px;
+    background: rgba(0,0,0,.65); border: 1px solid rgba(255,255,255,.3); font-size: 12px; font-weight: 700; opacity: .85;
+}
+.stage-exit:hover { opacity: 1; }
+.mobile-only { display: none; }
 .player-stage > iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .player-status {
     position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
@@ -787,6 +801,9 @@ ul.guide-steps { list-style: disc; }
     .server-label { display: none; }
     .server-chips { flex-basis: 100%; order: 2; margin: 0 calc(var(--gutter) * -1); padding: 2px var(--gutter); }
     .server-next { order: 1; margin-left: auto; }
+    .stage-fullscreen { order: 1; }
+    .mobile-only { display: inline; }
+    .server-note .fa-gear { color: var(--text-2); }
     .server-row::before { content: 'Pilih server'; order: 0; font-size: 13px; font-weight: 800; color: var(--text-2); align-self: center; }
     .episode-stepper .btn span { display: none; }
     .episode-stepper .btn { width: 44px; padding: 0; min-height: 40px; }

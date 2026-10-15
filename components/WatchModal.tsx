@@ -146,6 +146,42 @@ export default function WatchModal({
     if (isPlaying) onRecordHistory(item, s, first);
   };
 
+  // The provider player hides its own fullscreen button on narrow screens, which leaves phones with
+  // a ~220px tall iframe where the quality (⚙) menu is clipped. Our button gives the iframe the
+  // whole screen: real fullscreen + landscape where supported, otherwise (iPhone) a CSS overlay.
+  const [expanded, setExpanded] = useState(false);
+
+  const enterFullscreen = async () => {
+    const stage = stageRef.current;
+    if (stage && document.fullscreenEnabled && stage.requestFullscreen) {
+      try {
+        await stage.requestFullscreen({ navigationUI: 'hide' });
+        try {
+          await (screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> }).lock?.('landscape');
+        } catch {}
+        return;
+      } catch {}
+    }
+    setExpanded(true);
+  };
+
+  const exitFullscreen = () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    setExpanded(false);
+  };
+
+  useEffect(() => {
+    const onChange = () => {
+      if (!document.fullscreenElement) {
+        try {
+          screen.orientation?.unlock?.();
+        } catch {}
+      }
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
   const nextServer = () => {
     if (servers.length <= 1) return;
     const next = (serverIndex + 1) % servers.length;
@@ -161,15 +197,17 @@ export default function WatchModal({
       if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
       if (event.key === 'Escape') {
         if (document.fullscreenElement) return;
-        onClose();
+        if (expanded) setExpanded(false);
+        else onClose();
       } else if ((event.key === 'f' || event.key === 'F') && isPlaying) {
-        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-        else stageRef.current?.requestFullscreen?.().catch(() => {});
+        if (document.fullscreenElement || expanded) exitFullscreen();
+        else void enterFullscreen();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [guideOpen, isPlaying, onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guideOpen, isPlaying, onClose, expanded]);
 
   const playLabel = isPlaying
     ? 'Kembali ke pemutar'
@@ -195,7 +233,12 @@ export default function WatchModal({
             </button>
           </div>
 
-          <div className="player-stage" ref={stageRef}>
+          <div className={`player-stage ${expanded ? 'is-expanded' : ''}`} ref={stageRef}>
+            {expanded && (
+              <button type="button" className="stage-exit" onClick={exitFullscreen}>
+                <i className="fa-solid fa-compress" aria-hidden="true"></i> Keluar layar penuh
+              </button>
+            )}
             {isPlaying ? (
               server ? (
                 <iframe
@@ -261,6 +304,9 @@ export default function WatchModal({
             <button type="button" className="btn btn-small btn-outline server-next" onClick={nextServer} disabled={servers.length <= 1} title="Coba server berikutnya">
               <i className="fa-solid fa-rotate" aria-hidden="true"></i> <span>Ganti</span>
             </button>
+            <button type="button" className="btn btn-small btn-light stage-fullscreen" onClick={() => { if (!isPlaying) startPlaying(); void enterFullscreen(); }} title="Layar penuh (F)">
+              <i className="fa-solid fa-expand" aria-hidden="true"></i> <span>Layar penuh</span>
+            </button>
           </div>
 
           {isTv && (
@@ -281,6 +327,7 @@ export default function WatchModal({
           {server && (
             <p className="server-note">
               <i className="fa-solid fa-closed-captioning" aria-hidden="true"></i> {server.subtitle.disclosure} {server.note}
+              <span className="mobile-only"> Atur resolusi lewat ikon <i className="fa-solid fa-gear" aria-label="pengaturan"></i> di pemutar; tekan <strong>Layar penuh</strong> dulu agar menunya tidak terpotong.</span>
             </p>
           )}
         </div>
