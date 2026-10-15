@@ -8,6 +8,8 @@ import {
   isBlockedUrl,
   hasPlayerFrameAncestor,
   makeDomainRule,
+  makePlayerNavigationRule,
+  PLAYER_HOSTS,
 } from './settings.mjs';
 
 test('site matching uses exact scheme, hostname, and port', () => {
@@ -57,4 +59,17 @@ test('DNR rule is scoped to configured Cinebox tab IDs', () => {
   assert.deepEqual(rule.condition.requestDomains, ['ads.example.com']);
   assert.deepEqual(rule.condition.resourceTypes, ['main_frame', 'sub_frame']);
   assert.equal(makeDomainRule(settings, []), null);
+});
+
+test('player navigation rule blocks top-level loads started by player frames', () => {
+  const settings = sanitizeSettings({ siteOrigins: ['https://cinebox.example'] });
+  const rule = makePlayerNavigationRule(settings);
+  assert.deepEqual(rule.condition.initiatorDomains, [...PLAYER_HOSTS]);
+  assert.deepEqual(rule.condition.resourceTypes, ['main_frame']);
+  assert.equal(rule.condition.tabIds, undefined);
+  assert.equal(makePlayerNavigationRule(sanitizeSettings({})), null);
+  assert.equal(makePlayerNavigationRule(sanitizeSettings({
+    siteOrigins: ['https://cinebox.example'],
+    blockPlayerPopups: false,
+  })), null);
 });

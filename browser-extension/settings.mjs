@@ -1,5 +1,6 @@
 export const SETTINGS_KEY = 'cineboxPlayerGuard';
 export const RULE_ID = 10001;
+export const PLAYER_NAV_RULE_ID = 10002;
 export const MAX_SITE_ORIGINS = 10;
 export const MAX_BLOCKED_DOMAINS = 100;
 
@@ -10,15 +11,18 @@ export const DEFAULT_SETTINGS = Object.freeze({
   blockListedDomains: true,
 });
 
-// These are the embed hosts currently used by Cinebox. A popup must originate
-// from one of these frames (or its child frame) before the extension closes it.
+// Embed hosts used by Cinebox, plus the hosts they load or redirect to
+// (vaplayer.ru -> nextgencloudfabric.com, 2embed.cc -> vidsrc.buzz,
+// multiembed.mov -> streamingnow.mov). A popup must originate from one of these
+// frames (or its child frame) before the extension closes it.
 export const PLAYER_HOSTS = Object.freeze([
   'vaplayer.ru',
+  'nextgencloudfabric.com',
   'vidlink.pro',
   '2embed.cc',
-  'autoembed.co',
-  'vidsrc.xyz',
+  'vidsrc.buzz',
   'multiembed.mov',
+  'streamingnow.mov',
 ]);
 
 export function normalizeSiteOrigin(value) {
@@ -147,6 +151,23 @@ export function makeDomainRule(settings, tabIds) {
       tabIds: [...new Set(tabIds)].sort((a, b) => a - b),
       requestDomains: settings.blockedDomains,
       resourceTypes: ['main_frame', 'sub_frame'],
+    },
+  };
+}
+
+// Popunders and top-level redirects from a player are navigations whose initiator is the
+// player's origin. Blocking those main-frame requests stops the ad page from loading even
+// when the ad domain is generated at random. A popup tab is not tied to the Cinebox tab id,
+// so this rule is scoped by initiator instead and is only installed while Cinebox is configured.
+export function makePlayerNavigationRule(settings) {
+  if (!settings.blockPlayerPopups || !settings.siteOrigins.length) return null;
+  return {
+    id: PLAYER_NAV_RULE_ID,
+    priority: 1,
+    action: { type: 'block' },
+    condition: {
+      initiatorDomains: [...PLAYER_HOSTS],
+      resourceTypes: ['main_frame'],
     },
   };
 }

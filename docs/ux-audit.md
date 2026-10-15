@@ -24,3 +24,18 @@ Inspeksi dilakukan pada beranda, detail film, pemutar film, detail serial, dan e
 ## Batas yang masih berlaku
 
 Pemutar lintas origin tidak memberi akses tepercaya ke track subtitle, waktu pemutaran, akhir video, atau redirect yang terjadi di dalam iframe. Penyedia utama juga menolak iframe dengan atribut `sandbox`, sehingga Cinebox memakai iframe tanpa sandbox. Ekstensi belum diuji secara langsung setelah **Load unpacked** di Chrome/Edge dan tidak menjamin video bebas iklan. Pemeriksaan aksesibilitas lengkap memerlukan pengujian keyboard dan pembaca layar terpisah.
+
+## Refactor responsif (15 Oktober 2026)
+
+`app/page.tsx` dipecah menjadi komponen di `components/`, dan `app/globals.css` ditulis ulang dengan breakpoint desktop (≥1200px), tablet (769–1199px), dan mobile (≤768px). Masalah yang diperbaiki:
+
+- Navbar tetap transparan saat halaman di-scroll sehingga konten menimpa menu; kini menjadi solid setelah scroll.
+- Tombol **Cari** di navigasi bawah tidak berfungsi karena kolom pencarian disembunyikan di mobile; kini membuka bilah pencarian penuh.
+- Menu drawer tidak memuat **Terbaru & Populer**; tablet tidak punya akses ke menu karena link desktop terpotong.
+- Tombol hero, tombol suara, dan indikator slide saling bertumpuk di mobile.
+- Poster Top 10 terdistorsi (rasio tetap tinggi), dan aksi hover kartu Top 10 tidak pernah tampil.
+- Panah slider tak terlihat tetapi tetap menangkap ketukan di tepi baris pada perangkat sentuh.
+- Skeleton loading bertinggi 0 sehingga tidak terlihat.
+- Pintasan **M**/**F** ikut terpicu saat mengetik di kolom pencarian; hasil pencarian lama dapat menimpa hasil baru.
+- Modal: tiga pemberitahuan iklan menumpuk di bawah pemutar, rekomendasi tidak menggulir ke atas modal, dan kontrol episode menimpa kontrol pemutar penyedia. Kini server dipilih lewat chip, episode lewat tombol sebelumnya/berikutnya di bawah pemutar, dan pemutar tetap terlihat (sticky) saat menggulir di mobile.
+- Daftar episode memakai judul dan thumbnail asli dari Cinemeta.

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getStreamServers, type StreamMediaType } from '../../../lib/stream-servers';
+import { buildStreamServers, type StreamContext, type StreamMediaType } from '../../../lib/stream-servers';
+import { getTmdbId } from '../../../lib/cinemeta';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,13 +28,15 @@ export async function GET(request: Request) {
   }
 
   const type: StreamMediaType = rawType;
-  const servers = getStreamServers(imdbId, type, season, episode);
+  const context: StreamContext = { imdbId, type, tmdbId: await getTmdbId(imdbId, type) };
+  const servers = buildStreamServers(context, season, episode);
 
   return NextResponse.json({
     imdb_id: imdbId,
     type,
     season,
     episode,
+    context,
     primary_server: servers[0],
     servers
   });

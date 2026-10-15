@@ -14,23 +14,34 @@ Anda tidak perlu menambahkan `z2.idlixku.com` sebagai origin kecuali itu memang 
 
 ## Cara kerja
 
-- **Popup pemutar:** Chrome `webNavigation.onCreatedNavigationTarget` memberi tab dan frame asal tab baru. Ekstensi hanya menutup tab ketika halaman teratas berada di origin Cinebox yang dikonfigurasi dan frame asal merupakan penyedia video Cinebox yang dikenali atau anak frame-nya. Saat ini penyedianya: `vaplayer.ru`, `vidlink.pro`, `2embed.cc`, `autoembed.co`, `vidsrc.xyz`, dan `multiembed.mov`. Tab baru dari halaman utama Cinebox atau trailer YouTube tidak ditutup oleh aturan penyedia ini. Jika pemblokiran domain diaktifkan, tab baru dari iframe lain pada Cinebox juga ditutup bila URL tujuannya ada dalam daftar domain.
-- **Domain redirect:** aturan `declarativeNetRequest` sesi memblokir navigasi `main_frame` dan `sub_frame` ke domain yang Anda tulis. Aturan memakai ID tab Cinebox yang sedang terbuka, sehingga domain yang sama tetap dapat dibuka di tab lain. Domain yang didaftarkan juga mencakup subdomainnya. Aturan sesi diperbarui saat tab atau pengaturan berubah, dan dibangun kembali setelah browser/ekstensi dijalankan ulang.
-- Tidak ada skrip yang disuntikkan ke situs dan tidak ada daftar domain iklan bawaan. Pengaturan tersimpan lokal di browser melalui `chrome.storage.local`.
-- Izin `webNavigation` memungkinkan ekstensi membaca URL frame untuk mencocokkan origin Cinebox dan penyedia video; kode ini tidak mengirim URL ke server lain.
+- **Blokir navigasi iklan dari pemutar:** pop-up dan redirect iklan dari pemutar adalah navigasi `main_frame` yang *initiator*-nya origin pemutar. Ekstensi memasang aturan sesi `declarativeNetRequest` (`initiatorDomains` = host pemutar, `resourceTypes: ["main_frame"]`) sehingga halaman iklan tidak sempat dimuat, meskipun domain iklannya dibuat acak. Aturan hanya aktif selama ada origin Cinebox yang dikonfigurasi dan opsi popup menyala.
+- **Tutup tab popup:** Chrome `webNavigation.onCreatedNavigationTarget` memberi tab dan frame asal tab baru. Ekstensi menutup tab ketika halaman teratas berada di origin Cinebox yang dikonfigurasi dan frame asal merupakan penyedia video yang dikenali atau anak frame-nya. Host yang dikenali: `vaplayer.ru`, `nextgencloudfabric.com`, `vidlink.pro`, `2embed.cc`, `vidsrc.buzz`, `multiembed.mov`, dan `streamingnow.mov`. Tab baru dari halaman utama Cinebox atau trailer YouTube tidak ditutup.
+- **Domain redirect:** aturan sesi lain memblokir navigasi `main_frame` dan `sub_frame` ke domain yang Anda tulis, terbatas pada tab Cinebox. Domain yang didaftarkan juga mencakup subdomainnya.
+- Tidak ada skrip yang disuntikkan ke situs. Pengaturan tersimpan lokal melalui `chrome.storage.local`, dan aturan sesi dibangun kembali setelah browser/ekstensi dijalankan ulang.
+- Izin `webNavigation` dipakai untuk membaca URL frame guna mencocokkan origin Cinebox dan penyedia video; kode ini tidak mengirim URL ke server lain.
+
+## Hasil uji (15 Oktober 2026)
+
+Diuji di Microsoft Edge (Chromium) dengan klik tiga kali pada pemutar di halaman uji lokal:
+
+| Server | Tanpa ekstensi | Dengan ekstensi 1.1.0 |
+| --- | --- | --- |
+| VidAPI (`vaplayer.ru`) | Tab iklan terbuka lewat domain `*.cfd` acak lalu ke halaman iklan | Navigasi diblokir, tab ditutup |
+| 2Embed | Tab iklan terbuka (afiliasi WPS) | Navigasi diblokir, tab ditutup |
+| MultiEmbed | Tab iklan terbuka | Tidak ada tab iklan |
 
 ## Batasan penting
 
-- Ekstensi menutup popup **setelah tab dibuat**. Tab bisa terlihat sesaat. Jika penyedia mengubah domain iframe-nya atau menyembunyikan sumber popup sehingga rantai frame tidak bisa diverifikasi, popup yang belum ada dalam daftar domain mungkin lolos.
-- Aturan domain hanya cocok dengan domain navigasi yang tercantum. Iklan yang ditampilkan dalam halaman penyedia, redirect ke domain lain, permintaan jaringan lain, dan teknik anti-adblock penyedia dapat tetap muncul. Menambahkan domain penyedia video ke daftar blokir dapat memutus pemutaran.
+- Tab popup tetap dibuat sesaat oleh browser sebelum ditutup, tetapi halaman iklannya tidak dimuat. Jika penyedia mengubah domain iframe-nya atau menyembunyikan sumber popup sehingga rantai frame tidak bisa diverifikasi, popup yang belum ada dalam daftar domain mungkin lolos.
+- Iklan overlay yang digambar di dalam halaman penyedia (bukan tab baru) tidak diblokir. Aturan domain hanya cocok dengan domain navigasi yang tercantum. Iklan yang ditampilkan dalam halaman penyedia, redirect ke domain lain, permintaan jaringan lain, dan teknik anti-adblock penyedia dapat tetap muncul. Menambahkan domain penyedia video ke daftar blokir dapat memutus pemutaran.
 - Ekstensi tidak menyediakan subtitle, tidak dapat mengendalikan isi iframe lintas origin, dan tidak dapat menjamin stream bebas iklan. Situs harus menangani kualitas pemutar serta klaim subtitle secara terpisah.
-- Pembatasan berdasarkan ID tab adalah aturan sesi. Saat tab berpindah origin, event browser akan memperbaruinya; navigasi yang terjadi tepat bersamaan dengan perpindahan tab dapat memiliki jeda singkat. Pemutar Cinebox tidak memakai `sandbox` karena penyedia menolaknya, sehingga ekstensi ini hanya mengurangi popup dan redirect yang cocok dengan aturannya.
+- Pembatasan berdasarkan ID tab adalah aturan sesi. Saat tab berpindah origin, event browser akan memperbaruinya; navigasi yang terjadi tepat bersamaan dengan perpindahan tab dapat memiliki jeda singkat. Pemutar Cinebox tidak memakai `sandbox` karena penyedia menolaknya, sehingga pemblokiran harus dilakukan di sisi browser.
 
 ## Cek cepat
 
 1. Di Options, simpan origin Cinebox. Status harus menunjukkan jumlah tab Cinebox yang cocok.
-2. Tambahkan domain redirect yang terlihat pada popup, lalu simpan. Status harus menunjukkan aturan domain terpasang saat tab Cinebox terbuka.
-3. Dari tab Cinebox, coba player yang pernah membuat popup: tab dari frame penyedia yang dikenali harus tertutup. Buka domain yang sama secara manual di tab lain untuk memastikan aturan tidak berlaku di luar Cinebox.
+2. Status harus menyebut "Navigasi iklan dari pemutar diblokir".
+3. Dari tab Cinebox, klik pemutar VidAPI: tab iklan tidak boleh tetap terbuka.
 4. Hapus semua origin Cinebox dan simpan; status harus menunjukkan tidak ada tab yang cocok dan aturan domain tidak aktif.
 
 ## Rujukan API

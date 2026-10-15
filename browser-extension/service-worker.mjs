@@ -1,11 +1,13 @@
 import {
   SETTINGS_KEY,
   RULE_ID,
+  PLAYER_NAV_RULE_ID,
   sanitizeSettings,
   isConfiguredSite,
   isBlockedUrl,
   hasPlayerFrameAncestor,
   makeDomainRule,
+  makePlayerNavigationRule,
 } from './settings.mjs';
 
 async function readSettings() {
@@ -26,17 +28,27 @@ async function syncDomainRule() {
     }
   }));
   const tabIds = matches.filter(Number.isInteger);
-  const nextRule = makeDomainRule(settings, tabIds);
-  const existing = (await chrome.declarativeNetRequest.getSessionRules())
-    .find(rule => rule.id === RULE_ID);
-
-  if (JSON.stringify(existing ?? null) !== JSON.stringify(nextRule)) {
-    await chrome.declarativeNetRequest.updateSessionRules({
-      removeRuleIds: existing ? [RULE_ID] : [],
-      addRules: nextRule ? [nextRule] : [],
-    });
+  const wanted = new Map([
+    [RULE_ID, makeDomainRule(settings, tabIds)],
+    [PLAYER_NAV_RULE_ID, makePlayerNavigationRule(settings)],
+  ]);
+  const current = await chrome.declarativeNetRequest.getSessionRules();
+  const removeRuleIds = [];
+  const addRules = [];
+  for (const [id, nextRule] of wanted) {
+    const existing = current.find(rule => rule.id === id);
+    if (JSON.stringify(existing ?? null) === JSON.stringify(nextRule)) continue;
+    if (existing) removeRuleIds.push(id);
+    if (nextRule) addRules.push(nextRule);
   }
-  return { activeTabCount: tabIds.length, domainRuleActive: Boolean(nextRule) };
+  if (removeRuleIds.length || addRules.length) {
+    await chrome.declarativeNetRequest.updateSessionRules({ removeRuleIds, addRules });
+  }
+  return {
+    activeTabCount: tabIds.length,
+    domainRuleActive: Boolean(wanted.get(RULE_ID)),
+    playerRuleActive: Boolean(wanted.get(PLAYER_NAV_RULE_ID)),
+  };
 }
 
 // Serialize updates so a quick succession of tab and settings events cannot

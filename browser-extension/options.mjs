@@ -30,12 +30,13 @@ function parseLines(text, normalizer, limit, label) {
 async function refreshStatus() {
   const response = await chrome.runtime.sendMessage({ type: 'cinebox-guard-status' });
   if (!response?.ok) throw new Error(response?.error || 'Status aturan tidak tersedia.');
+  const playerRule = response.playerRuleActive ? ' Navigasi iklan dari pemutar diblokir.' : '';
   if (response.activeTabCount === 0) {
-    setStatus('Tersimpan. Belum ada tab Cinebox yang cocok.');
+    setStatus(`Tersimpan. Belum ada tab Cinebox yang cocok.${playerRule}`);
   } else if (response.domainRuleActive) {
-    setStatus(`Aktif pada ${response.activeTabCount} tab Cinebox. Aturan domain terpasang.`);
+    setStatus(`Aktif pada ${response.activeTabCount} tab Cinebox. Aturan domain terpasang.${playerRule}`);
   } else {
-    setStatus(`Aktif pada ${response.activeTabCount} tab Cinebox. Tidak ada aturan domain aktif.`);
+    setStatus(`Aktif pada ${response.activeTabCount} tab Cinebox.${playerRule}`);
   }
 }
 

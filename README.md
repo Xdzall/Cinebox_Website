@@ -15,21 +15,41 @@ Buka `http://localhost:3000`. Untuk memeriksa build produksi, jalankan `npm run 
 
 ## Pemutar, subtitle, dan server
 
-- Film dan episode memakai komponen pemutar serta pilihan server yang sama. Enam URL penyedia disusun di `lib/stream-servers.ts` dan dipakai juga oleh `/api/servers`.
-- Server pertama meminta bahasa Indonesia lewat parameter penyedia. Semua subtitle tetap dikelola pemutar penyedia. Cinebox belum memiliki berkas subtitle atau kontrol CC lintas server, sehingga ketersediaan dan bahasa subtitle tidak dapat dijamin.
-- Pilih **Sumber video** atau **Server berikutnya** bila pemutar gagal atau dialihkan ke iklan di dalam frame. Kegagalan iframe tidak dapat dideteksi secara andal, jadi pergantian server dilakukan secara manual.
-- Daftar episode diambil dari `/api/tv/details`. Jika data episode tidak tersedia, situs menampilkan keadaan kosong dan tetap dapat mencoba Season 1 Episode 1 tanpa membuat daftar episode fiktif.
-- Iframe video tidak memakai sandbox karena penyedia dapat menolak frame yang dibatasi. Gunakan ekstensi opsional di bawah untuk mengurangi popup dan redirect tertentu; iklan dalam pemutar mungkin tetap muncul.
+Server disusun di `lib/stream-servers.ts` dan diambil lewat `/api/servers`, yang juga mencari ID TMDB lewat Cinemeta. Hasil pemeriksaan 15 Oktober 2026:
+
+| Server | Status | Catatan |
+| --- | --- | --- |
+| VidAPI (`vaplayer.ru`) | Dipakai (server utama) | Meminta subtitle Indonesia (`ds_lang=id`). Wrapper memasang iklan popunder pada klik pertama. |
+| VidLink | Dipakai | Hanya menerima ID TMDB; ID IMDb untuk episode menghasilkan HTTP 500. |
+| 2Embed | Dipakai | Membuka tab iklan saat diklik. |
+| MultiEmbed | Dipakai | Dialihkan ke `streamingnow.mov`, membuka tab iklan saat diklik. |
+| VidSrc (`vidsrc.xyz`) | **Dihapus** | Domain tidak lagi dapat di-resolve (NXDOMAIN). |
+| AutoEmbed (`autoembed.co`) | **Dihapus** | Episode menghasilkan 404; film memuat `player.autoembed.co`, pemutar VidAPI yang sama. |
+
+### Iklan VidAPI
+
+`vaplayer.ru` hanya wrapper: halaman itu memuat skrip popunder (domain iklan dibuat acak, dipicu `mousedown`, dibatasi sekali per jam lewat `localStorage`) dan pelacak Histats, lalu meng-iframe pemutar asli di `nextgencloudfabric.com`. Tiga cara menghilangkannya dari sisi situs sudah diuji dan tidak bisa dipakai:
+
+- **`sandbox` pada iframe:** wrapper menulis `document.domain`, yang selalu gagal di iframe ber-sandbox (bahkan dengan `allow-same-origin`), lalu pindah ke halaman penolakan.
+- **Embed pemutar asli langsung:** `nextgencloudfabric.com` memeriksa `Referer` dan mengembalikan 404 untuk domain di luar daftar izinnya, termasuk `localhost` dan domain `*.vercel.app`.
+- **Mencegat pop-up dari halaman induk:** pop-up dibuka dari dalam iframe lintas origin, sehingga halaman Cinebox tidak dapat mencegahnya.
+
+Pemblokiran yang berhasil dilakukan di browser pengguna: ekstensi **Cinebox Player Guard** (di bawah) atau uBlock Origin/Brave. Ganti server bila pemutar kosong atau terus mengalihkan ke iklan; kegagalan iframe tidak bisa dideteksi otomatis.
+
+### Subtitle
+
+Hanya VidAPI yang meminta bahasa Indonesia. Semua subtitle dikelola pemutar penyedia, sehingga ketersediaannya tidak dapat dijamin.
 
 ## Ekstensi opsional
 
-Folder [`browser-extension`](browser-extension/README.md) berisi **Cinebox Player Guard** untuk Chrome/Edge (Manifest V3). Ekstensi dapat menutup popup dari frame penyedia yang dikenali dan memblokir domain redirect yang Anda masukkan sendiri pada tab Cinebox yang dikonfigurasi. Ekstensi perlu dipasang pengguna lewat **Load unpacked**; situs tidak bisa memasangnya otomatis. Baca petunjuk instalasi dan batasannya di README folder tersebut.
+Folder [`browser-extension`](browser-extension/README.md) berisi **Cinebox Player Guard** untuk Chrome/Edge (Manifest V3). Versi 1.1.0 memblokir navigasi yang dimulai frame pemutar (pop-up dan redirect iklan) sebelum halaman iklan dimuat, lalu menutup tab kosongnya. Ekstensi dipasang lewat **Load unpacked**; situs tidak bisa memasangnya otomatis.
 
 ## Struktur penting
 
-- `app/page.tsx`: katalog, navigasi, detail, dan pemutar.
+- `app/page.tsx`: state halaman dan navigasi.
+- `components/`: `Navbar`, `MobileNav` (drawer + navigasi bawah), `Hero`, `MediaCards` (kartu, baris, grid), `WatchModal` (detail + pemutar), `PlayerGuide`.
 - `app/api/catalog`, `search`, `tv/details`, `trailer`, `servers`: API Next.js.
-- `lib/stream-servers.ts`: konfigurasi bersama URL server dan informasi subtitle.
+- `lib/stream-servers.ts`: daftar server dan informasi subtitle. `lib/cinemeta.ts`: ID TMDB serta judul/thumbnail episode.
 - `idlix_catalog.json`: cache katalog lokal. API dapat membacanya, tetapi tidak menimpanya saat melayani permintaan.
 - `browser-extension/`: ekstensi opsional.
 

@@ -11,7 +11,16 @@ export interface StreamServer {
   id: string;
   name: string;
   url: string;
+  /** Short, factual note about the source shown under the server picker. */
+  note: string;
   subtitle: StreamSubtitleInfo;
+}
+
+/** Per-title data resolved by /api/servers. tmdbId is optional so the client can still build a list when the lookup fails. */
+export interface StreamContext {
+  imdbId: string;
+  type: StreamMediaType;
+  tmdbId?: number | null;
 }
 
 const providerSubtitle = (preferredLanguage: 'id' | null): StreamSubtitleInfo => ({
@@ -19,68 +28,62 @@ const providerSubtitle = (preferredLanguage: 'id' | null): StreamSubtitleInfo =>
   selection: 'provider-player',
   preferredLanguage,
   disclosure: preferredLanguage === 'id'
-    ? 'Bahasa Indonesia diminta pada pemutar penyedia. Ketersediaan subtitle bergantung pada judul dan penyedia.'
-    : 'Subtitle dan pilihan bahasa dikelola oleh pemutar penyedia; ketersediaannya belum terverifikasi.'
+    ? 'Subtitle Indonesia diminta ke pemutar. Ketersediaannya bergantung pada judul.'
+    : 'Subtitle dikelola pemutar penyedia; bahasa Indonesia belum tentu tersedia.'
 });
 
-export function getStreamServers(
-  id: string,
-  type: StreamMediaType = 'movie',
-  season = 1,
-  episode = 1
-): StreamServer[] {
-  const tv = type === 'tv';
+// Checked 2026-10-15. Removed: vidsrc.xyz (domain no longer resolves) and autoembed.co
+// (TV returns 404; movies load player.autoembed.co, the same VidAPI player as vaplayer.ru).
+export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1): StreamServer[] {
+  const tv = ctx.type === 'tv';
+  const id = ctx.imdbId;
   const s = season;
   const e = episode;
-
-  return [
+  const servers: StreamServer[] = [
     {
       id: 'vidapi',
-      name: 'Server 1 (VidAPI)',
+      name: 'VidAPI',
       url: tv
         ? `https://vaplayer.ru/embed/tv/${id}/${s}/${e}?ds_lang=id`
         : `https://vaplayer.ru/embed/movie/${id}?ds_lang=id`,
+      note: 'Klik pertama pada pemutar dapat membuka tab iklan.',
       subtitle: providerSubtitle('id')
-    },
-    {
+    }
+  ];
+
+  // VidLink only accepts TMDB ids; IMDb ids return HTTP 500 for episodes.
+  if (ctx.tmdbId) {
+    servers.push({
       id: 'vidlink',
-      name: 'Server 2 (VidLink)',
+      name: 'VidLink',
       url: tv
-        ? `https://vidlink.pro/tv/${id}/${s}/${e}`
-        : `https://vidlink.pro/movie/${id}`,
+        ? `https://vidlink.pro/tv/${ctx.tmdbId}/${s}/${e}`
+        : `https://vidlink.pro/movie/${ctx.tmdbId}`,
+      note: 'Memakai ID TMDB dari Cinemeta.',
       subtitle: providerSubtitle(null)
-    },
+    });
+  }
+
+  servers.push(
     {
       id: '2embed',
-      name: 'Server 3 (2Embed)',
+      name: '2Embed',
       url: tv
         ? `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`
         : `https://www.2embed.cc/embed/${id}`,
-      subtitle: providerSubtitle(null)
-    },
-    {
-      id: 'autoembed',
-      name: 'Server 4 (AutoEmbed)',
-      url: tv
-        ? `https://autoembed.co/tv/imdb/${id}/${s}/${e}`
-        : `https://autoembed.co/movie/imdb/${id}`,
-      subtitle: providerSubtitle(null)
-    },
-    {
-      id: 'vidsrc',
-      name: 'Server 5 (VidSrc)',
-      url: tv
-        ? `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`
-        : `https://vidsrc.xyz/embed/movie/${id}`,
+      note: 'Klik pada pemutar dapat membuka tab iklan.',
       subtitle: providerSubtitle(null)
     },
     {
       id: 'multiembed',
-      name: 'Server 6 (MultiEmbed)',
+      name: 'MultiEmbed',
       url: tv
         ? `https://multiembed.mov/?video_id=${id}&s=${s}&e=${e}`
         : `https://multiembed.mov/?video_id=${id}`,
+      note: 'Dialihkan ke streamingnow.mov dan dapat membuka pop-up iklan.',
       subtitle: providerSubtitle(null)
     }
-  ];
+  );
+
+  return servers;
 }

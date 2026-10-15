@@ -1,8 +1,34 @@
 import { NextResponse } from 'next/server';
+import { getCinemetaMeta } from '../../../../lib/cinemeta';
 
 export const dynamic = 'force-dynamic';
 
 const tvCache = new Map<string, any>();
+
+type SeasonMap = Record<string, { season: number; episodes: { episode: number; title: string; thumbnail?: string }[] }>;
+
+// Cinemeta lists real episode titles and thumbnails; season 0 (specials) is skipped.
+async function fromCinemeta(imdbId: string) {
+  const meta = await getCinemetaMeta(imdbId, 'tv');
+  const seasons: SeasonMap = {};
+  for (const video of meta?.videos || []) {
+    const season = Number(video.season);
+    const episode = Number(video.episode ?? video.number);
+    if (!Number.isInteger(season) || season < 1 || !Number.isInteger(episode) || episode < 1) continue;
+    const key = String(season);
+    seasons[key] ??= { season, episodes: [] };
+    if (seasons[key].episodes.some(ep => ep.episode === episode)) continue;
+    seasons[key].episodes.push({
+      episode,
+      title: video.name || video.title || `Episode ${episode}`,
+      ...(typeof video.thumbnail === 'string' && video.thumbnail.startsWith('https://') ? { thumbnail: video.thumbnail } : {})
+    });
+  }
+  const seasonNumbers = Object.keys(seasons).map(Number).sort((a, b) => a - b);
+  if (seasonNumbers.length === 0) return null;
+  for (const key of Object.keys(seasons)) seasons[key].episodes.sort((a, b) => a.episode - b.episode);
+  return { imdb_id: imdbId, total_seasons: seasonNumbers.length, season_numbers: seasonNumbers, seasons };
+}
 
 // Verified accurate seasons and episode counts for major series & anime
 const ACCURATE_TV_METADATA: Record<string, { total_seasons: number; season_numbers: number[]; seasons: Record<string, { season: number; episodes: { episode: number; title: string }[] }> }> = {
@@ -178,14 +204,21 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'A valid IMDb title ID is required' }, { status: 400 });
   }
 
-  // 1. Check curated accurate dictionary first
+  if (tvCache.has(imdbId)) {
+    return NextResponse.json(tvCache.get(imdbId));
+  }
+
+  // 1. Cinemeta has real episode names and thumbnails.
+  const cinemeta = await fromCinemeta(imdbId);
+  if (cinemeta) {
+    tvCache.set(imdbId, cinemeta);
+    return NextResponse.json(cinemeta);
+  }
+
+  // 2. Curated dictionary when Cinemeta is unavailable.
   if (ACCURATE_TV_METADATA[imdbId]) {
     const meta = ACCURATE_TV_METADATA[imdbId];
     return NextResponse.json({ imdb_id: imdbId, ...meta });
-  }
-
-  if (tvCache.has(imdbId)) {
-    return NextResponse.json(tvCache.get(imdbId));
   }
 
   try {
