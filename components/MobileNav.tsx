@@ -15,6 +15,7 @@ interface MobileNavProps {
   onNavigate: (target: NavTarget) => void;
   onGenre: (genre: string) => void;
   onOpenSearch: () => void;
+  onLogout: () => void;
 }
 
 export function MobileDrawer({
@@ -25,7 +26,8 @@ export function MobileDrawer({
   myListCount,
   onCloseDrawer,
   onNavigate,
-  onGenre
+  onGenre,
+  onLogout
 }: Omit<MobileNavProps, 'onOpenSearch' | 'searchOpen'>) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLElement>(null);
@@ -79,6 +81,11 @@ export function MobileDrawer({
             </button>
           ))}
         </div>
+
+        <button type="button" className="drawer-link drawer-logout" onClick={onLogout}>
+          <i className="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          <span>Keluar</span>
+        </button>
       </aside>
     </>
   );

@@ -32,7 +32,7 @@ async function refreshStatus() {
   if (!response?.ok) throw new Error(response?.error || 'Status aturan tidak tersedia.');
   const playerRule = response.playerRuleActive ? ' Navigasi iklan dari pemutar diblokir.' : '';
   if (response.activeTabCount === 0) {
-    setStatus(`Tersimpan. Belum ada tab Cinebox yang cocok.${playerRule}`);
+    setStatus(`Tersimpan.${playerRule}`);
   } else if (response.domainRuleActive) {
     setStatus(`Aktif pada ${response.activeTabCount} tab Cinebox. Aturan domain terpasang.${playerRule}`);
   } else {

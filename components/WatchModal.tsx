@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { buildStreamServers, type StreamContext } from '../lib/stream-servers';
 import { FALLBACK_IMAGE, genreText, type MovieItem, type TvDetails } from '../lib/types';
 import { PosterImage } from './MediaCards';
+import PlayerGuardNotice from './PlayerGuardNotice';
 
 interface WatchModalProps {
   item: MovieItem;
@@ -238,6 +239,7 @@ export default function WatchModal({
         </div>
 
         <div className="player-toolbar">
+          <PlayerGuardNotice onOpenGuide={onOpenGuide} />
           <div className="server-row">
             <span className="server-label" id="server-label">Server</span>
             <div className="server-chips" role="radiogroup" aria-labelledby="server-label">
@@ -278,8 +280,7 @@ export default function WatchModal({
 
           {server && (
             <p className="server-note">
-              <i className="fa-solid fa-closed-captioning" aria-hidden="true"></i> {server.subtitle.disclosure} {server.note}{' '}
-              <button type="button" className="link-btn" onClick={onOpenGuide}>Muncul pop-up iklan?</button>
+              <i className="fa-solid fa-closed-captioning" aria-hidden="true"></i> {server.subtitle.disclosure} {server.note}
             </p>
           )}
         </div>

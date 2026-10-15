@@ -157,10 +157,10 @@ export function makeDomainRule(settings, tabIds) {
 
 // Popunders and top-level redirects from a player are navigations whose initiator is the
 // player's origin. Blocking those main-frame requests stops the ad page from loading even
-// when the ad domain is generated at random. A popup tab is not tied to the Cinebox tab id,
-// so this rule is scoped by initiator instead and is only installed while Cinebox is configured.
+// when the ad domain is generated at random. The rule is scoped by initiator (a popup tab is
+// not tied to the Cinebox tab id), so it needs no Cinebox origin and is on right after install.
 export function makePlayerNavigationRule(settings) {
-  if (!settings.blockPlayerPopups || !settings.siteOrigins.length) return null;
+  if (!settings.blockPlayerPopups) return null;
   return {
     id: PLAYER_NAV_RULE_ID,
     priority: 1,

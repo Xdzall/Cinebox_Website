@@ -3,7 +3,10 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
+    "pack:extension": "node scripts/pack-extension.mjs",
+    "predev": "node scripts/pack-extension.mjs",
     "dev": "next dev -p 3000",
+    "prebuild": "node scripts/pack-extension.mjs",
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint"

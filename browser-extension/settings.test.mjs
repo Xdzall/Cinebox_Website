@@ -67,7 +67,8 @@ test('player navigation rule blocks top-level loads started by player frames', (
   assert.deepEqual(rule.condition.initiatorDomains, [...PLAYER_HOSTS]);
   assert.deepEqual(rule.condition.resourceTypes, ['main_frame']);
   assert.equal(rule.condition.tabIds, undefined);
-  assert.equal(makePlayerNavigationRule(sanitizeSettings({})), null);
+  // Works without any configured Cinebox origin; only the toggle turns it off.
+  assert.notEqual(makePlayerNavigationRule(sanitizeSettings({})), null);
   assert.equal(makePlayerNavigationRule(sanitizeSettings({
     siteOrigins: ['https://cinebox.example'],
     blockPlayerPopups: false,

@@ -65,16 +65,19 @@ async function closePlayerPopup(details) {
       details.sourceFrameId <= 0 || details.tabId === details.sourceTabId) return;
 
   const settings = await readSettings();
-  if (!settings.siteOrigins.length ||
-      (!settings.blockPlayerPopups && !settings.blockListedDomains)) return;
+  if (!settings.blockPlayerPopups && !settings.blockListedDomains) return;
 
-  let topFrame;
-  try {
-    topFrame = await chrome.webNavigation.getFrame({ tabId: details.sourceTabId, frameId: 0 });
-  } catch {
-    return;
+  // Player popups are recognised by the frame that opened them, so they are closed on any page
+  // without configuration. Custom redirect domains only apply inside configured Cinebox tabs.
+  let onCinebox = false;
+  if (settings.blockListedDomains && settings.siteOrigins.length) {
+    try {
+      const topFrame = await chrome.webNavigation.getFrame({ tabId: details.sourceTabId, frameId: 0 });
+      onCinebox = isConfiguredSite(topFrame?.url, settings);
+    } catch {
+      onCinebox = false;
+    }
   }
-  if (!isConfiguredSite(topFrame?.url, settings)) return;
 
   let fromPlayerFrame = false;
   if (settings.blockPlayerPopups) {
@@ -86,7 +89,7 @@ async function closePlayerPopup(details) {
       // destination can be closed. We do not close every Cinebox popup.
     }
   }
-  const listedDestination = settings.blockListedDomains && isBlockedUrl(details.url, settings);
+  const listedDestination = onCinebox && isBlockedUrl(details.url, settings);
   if (!fromPlayerFrame && !listedDestination) return;
 
   try {

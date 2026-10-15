@@ -135,6 +135,10 @@ export default function CineboxHomePage() {
         const type = view === 'genre' ? 'home' : view;
         const genreParam = genre !== 'Semua' ? `&genre=${encodeURIComponent(genre)}` : '';
         const res = await fetch(`/api/catalog?type=${encodeURIComponent(type)}${genreParam}`);
+        if (res.status === 401) {
+          window.location.replace('/login');
+          return;
+        }
         if (!res.ok) throw new Error('Katalog tidak tersedia');
         data = await res.json();
       }
@@ -225,6 +229,14 @@ export default function CineboxHomePage() {
     setWatchItem({ item, autoPlay, nonce: Date.now() });
   }, []);
 
+  const handleLogout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } finally {
+      window.location.replace('/login');
+    }
+  }, []);
+
   const closeWatch = useCallback(() => setWatchItem(null), []);
   const openGuide = useCallback(() => setGuideOpen(true), []);
   const closeGuide = useCallback(() => setGuideOpen(false), []);
@@ -271,6 +283,7 @@ export default function CineboxHomePage() {
         onNavigate={handleNavigate}
         onGenre={handleGenre}
         onOpenDrawer={() => setDrawerOpen(true)}
+        onLogout={handleLogout}
       />
 
       <MobileDrawer
@@ -282,6 +295,7 @@ export default function CineboxHomePage() {
         onCloseDrawer={() => setDrawerOpen(false)}
         onNavigate={handleNavigate}
         onGenre={handleGenre}
+        onLogout={handleLogout}
       />
 
       <main id="main" className="page-main view-enter" key={viewKey}>

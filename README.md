@@ -8,10 +8,24 @@ Catatan inspeksi visual referensi IDLIX dan alur Cinebox tersedia di [`docs/ux-a
 
 ```bash
 npm ci
+cp .env.example .env.local   # lalu isi akun login
 npm run dev
 ```
 
 Buka `http://localhost:3000`. Untuk memeriksa build produksi, jalankan `npm run build`.
+
+## Login
+
+Semua halaman dan API dilindungi login (`middleware.ts`). Tanpa sesi, halaman dialihkan ke `/login` dan API mengembalikan 401. Login tidak memakai database:
+
+- **Akun** dibaca dari environment variable `CINEBOX_USERNAME`, `CINEBOX_PASSWORD`, dan `CINEBOX_AUTH_SECRET` (minimal 32 karakter). Jika salah satu kosong, tidak ada yang bisa login.
+- **Sesi** disimpan di cookie `HttpOnly` yang ditandatangani HMAC dan berlaku 7 hari. Mengganti `CINEBOX_PASSWORD` otomatis mengeluarkan semua sesi.
+- **Daftar Saya, Suka, dan riwayat tonton** tetap tersimpan di `localStorage` browser masing-masing.
+- Lima kali gagal login dari IP yang sama dalam 15 menit akan diblokir sementara. Di Vercel, batas ini dihitung per instance serverless, jadi hanya perlambatan dasar, bukan perlindungan penuh.
+
+**Lokal:** salin `.env.example` ke `.env.local`, lalu isi nilainya.
+
+**Vercel:** buka Project → Settings → Environment Variables, tambahkan ketiga variabel untuk environment Production (dan Preview bila perlu), lalu lakukan **Redeploy**. Perubahan environment variable baru berlaku setelah deploy ulang.
 
 ## Pemutar, subtitle, dan server
 
@@ -26,23 +40,28 @@ Server disusun di `lib/stream-servers.ts` dan diambil lewat `/api/servers`, yang
 | VidSrc (`vidsrc.xyz`) | **Dihapus** | Domain tidak lagi dapat di-resolve (NXDOMAIN). |
 | AutoEmbed (`autoembed.co`) | **Dihapus** | Episode menghasilkan 404; film memuat `player.autoembed.co`, pemutar VidAPI yang sama. |
 
-### Iklan VidAPI
+### Iklan pada pemutar
 
-`vaplayer.ru` hanya wrapper: halaman itu memuat skrip popunder (domain iklan dibuat acak, dipicu `mousedown`, dibatasi sekali per jam lewat `localStorage`) dan pelacak Histats, lalu meng-iframe pemutar asli di `nextgencloudfabric.com`. Tiga cara menghilangkannya dari sisi situs sudah diuji dan tidak bisa dipakai:
+Semua server (VidAPI, VidLink, 2Embed, MultiEmbed) membuka tab iklan "clickunder" saat pemutarnya diklik. Pada uji 15 Oktober 2026 di Chrome sungguhan, VidAPI dan VidLink sama-sama membuka situs judi 1xBet. Pemutarnya sendiri tidak menampilkan iklan di dalam video. Cara memblokirnya dari sisi situs sudah diuji dan tidak ada yang berhasil:
 
-- **`sandbox` pada iframe:** wrapper menulis `document.domain`, yang selalu gagal di iframe ber-sandbox (bahkan dengan `allow-same-origin`), lalu pindah ke halaman penolakan.
-- **Embed pemutar asli langsung:** `nextgencloudfabric.com` memeriksa `Referer` dan mengembalikan 404 untuk domain di luar daftar izinnya, termasuk `localhost` dan domain `*.vercel.app`.
-- **Mencegat pop-up dari halaman induk:** pop-up dibuka dari dalam iframe lintas origin, sehingga halaman Cinebox tidak dapat mencegahnya.
+- **`sandbox` pada iframe:** VidAPI menampilkan "Playback blocked" (wrapper menulis `document.domain`, yang selalu gagal di iframe ber-sandbox).
+- **Embed pemutar asli (`nextgencloudfabric.com`) langsung:** 404, karena pemutar hanya menerima `Referer` dari daftar domain tetap (misalnya `vaplayer.ru`, `vercel.com`), bukan domain situs biasa atau `*.vercel.app`.
+- **`vidapi.xyz/embed`:** template lain dengan skrip iklan yang sama jenisnya.
+- **Mencegat dari halaman Cinebox:** tab dibuka dari dalam iframe lintas origin, jadi halaman induk tidak bisa mencegahnya.
+- VidAPI tidak menyediakan opsi bebas iklan.
 
-Pemblokiran yang berhasil dilakukan di browser pengguna: ekstensi **Cinebox Player Guard** (di bawah) atau uBlock Origin/Brave. Ganti server bila pemutar kosong atau terus mengalihkan ke iklan; kegagalan iframe tidak bisa dideteksi otomatis.
+Yang berhasil adalah pemblokiran di browser penonton. Di bawah pemutar, Cinebox mendeteksi apakah ekstensi **Cinebox Player Guard** terpasang: jika ya, tampil "Pemblokir iklan aktif"; jika belum, tampil tombol unduh dan panduan pemasangan. Pengguna HP diarahkan ke Brave atau Firefox + uBlock Origin karena Chrome di HP tidak mendukung ekstensi.
 
 ### Subtitle
 
 Hanya VidAPI yang meminta bahasa Indonesia. Semua subtitle dikelola pemutar penyedia, sehingga ketersediaannya tidak dapat dijamin.
 
-## Ekstensi opsional
+## Ekstensi Cinebox Player Guard
 
-Folder [`browser-extension`](browser-extension/README.md) berisi **Cinebox Player Guard** untuk Chrome/Edge (Manifest V3). Versi 1.1.0 memblokir navigasi yang dimulai frame pemutar (pop-up dan redirect iklan) sebelum halaman iklan dimuat, lalu menutup tab kosongnya. Ekstensi dipasang lewat **Load unpacked**; situs tidak bisa memasangnya otomatis.
+Folder [`browser-extension`](browser-extension/README.md) berisi ekstensi Chrome/Edge (Manifest V3). Versi 1.2.0 langsung aktif setelah dipasang tanpa pengaturan: navigasi yang dimulai frame pemutar (pop-up dan redirect iklan) diblokir sebelum halaman iklan dimuat, lalu tab kosongnya ditutup.
+
+- `npm run dev` dan `npm run build` otomatis mengemas folder itu menjadi `public/downloads/cinebox-player-guard.zip` (`scripts/pack-extension.mjs`). File zip tidak di-commit dan hanya bisa diunduh setelah login.
+- `manifest.json` berisi `key` agar ID ekstensi selalu `hejbphhakjbiifnfchmojlkkdheibhjb`. Situs mendeteksi ekstensi dengan membaca `chrome-extension://<ID>/guard.json` (`lib/player-guard.ts`). Jangan ubah `key` tanpa memperbarui ID di file tersebut.
 
 ## Struktur penting
 

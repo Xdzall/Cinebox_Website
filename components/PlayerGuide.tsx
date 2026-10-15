@@ -1,9 +1,30 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { PLAYER_GUARD_DOWNLOAD, usePlayerGuard } from '../lib/player-guard';
+
+function CopyCode({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard?.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }).catch(() => {});
+  };
+  return (
+    <span className="copy-code">
+      <code>{text}</code>
+      <button type="button" onClick={copy} aria-label={`Salin ${text}`}>
+        <i className={`fa-solid ${copied ? 'fa-check' : 'fa-copy'}`} aria-hidden="true"></i>
+      </button>
+    </span>
+  );
+}
 
 export default function PlayerGuide({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const status = usePlayerGuard();
+  const isMobile = status === 'mobile';
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -12,14 +33,54 @@ export default function PlayerGuide({ onClose }: { onClose: () => void }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
+  const desktop = (
+    <section className="guide-section" aria-labelledby="guide-desktop">
+      <h4 id="guide-desktop">
+        <i className="fa-solid fa-desktop" aria-hidden="true"></i> Komputer: Chrome atau Edge
+        {status === 'installed' && <span className="guide-badge ok">Sudah terpasang</span>}
+      </h4>
+      <ol className="guide-steps">
+        <li>
+          Unduh ekstensinya:{' '}
+          <a className="btn btn-small btn-light" href={PLAYER_GUARD_DOWNLOAD} download>
+            <i className="fa-solid fa-download" aria-hidden="true"></i> cinebox-player-guard.zip
+          </a>
+        </li>
+        <li>Ekstrak file zip (klik kanan → <strong>Extract All</strong>). Akan muncul folder <code>cinebox-player-guard</code>. Simpan folder ini di tempat tetap, jangan dihapus.</li>
+        <li>Buka alamat ini di tab baru: <CopyCode text="chrome://extensions" /> (di Edge: <CopyCode text="edge://extensions" />)</li>
+        <li>Nyalakan <strong>Developer mode</strong> (pojok kanan atas di Chrome, menu kiri di Edge).</li>
+        <li>Klik <strong>Load unpacked</strong>, lalu pilih folder <code>cinebox-player-guard</code>.</li>
+        <li>Muat ulang Cinebox. Di bawah pemutar akan muncul tulisan <strong>Pemblokir iklan aktif</strong>. Tidak ada yang perlu diatur.</li>
+      </ol>
+    </section>
+  );
+
+  const mobile = (
+    <section className="guide-section" aria-labelledby="guide-mobile">
+      <h4 id="guide-mobile"><i className="fa-solid fa-mobile-screen" aria-hidden="true"></i> HP: Android atau iPhone</h4>
+      <p className="guide-text">
+        Chrome di HP tidak bisa memasang ekstensi. Pilihan yang tersedia:
+      </p>
+      <ul className="guide-steps">
+        <li><strong>Brave</strong> (Android dan iPhone): pemblokir iklan bawaan sudah aktif. Login ke Cinebox lewat Brave.</li>
+        <li><strong>Firefox</strong> (Android): pasang add-on <strong>uBlock Origin</strong> dari menu Add-ons.</li>
+        <li>Jika tetap memakai Chrome, tutup tab iklan yang terbuka lalu kembali ke Cinebox dan ketuk pemutar sekali lagi.</li>
+      </ul>
+      <p className="guide-note">Brave dan uBlock Origin memblokir banyak iklan pop-up, tetapi belum kami uji khusus pada pemutar ini.</p>
+    </section>
+  );
+
   return (
     <div className="guide-overlay" onClick={onClose}>
       <div className="guide-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title" onClick={event => event.stopPropagation()}>
         <div className="guide-head">
           <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
           <div>
-            <h3 id="guide-title">Mengurangi iklan dari pemutar</h3>
-            <p>Iklan berasal dari situs penyedia video, bukan dari Cinebox.</p>
+            <h3 id="guide-title">Memblokir tab iklan dari pemutar</h3>
+            <p>
+              Semua server video membuka tab iklan saat pemutarnya diklik. Iklan itu berjalan di dalam pemutar milik penyedia, jadi
+              situs tidak bisa memblokirnya; yang bisa hanya browser Anda.
+            </p>
           </div>
           <button type="button" ref={closeRef} className="icon-btn" onClick={onClose} aria-label="Tutup panduan">
             <i className="fa-solid fa-xmark" aria-hidden="true"></i>
@@ -27,27 +88,26 @@ export default function PlayerGuide({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="guide-body">
-          <ol className="guide-steps">
-            <li>
-              <strong>Pasang Cinebox Player Guard (paling efektif).</strong> Ekstensi di folder <code>browser-extension</code> memblokir
-              halaman yang dibuka oleh frame pemutar sebelum sempat dimuat, lalu menutup tab kosongnya. Pasang lewat{' '}
-              <code>chrome://extensions</code> → Developer mode → Load unpacked, lalu isi origin situs Cinebox di Options.
-            </li>
-            <li>
-              <strong>Atau pakai pemblokir iklan.</strong> uBlock Origin atau browser Brave juga dapat memblokir pop-up dan skrip iklan
-              di dalam iframe — hal yang tidak bisa dilakukan situs mana pun dari luar iframe.
-            </li>
-            <li>
-              <strong>Tab iklan sudah terbuka?</strong> Tutup tab itu dan kembali ke Cinebox. VidAPI biasanya hanya membuka iklan pada
-              klik pertama, jadi klik berikutnya akan memutar video.
-            </li>
-            <li>
-              <strong>Coba server lain</strong> jika pemutar kosong, menampilkan 404, atau terus mengalihkan ke iklan.
-            </li>
-          </ol>
-          <a className="btn btn-small btn-outline" href="https://github.com/Xdzall/Cinebox_Website/blob/main/browser-extension/README.md" target="_blank" rel="noopener noreferrer">
-            <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Panduan ekstensi
-          </a>
+          {isMobile ? (
+            <>
+              {mobile}
+              {desktop}
+            </>
+          ) : (
+            <>
+              {desktop}
+              {status === 'other' && (
+                <section className="guide-section">
+                  <h4><i className="fa-brands fa-firefox-browser" aria-hidden="true"></i> Firefox atau Safari</h4>
+                  <p className="guide-text">
+                    Player Guard hanya untuk Chrome dan Edge. Di Firefox, pasang add-on <strong>uBlock Origin</strong>. Safari tidak
+                    didukung; gunakan Chrome atau Edge.
+                  </p>
+                </section>
+              )}
+              {mobile}
+            </>
+          )}
         </div>
       </div>
     </div>

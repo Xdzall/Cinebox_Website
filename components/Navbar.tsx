@@ -15,6 +15,7 @@ interface NavbarProps {
   onNavigate: (target: NavTarget) => void;
   onGenre: (genre: string) => void;
   onOpenDrawer: () => void;
+  onLogout: () => void;
 }
 
 export function isNavActive(target: NavTarget, currentView: ViewName, activeGenre: string, searchQuery: string) {
@@ -34,7 +35,8 @@ export default function Navbar({
   onSearchOpenChange,
   onNavigate,
   onGenre,
-  onOpenDrawer
+  onOpenDrawer,
+  onLogout
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [genreOpen, setGenreOpen] = useState(false);
@@ -179,6 +181,10 @@ export default function Navbar({
 
           <button type="button" className="avatar-btn" onClick={() => onNavigate('mylist')} aria-label="Daftar Saya" title="Daftar Saya">
             <i className="fa-solid fa-user" aria-hidden="true"></i>
+          </button>
+
+          <button type="button" className="icon-btn header-logout" onClick={onLogout} aria-label="Keluar" title="Keluar">
+            <i className="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
           </button>
         </div>
       </div>

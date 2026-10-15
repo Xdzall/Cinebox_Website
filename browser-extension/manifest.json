@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Cinebox Player Guard",
-  "version": "1.1.0",
-  "description": "Blocks popup and redirect navigations started by Cinebox player frames, closes the popup tabs, and blocks user-listed redirect domains.",
+  "version": "1.2.0",
+  "description": "Blocks popup and redirect ads opened by Cinebox video player frames. Works without configuration.",
   "minimum_chrome_version": "101",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApqoIrxLGAQOMD78ln0J2DXVL9saHcQq2HHTP54xI1rRK/daaSpC6sQUf3/U728ocBGTtrBZA0guoWxqpho/ln2wfyDXv+8tz1D8wv/zSGgFI3mGmYjvhY7PXNw7cBHJmmU4BQ4ukpoTDpu/7I6YWENS4KqjDt7J6hxJS33HwbiXu/rr1pNeixbyNh4r2GNH9v2mu+4KUD1N3eg8+AfUV5BQz5CjaZgK52ZFo8bhR3vREXEQ3QlvohN9C9CYdg3YgiDm5693RmJO254Bc+T6coqQBcodz7YfB5T7C/ZkdvlAOMXQpAS1aC7c3CIV+KOXnt0YqCDXdSdjH6m2ZEwBoDwIDAQAB",
   "permissions": [
     "storage",
     "webNavigation",
@@ -13,5 +14,15 @@
     "service_worker": "service-worker.mjs",
     "type": "module"
   },
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "guard.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }

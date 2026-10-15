@@ -32,7 +32,8 @@ const providerSubtitle = (preferredLanguage: 'id' | null): StreamSubtitleInfo =>
     : 'Subtitle dikelola pemutar penyedia; bahasa Indonesia belum tentu tersedia.'
 });
 
-// Checked 2026-10-15. Removed: vidsrc.xyz (domain no longer resolves) and autoembed.co
+// Every provider here opens ad tabs from inside its iframe (verified 2026-10-15); the site cannot
+// block that, so the player shows PlayerGuardNotice instead of a per-server warning. Removed: vidsrc.xyz (domain no longer resolves) and autoembed.co
 // (TV returns 404; movies load player.autoembed.co, the same VidAPI player as vaplayer.ru).
 export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1): StreamServer[] {
   const tv = ctx.type === 'tv';
@@ -46,7 +47,7 @@ export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1):
       url: tv
         ? `https://vaplayer.ru/embed/tv/${id}/${s}/${e}?ds_lang=id`
         : `https://vaplayer.ru/embed/movie/${id}?ds_lang=id`,
-      note: 'Klik pertama pada pemutar dapat membuka tab iklan.',
+      note: 'Pemutar utama.',
       subtitle: providerSubtitle('id')
     }
   ];
@@ -59,7 +60,7 @@ export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1):
       url: tv
         ? `https://vidlink.pro/tv/${ctx.tmdbId}/${s}/${e}`
         : `https://vidlink.pro/movie/${ctx.tmdbId}`,
-      note: 'Memakai ID TMDB dari Cinemeta.',
+      note: 'Memakai ID TMDB.',
       subtitle: providerSubtitle(null)
     });
   }
@@ -71,7 +72,7 @@ export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1):
       url: tv
         ? `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`
         : `https://www.2embed.cc/embed/${id}`,
-      note: 'Klik pada pemutar dapat membuka tab iklan.',
+      note: '',
       subtitle: providerSubtitle(null)
     },
     {
@@ -80,7 +81,7 @@ export function buildStreamServers(ctx: StreamContext, season = 1, episode = 1):
       url: tv
         ? `https://multiembed.mov/?video_id=${id}&s=${s}&e=${e}`
         : `https://multiembed.mov/?video_id=${id}`,
-      note: 'Dialihkan ke streamingnow.mov dan dapat membuka pop-up iklan.',
+      note: 'Dialihkan ke streamingnow.mov.',
       subtitle: providerSubtitle(null)
     }
   );
