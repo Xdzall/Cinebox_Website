@@ -30,7 +30,9 @@ function parseLines(text, normalizer, limit, label) {
 async function refreshStatus() {
   const response = await chrome.runtime.sendMessage({ type: 'cinebox-guard-status' });
   if (!response?.ok) throw new Error(response?.error || 'Status aturan tidak tersedia.');
-  const playerRule = response.playerRuleActive ? ' Navigasi iklan dari pemutar diblokir.' : '';
+  const playerRule = response.popupScriptActive
+    ? ' Pencegahan tab terpasang. Muat ulang Cinebox agar perubahan berlaku pada pemutar.'
+    : ' Pencegahan tab dimatikan. Muat ulang Cinebox agar perubahan berlaku pada pemutar.';
   if (response.activeTabCount === 0) {
     setStatus(`Tersimpan.${playerRule}`);
   } else if (response.domainRuleActive) {

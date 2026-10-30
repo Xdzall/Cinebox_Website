@@ -1,6 +1,7 @@
 export const SETTINGS_KEY = 'cineboxPlayerGuard';
 export const RULE_ID = 10001;
 export const PLAYER_NAV_RULE_ID = 10002;
+export const POPUP_SCRIPT_ID = 'cinebox-player-popup-guard';
 export const MAX_SITE_ORIGINS = 10;
 export const MAX_BLOCKED_DOMAINS = 100;
 
@@ -24,6 +25,19 @@ export const PLAYER_HOSTS = Object.freeze([
   'multiembed.mov',
   'streamingnow.mov',
 ]);
+
+export function makePopupContentScript() {
+  return {
+    id: POPUP_SCRIPT_ID,
+    matches: PLAYER_HOSTS.map(host => `*://*.${host}/*`),
+    js: ['popup-guard.js'],
+    allFrames: true,
+    matchOriginAsFallback: true,
+    runAt: 'document_start',
+    world: 'MAIN',
+    persistAcrossSessions: true,
+  };
+}
 
 export function normalizeSiteOrigin(value) {
   const input = String(value ?? '').trim();

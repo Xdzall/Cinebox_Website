@@ -56,24 +56,12 @@ function CardHoverActions({ item, actions }: { item: MovieItem; actions: CardAct
   );
 }
 
-const openOnKey = (fn: () => void) => (event: React.KeyboardEvent) => {
-  if (event.target !== event.currentTarget) return;
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    fn();
-  }
-};
-
 export function MediaCard({ item, actions, progress }: { item: MovieItem; actions: CardActions; progress?: string }) {
   return (
     <div
       className="media-card"
-      role="button"
-      tabIndex={0}
-      aria-label={`${item.title}${item.year ? `, ${item.year}` : ''}, ${typeLabel(item)}`}
-      onClick={() => actions.onOpen(item)}
-      onKeyDown={openOnKey(() => actions.onOpen(item))}
     >
+      <button type="button" className="media-open" aria-label={`${item.title}${item.year ? `, ${item.year}` : ''}, ${typeLabel(item)}`} onClick={() => actions.onOpen(item)} />
       <div className="media-poster">
         <PosterImage src={item.poster} alt="" />
         {item.rating && <span className="badge-rating-chip"><i className="fa-solid fa-star" aria-hidden="true"></i> {item.rating}</span>}
@@ -92,12 +80,8 @@ export function Top10Card({ item, rank, actions }: { item: MovieItem; rank: numb
   return (
     <div
       className="top10-card"
-      role="button"
-      tabIndex={0}
-      aria-label={`Peringkat ${rank}: ${item.title}`}
-      onClick={() => actions.onOpen(item)}
-      onKeyDown={openOnKey(() => actions.onOpen(item))}
     >
+      <button type="button" className="media-open" aria-label={`Peringkat ${rank}: ${item.title}`} onClick={() => actions.onOpen(item)} />
       <span className="top10-rank" aria-hidden="true">{rank}</span>
       <div className="media-poster top10-poster">
         <PosterImage src={item.poster} alt="" />

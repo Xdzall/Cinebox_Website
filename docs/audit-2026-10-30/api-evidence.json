@@ -1,0 +1,1335 @@
+{
+  "korea": {
+    "status": 200,
+    "data": {
+      "view": "genre_Korea",
+      "title": "Genre Korea di Cinebox",
+      "version": 1793322880264,
+      "featured": [
+        {
+          "id": "tt10919420",
+          "title": "Squid Game (오징어 게임)",
+          "year": "2024",
+          "type": "tv",
+          "typeLabel": "Serial TV",
+          "rating": "8.8",
+          "poster": "https://images.metahub.space/poster/small/tt10919420/img",
+          "backdrop": "https://images.metahub.space/background/medium/tt10919420/img",
+          "desc": "Ratusan pemain yang terlilit hutang menerima undangan aneh untuk bertanding dalam permainan anak-anak dengan taruhan mematikan berhadiah 45,6 miliar won.",
+          "genre": [
+            "Drama Korea",
+            "Thriller",
+            "Survival"
+          ],
+          "trailer_yt": "oqxAJKy0ii4"
+        },
+        {
+          "id": "tt14169960",
+          "title": "All of Us Are Dead (지금 우리 학교는)",
+          "year": "2024",
+          "type": "tv",
+          "typeLabel": "Serial TV",
+          "rating": "8.5",
+          "poster": "https://images.metahub.space/poster/small/tt14169960/img",
+          "backdrop": "https://images.metahub.space/background/medium/tt14169960/img",
+          "desc": "Sebuah SMA menjadi titik nol penyebaran virus zombi yang mengerikan. Murid-murid yang terperangkap harus berjuang mati-matian mencari jalan keluar.",
+          "genre": [
+            "Drama Korea",
+            "Horor",
+            "Aksi"
+          ],
+          "trailer_yt": "IN5TD4VRcSM"
+        },
+        {
+          "id": "tt2788316",
+          "title": "Shōgun (将軍)",
+          "year": "2024",
+          "type": "tv",
+          "typeLabel": "Serial TV",
+          "rating": "8.9",
+          "poster": "https://images.metahub.space/poster/small/tt2788316/img",
+          "backdrop": "https://images.metahub.space/background/medium/tt2788316/img",
+          "desc": "Di Jepang tahun 1600 pada masa fajar perang saudara yang menentukan abad tersebut, Lord Yoshii Toranaga bertarung demi bertahan hidup.",
+          "genre": [
+            "Drama Asia",
+            "Sejarah",
+            "Petualangan"
+          ],
+          "trailer_yt": "HIs9x49DK7I"
+        }
+      ],
+      "sections": [
+        {
+          "id": "genre_Korea_movies",
+          "title": "🔥 Film Korea Terpopuler di IMDb",
+          "items": [
+            {
+              "id": "tt22084616",
+              "title": "Spider-Man: Brand New Day",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "8.0",
+              "poster": "https://images.metahub.space/poster/small/tt22084616/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt22084616/img",
+              "desc": "A forgotten Peter Parker lives alone as a full-time Spider-Man until mounting pressure triggers a dangerous change and a powerful new enemy emerges.",
+              "genre": [
+                "Action",
+                "Adventure"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt6933238",
+              "title": "Unabomber",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.2",
+              "poster": "https://images.metahub.space/poster/small/tt6933238/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt6933238/img",
+              "desc": "A Harvard student becomes the Unabomber after psychological experiments. Years later, an FBI agent's pursuit reveals how his past shaped his deadly campaign that killed 3 and injured 23 from 1978-1995.",
+              "genre": [
+                "Biography",
+                "Crime",
+                "Drama"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt15047880",
+              "title": "Disclosure Day",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.4",
+              "poster": "https://images.metahub.space/poster/small/tt15047880/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt15047880/img",
+              "desc": "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you?",
+              "genre": [
+                "Action",
+                "Mystery",
+                "Sci-Fi"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt37287335",
+              "title": "Obsession",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.8",
+              "poster": "https://images.metahub.space/poster/small/tt37287335/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt37287335/img",
+              "desc": "After breaking the mysterious \"One Wish Willow\" to win his crush's heart, a hopeless romantic finds himself getting exactly what he asked for but soon discovers that some desires come at a dark, sinister price.",
+              "genre": [
+                "Horror",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt26657236",
+              "title": "Backrooms",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.7",
+              "poster": "https://images.metahub.space/poster/small/tt26657236/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt26657236/img",
+              "desc": "Clark, an angry architect, chases the source of impossible power failures when a glowing gap opens in his basement, but the yellow maze beyond it threatens his sanity, his friends, and Mary.",
+              "genre": [
+                "Horror",
+                "Sci-Fi",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt36983905",
+              "title": "The Uprising",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "poster": "https://images.metahub.space/poster/small/tt36983905/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt36983905/img",
+              "desc": "Based on the true story of the uprising that inspired the legend of Robin Hood, Andrew Garfield stars as the leader of a rebellion against the tyranny of King Richard II in a fight for justice.",
+              "genre": [
+                "Action",
+                "Drama",
+                "History"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt22526100",
+              "title": "The Love Hypothesis",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "poster": "https://images.metahub.space/poster/small/tt22526100/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt22526100/img",
+              "desc": "After an impulsive kiss, two scientists end up in a fake relationship, testing their theories about love and each other.",
+              "genre": [
+                "Comedy",
+                "Romance"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt27543632",
+              "title": "The Housemaid",
+              "year": "2025",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.7",
+              "poster": "https://images.metahub.space/poster/small/tt27543632/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt27543632/img",
+              "desc": "Millie a struggling young woman becomes live-in maid for a wealthy couple Nina and Andrew. She enters a mansion of secrets, manipulation, and escalating psychological games that pull her into a dangerous relationship dynamic.",
+              "genre": [
+                "Drama",
+                "Mystery",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt0074285",
+              "title": "Carrie",
+              "year": "1976",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.4",
+              "poster": "https://images.metahub.space/poster/small/tt0074285/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt0074285/img",
+              "desc": "A social misfit with psychic powers turns prom night into Hell on Earth.",
+              "genre": [
+                "Horror"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt27165187",
+              "title": "The End of Oak Street",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.5",
+              "poster": "https://images.metahub.space/poster/small/tt27165187/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt27165187/img",
+              "desc": "The Platt family bands together to navigate their new surroundings after a cosmic event transports their suburban neighborhood to someplace unknown.",
+              "genre": [
+                "Action",
+                "Adventure",
+                "Mystery"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt36429458",
+              "title": "Doing Life",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "poster": "https://images.metahub.space/poster/small/tt36429458/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt36429458/img",
+              "desc": "A single mother fighting to survive and a reformed ex-con with untapped talent find in each other an unlikely second chance.",
+              "genre": [
+                "Drama"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt12042730",
+              "title": "Project Hail Mary",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "8.2",
+              "poster": "https://images.metahub.space/poster/small/tt12042730/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt12042730/img",
+              "desc": "A science teacher wakes up alone on a spaceship. As his memory returns, he uncovers a mission to stop a mysterious substance killing Earth's sun, and realizes that an unexpected friendship may be the key.",
+              "genre": [
+                "Adventure",
+                "Comedy",
+                "Sci-Fi"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt31349844",
+              "title": "Runner",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.6",
+              "poster": "https://images.metahub.space/poster/small/tt31349844/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt31349844/img",
+              "desc": "A former soldier and his unlikely partner become the targets of a ruthless cartel while racing to complete a critical medical delivery and save the life of a little girl.",
+              "genre": [
+                "Action",
+                "Comedy",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt14173636",
+              "title": "The Invite",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.5",
+              "poster": "https://images.metahub.space/poster/small/tt14173636/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt14173636/img",
+              "desc": "Joe and Angela's marriage is on thin ice. When they invite their enigmatic upstairs neighbors for a dinner party, the night spirals into unexpected places.",
+              "genre": [
+                "Comedy",
+                "Drama",
+                "Romance"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt27369017",
+              "title": "Hope",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.9",
+              "poster": "https://images.metahub.space/poster/small/tt27369017/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt27369017/img",
+              "desc": "A mysterious discovery is made on the outskirts of the remote harbor town. The residents find themselves in a desperate fight for survival against something they have never encountered before.",
+              "genre": [
+                "Action",
+                "Drama",
+                "Horror"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt37969426",
+              "title": "The Muppet Show",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "8.0",
+              "poster": "https://images.metahub.space/poster/small/tt37969426/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt37969426/img",
+              "desc": "Kermit and friends return in a modern take on their classic variety show format, mixing nostalgic charm with new comedy bits while staying true to the Muppets' timeless spirit.",
+              "genre": [
+                "Comedy",
+                "Family",
+                "Music"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt11561116",
+              "title": "The Whisper Man",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "poster": "https://images.metahub.space/poster/small/tt11561116/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt11561116/img",
+              "desc": "A grieving father and his young son relocate to the quiet town of Featherbank, which was terrorized by a serial killer known as The Whisper Man 15 years earlier, while rumors circulated that Whisper Man worked with an accomplice.",
+              "genre": [
+                "Crime",
+                "Drama",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt28014327",
+              "title": "Mayday",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.9",
+              "poster": "https://images.metahub.space/poster/small/tt28014327/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt28014327/img",
+              "desc": "Lieutenant Troy Brennan's reconnaissance mission over Soviet territory goes awry, forcing him to crash-land and survive in Russian wilderness while evading capture or rescue.",
+              "genre": [
+                "Action",
+                "Adventure",
+                "Comedy"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt1756855",
+              "title": "Coyote vs. Acme",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.6",
+              "poster": "https://images.metahub.space/poster/small/tt1756855/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt1756855/img",
+              "desc": "After enduring years of malfunctioning products, Wile E. Coyote teams up with a local personal injury attorney to take on ACME, the manufacturer of anything and everything used by the Looney Tunes characters.",
+              "genre": [
+                "Animation",
+                "Adventure",
+                "Comedy"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt35298123",
+              "title": "Teenage Sex and Death at Camp Miasma",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.1",
+              "poster": "https://images.metahub.space/poster/small/tt35298123/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt35298123/img",
+              "desc": "A director making a slasher sequel becomes obsessed with casting the original film's 'final girl,' leading both women into psychological and sexual chaos.",
+              "genre": [
+                "Comedy",
+                "Horror",
+                "Romance"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt31170389",
+              "title": "Evil Dead Burn",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.3",
+              "poster": "https://images.metahub.space/poster/small/tt31170389/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt31170389/img",
+              "desc": "After the loss of her husband, a woman seeks solace with her in-laws. As one by one they transform into deadites, she comes to discover that the vows she took in life - survive even in death.",
+              "genre": [
+                "Horror"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt0111161",
+              "title": "The Shawshank Redemption",
+              "year": "1994",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "9.3",
+              "poster": "https://images.metahub.space/poster/small/tt0111161/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt0111161/img",
+              "desc": "After a banker is sentenced to life in Shawshank Prison, he forms an unlikely friendship with a seasoned inmate and clings to hope amid cruelty and corruption.",
+              "genre": [
+                "Drama"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt29355505",
+              "title": "Toy Story 5",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.4",
+              "poster": "https://images.metahub.space/poster/small/tt29355505/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt29355505/img",
+              "desc": "Woody, Buzz, Jessie and the rest of the gang's jobs are challenged when they're introduced to electronics, a new threat to playtime.",
+              "genre": [
+                "Animation",
+                "Adventure",
+                "Comedy"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt35672862",
+              "title": "Hokum",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.6",
+              "poster": "https://images.metahub.space/poster/small/tt35672862/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt35672862/img",
+              "desc": "A horror writer visits an Irish inn to scatter his parents' ashes, unaware the property is said to be haunted by a witch.",
+              "genre": [
+                "Horror",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt26581740",
+              "title": "Weapons",
+              "year": "2025",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.4",
+              "poster": "https://images.metahub.space/poster/small/tt26581740/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt26581740/img",
+              "desc": "When all but one child from the same class mysteriously vanish on the same night at exactly the same time, a community is left questioning who or what is behind their disappearance.",
+              "genre": [
+                "Horror",
+                "Mystery"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt0107120",
+              "title": "Hocus Pocus",
+              "year": "1993",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.9",
+              "poster": "https://images.metahub.space/poster/small/tt0107120/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt0107120/img",
+              "desc": "A teenage boy named Max and his little sister move to Salem, where he struggles to fit in before awakening a trio of diabolical witches that were executed in the 17th century.",
+              "genre": [
+                "Comedy",
+                "Family",
+                "Fantasy"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt27681354",
+              "title": "In the Grey",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "6.3",
+              "poster": "https://images.metahub.space/poster/small/tt27681354/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt27681354/img",
+              "desc": "A covert team of elite operatives are living in the shadows. When a ruthless despot steals a billion-dollar fortune, they're sent to steal it back--an impossible heist that erupts into a deadly game of strategy, deception and surv...",
+              "genre": [
+                "Action",
+                "Crime",
+                "Thriller"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt33296751",
+              "title": "Tuner",
+              "year": "2026",
+              "type": "movie",
+              "typeLabel": "Film",
+              "rating": "7.2",
+              "poster": "https://images.metahub.space/poster/small/tt33296751/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt33296751/img",
+              "desc": "A talented piano tuner who suffers from hyperacusis discovers an unexpected aptitude for cracking safes, turning his life upside down.",
+              "genre": [
+                "Crime",
+                "Drama",
+                "Music"
+              ],
+              "trailer_yt": ""
+            }
+          ]
+        },
+        {
+          "id": "genre_Korea_series",
+          "title": "📺 Serial TV Korea Terpopuler di IMDb",
+          "items": [
+            {
+              "id": "tt10919420",
+              "title": "Squid Game (오징어 게임)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.8",
+              "poster": "https://images.metahub.space/poster/small/tt10919420/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt10919420/img",
+              "desc": "Ratusan pemain yang terlilit hutang menerima undangan aneh untuk bertanding dalam permainan anak-anak dengan taruhan mematikan berhadiah 45,6 miliar won.",
+              "genre": [
+                "Drama Korea",
+                "Thriller",
+                "Survival"
+              ],
+              "trailer_yt": "oqxAJKy0ii4"
+            },
+            {
+              "id": "tt14169960",
+              "title": "All of Us Are Dead (지금 우리 학교는)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.5",
+              "poster": "https://images.metahub.space/poster/small/tt14169960/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt14169960/img",
+              "desc": "Sebuah SMA menjadi titik nol penyebaran virus zombi yang mengerikan. Murid-murid yang terperangkap harus berjuang mati-matian mencari jalan keluar.",
+              "genre": [
+                "Drama Korea",
+                "Horor",
+                "Aksi"
+              ],
+              "trailer_yt": "IN5TD4VRcSM"
+            },
+            {
+              "id": "tt2788316",
+              "title": "Shōgun (将軍)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.9",
+              "poster": "https://images.metahub.space/poster/small/tt2788316/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt2788316/img",
+              "desc": "Di Jepang tahun 1600 pada masa fajar perang saudara yang menentukan abad tersebut, Lord Yoshii Toranaga bertarung demi bertahan hidup.",
+              "genre": [
+                "Drama Asia",
+                "Sejarah",
+                "Petualangan"
+              ],
+              "trailer_yt": "HIs9x49DK7I"
+            },
+            {
+              "id": "tt12343534",
+              "title": "Jujutsu Kaisen (呪術廻戦)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.7",
+              "poster": "https://images.metahub.space/poster/small/tt12343534/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt12343534/img",
+              "desc": "Seorang anak laki-laki menelan jimat terkutuk—jari iblis—dan menjadi terkutuk sendiri. Dia masuk sekolah dukun untuk bisa menemukan bagian tubuh iblis lainnya.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Fantasi"
+              ],
+              "trailer_yt": "VpO6APNqY1c"
+            },
+            {
+              "id": "tt15211974",
+              "title": "Parasyte: The Grey (기생수: 더 그레이)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.4",
+              "poster": "https://images.metahub.space/poster/small/tt15211974/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt15211974/img",
+              "desc": "Ketika parasit tak dikenal dengan kejam mengambil alih tubuh manusia dan meraih kekuasaan, umat manusia harus bangkit untuk melawan ancaman tersebut.",
+              "genre": [
+                "Drama Korea",
+                "Sci-Fi",
+                "Horor"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt1160419",
+              "title": "Sweet Home (스위트홈)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.3",
+              "poster": "https://images.metahub.space/poster/small/tt1160419/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt1160419/img",
+              "desc": "Seorang remaja penyendiri yang pindah ke apartemen baru harus berjuang bersama penghuni lain saat manusia mulai berubah menjadi monster mengerikan.",
+              "genre": [
+                "Drama Korea",
+                "Horor",
+                "Aksi"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt9335498",
+              "title": "Demon Slayer: Kimetsu no Yaiba",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.8",
+              "poster": "https://images.metahub.space/poster/small/tt9335498/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt9335498/img",
+              "desc": "Sebuah keluarga diserang oleh iblis dan hanya dua anggota yang selamat—Tanjiro dan adiknya Nezuko, yang perlahan berubah menjadi iblis.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Petualangan"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt21209876",
+              "title": "Solo Leveling (나 혼자만 레벨업)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.6",
+              "poster": "https://images.metahub.space/poster/small/tt21209876/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt21209876/img",
+              "desc": "Hunter terlemah dari seluruh umat manusia, Sung Jin-woo, terbangun dalam pencarian tersembunyi yang memberinya kemampuan unik untuk naik level tanpa batas.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Fantasi"
+              ],
+              "trailer_yt": ""
+            }
+          ]
+        },
+        {
+          "id": "genre_Korea_top",
+          "title": "⭐ Karya Korea Rating Tertinggi di IMDb",
+          "items": [
+            {
+              "id": "tt2788316",
+              "title": "Shōgun (将軍)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.9",
+              "poster": "https://images.metahub.space/poster/small/tt2788316/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt2788316/img",
+              "desc": "Di Jepang tahun 1600 pada masa fajar perang saudara yang menentukan abad tersebut, Lord Yoshii Toranaga bertarung demi bertahan hidup.",
+              "genre": [
+                "Drama Asia",
+                "Sejarah",
+                "Petualangan"
+              ],
+              "trailer_yt": "HIs9x49DK7I"
+            },
+            {
+              "id": "tt10919420",
+              "title": "Squid Game (오징어 게임)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.8",
+              "poster": "https://images.metahub.space/poster/small/tt10919420/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt10919420/img",
+              "desc": "Ratusan pemain yang terlilit hutang menerima undangan aneh untuk bertanding dalam permainan anak-anak dengan taruhan mematikan berhadiah 45,6 miliar won.",
+              "genre": [
+                "Drama Korea",
+                "Thriller",
+                "Survival"
+              ],
+              "trailer_yt": "oqxAJKy0ii4"
+            },
+            {
+              "id": "tt9335498",
+              "title": "Demon Slayer: Kimetsu no Yaiba",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.8",
+              "poster": "https://images.metahub.space/poster/small/tt9335498/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt9335498/img",
+              "desc": "Sebuah keluarga diserang oleh iblis dan hanya dua anggota yang selamat—Tanjiro dan adiknya Nezuko, yang perlahan berubah menjadi iblis.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Petualangan"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt12343534",
+              "title": "Jujutsu Kaisen (呪術廻戦)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.7",
+              "poster": "https://images.metahub.space/poster/small/tt12343534/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt12343534/img",
+              "desc": "Seorang anak laki-laki menelan jimat terkutuk—jari iblis—dan menjadi terkutuk sendiri. Dia masuk sekolah dukun untuk bisa menemukan bagian tubuh iblis lainnya.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Fantasi"
+              ],
+              "trailer_yt": "VpO6APNqY1c"
+            },
+            {
+              "id": "tt21209876",
+              "title": "Solo Leveling (나 혼자만 레벨업)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.6",
+              "poster": "https://images.metahub.space/poster/small/tt21209876/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt21209876/img",
+              "desc": "Hunter terlemah dari seluruh umat manusia, Sung Jin-woo, terbangun dalam pencarian tersembunyi yang memberinya kemampuan unik untuk naik level tanpa batas.",
+              "genre": [
+                "Anime",
+                "Aksi",
+                "Fantasi"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt14169960",
+              "title": "All of Us Are Dead (지금 우리 학교는)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.5",
+              "poster": "https://images.metahub.space/poster/small/tt14169960/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt14169960/img",
+              "desc": "Sebuah SMA menjadi titik nol penyebaran virus zombi yang mengerikan. Murid-murid yang terperangkap harus berjuang mati-matian mencari jalan keluar.",
+              "genre": [
+                "Drama Korea",
+                "Horor",
+                "Aksi"
+              ],
+              "trailer_yt": "IN5TD4VRcSM"
+            },
+            {
+              "id": "tt15211974",
+              "title": "Parasyte: The Grey (기생수: 더 그레이)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.4",
+              "poster": "https://images.metahub.space/poster/small/tt15211974/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt15211974/img",
+              "desc": "Ketika parasit tak dikenal dengan kejam mengambil alih tubuh manusia dan meraih kekuasaan, umat manusia harus bangkit untuk melawan ancaman tersebut.",
+              "genre": [
+                "Drama Korea",
+                "Sci-Fi",
+                "Horor"
+              ],
+              "trailer_yt": ""
+            },
+            {
+              "id": "tt1160419",
+              "title": "Sweet Home (스위트홈)",
+              "year": "2024",
+              "type": "tv",
+              "typeLabel": "Serial TV",
+              "rating": "8.3",
+              "poster": "https://images.metahub.space/poster/small/tt1160419/img",
+              "backdrop": "https://images.metahub.space/background/medium/tt1160419/img",
+              "desc": "Seorang remaja penyendiri yang pindah ke apartemen baru harus berjuang bersama penghuni lain saat manusia mulai berubah menjadi monster mengerikan.",
+              "genre": [
+                "Drama Korea",
+                "Horor",
+                "Aksi"
+              ],
+              "trailer_yt": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "squidSearch": {
+    "status": 200,
+    "data": [
+      {
+        "id": "tt10919420",
+        "title": "Squid Game",
+        "year": "2021",
+        "type": "tv",
+        "typeLabel": "Serial TV",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDcxYjg1OTctYmUxZi00ZjhjLWIwNTMtNmI2M2Y4OTU1YWU2XkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMDcxYjg1OTctYmUxZi00ZjhjLWIwNTMtNmI2M2Y4OTU1YWU2XkEyXkFqcGc@._V1_.jpg",
+        "cast": "Lee Jung-jae, Wi Ha-joon",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Lee Jung-jae, Wi Ha-joon."
+      },
+      {
+        "id": "tt34352214",
+        "title": "Squid Game: America",
+        "year": "2026",
+        "type": "tv",
+        "typeLabel": "Serial TV",
+        "poster": "https://m.media-amazon.com/images/M/MV5BODM3ZDE1MjktMGZjNS00ZmNlLWI2NGQtZjRjZDNhODg4Nzg5XkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BODM3ZDE1MjktMGZjNS00ZmNlLWI2NGQtZjRjZDNhODg4Nzg5XkEyXkFqcGc@._V1_.jpg",
+        "cast": "",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Jelajahi Squid Game: America di Cinebox."
+      },
+      {
+        "id": "tt28104766",
+        "title": "Squid Game: The Challenge",
+        "year": "2023",
+        "type": "tv",
+        "typeLabel": "Serial TV",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGU4ZmQxZjYtYjE2YS00OWM2LTg2ZmMtMDMwYWI1Mzg0Y2NjXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BNGU4ZmQxZjYtYjE2YS00OWM2LTg2ZmMtMDMwYWI1Mzg0Y2NjXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Jennie Kwan, Nick Martineau",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Jennie Kwan, Nick Martineau."
+      },
+      {
+        "id": "tt37546146",
+        "title": "Squid Game: Making Season 2",
+        "year": "2025",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BYjQ2ZjdlNTctNDcwNC00ZjY0LThhMmItM2I0YTQ0ZTk5OGY0XkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BYjQ2ZjdlNTctNDcwNC00ZjY0LThhMmItM2I0YTQ0ZTk5OGY0XkEyXkFqcGc@._V1_.jpg",
+        "cast": "Hwang Dong-hyuk, Lee Jung-jae",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Hwang Dong-hyuk, Lee Jung-jae."
+      },
+      {
+        "id": "tt40387887",
+        "title": "Squid Game: The VIP Challenge",
+        "type": "tv",
+        "typeLabel": "Serial TV",
+        "poster": "https://m.media-amazon.com/images/M/MV5BOGUzMzEwOGQtYjA2ZS00MDQwLTg0OWItZmVjNjFkYmMwNzJjXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BOGUzMzEwOGQtYjA2ZS00MDQwLTg0OWItZmVjNjFkYmMwNzJjXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Dylan Efron, Mel B",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Dylan Efron, Mel B."
+      },
+      {
+        "id": "tt37537377",
+        "title": "Squid Game: Sweden",
+        "year": "2025",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BZGI0NGRmY2YtMThmZS00MmRhLTk0MDQtYjMyNDc2NmU0ODYxXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BZGI0NGRmY2YtMThmZS00MmRhLTk0MDQtYjMyNDc2NmU0ODYxXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Isac Norell, Edvin Karelius",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Isac Norell, Edvin Karelius."
+      },
+      {
+        "id": "tt37455270",
+        "title": "Squid Game in Conversation",
+        "year": "2025",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BYjc0Mjc3NDQtZDU0NC00MDY0LWExZjMtNjgzMzk4MzBlMGUzXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BYjc0Mjc3NDQtZDU0NC00MDY0LWExZjMtNjgzMzk4MzBlMGUzXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Lee Byung-hun, Tom Choi",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Lee Byung-hun, Tom Choi."
+      },
+      {
+        "id": "tt29276728",
+        "title": "Squid Game: Davuuverso",
+        "year": "2022",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMWM4YTIyNGMtOWUzMi00ZTJkLTlkYWUtMDg2MGNhYTA3NmIzXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMWM4YTIyNGMtOWUzMi00ZTJkLTlkYWUtMDg2MGNhYTA3NmIzXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Luisma Albarracín, Aya_FDubs",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Luisma Albarracín, Aya_FDubs."
+      }
+    ]
+  },
+  "squidDetails": {
+    "status": 200,
+    "data": {
+      "imdb_id": "tt10919420",
+      "total_seasons": 3,
+      "season_numbers": [
+        1,
+        2,
+        3
+      ],
+      "seasons": {
+        "1": {
+          "season": 1,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Red Light, Green Light",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/1/w780.jpg"
+            },
+            {
+              "episode": 2,
+              "title": "Hell",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/2/w780.jpg"
+            },
+            {
+              "episode": 3,
+              "title": "The Man with the Umbrella",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/3/w780.jpg"
+            },
+            {
+              "episode": 4,
+              "title": "Stick to the Team",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/4/w780.jpg"
+            },
+            {
+              "episode": 5,
+              "title": "A Fair World",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/5/w780.jpg"
+            },
+            {
+              "episode": 6,
+              "title": "Gganbu",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/6/w780.jpg"
+            },
+            {
+              "episode": 7,
+              "title": "VIPS",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/7/w780.jpg"
+            },
+            {
+              "episode": 8,
+              "title": "Front Man",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/8/w780.jpg"
+            },
+            {
+              "episode": 9,
+              "title": "One Lucky Day",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/1/9/w780.jpg"
+            }
+          ]
+        },
+        "2": {
+          "season": 2,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Bread and Lottery",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/1/w780.jpg"
+            },
+            {
+              "episode": 2,
+              "title": "Halloween Party",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/2/w780.jpg"
+            },
+            {
+              "episode": 3,
+              "title": "001",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/3/w780.jpg"
+            },
+            {
+              "episode": 4,
+              "title": "Six Legs",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/4/w780.jpg"
+            },
+            {
+              "episode": 5,
+              "title": "One More Game",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/5/w780.jpg"
+            },
+            {
+              "episode": 6,
+              "title": "O X",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/6/w780.jpg"
+            },
+            {
+              "episode": 7,
+              "title": "Friend or Foe",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/2/7/w780.jpg"
+            }
+          ]
+        },
+        "3": {
+          "season": 3,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Keys and Knives",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/1/w780.jpg"
+            },
+            {
+              "episode": 2,
+              "title": "The Starry Night",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/2/w780.jpg"
+            },
+            {
+              "episode": 3,
+              "title": "It's Not Your Fault",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/3/w780.jpg"
+            },
+            {
+              "episode": 4,
+              "title": "222",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/4/w780.jpg"
+            },
+            {
+              "episode": 5,
+              "title": "○△□",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/5/w780.jpg"
+            },
+            {
+              "episode": 6,
+              "title": "Humans Are…",
+              "thumbnail": "https://episodes.metahub.space/tt10919420/3/6/w780.jpg"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sweetHomeSearch": {
+    "status": 200,
+    "data": [
+      {
+        "id": "tt11612120",
+        "title": "Sweet Home",
+        "year": "2020",
+        "type": "tv",
+        "typeLabel": "Serial TV",
+        "poster": "https://m.media-amazon.com/images/M/MV5BZDE0MTM5YjgtMzNhOS00NWE2LTkxN2EtMzg0NWRmODBmMDA5XkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BZDE0MTM5YjgtMzNhOS00NWE2LTkxN2EtMzg0NWRmODBmMDA5XkEyXkFqcGc@._V1_.jpg",
+        "cast": "Song Kang, Lee Jin-wook",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Song Kang, Lee Jin-wook."
+      },
+      {
+        "id": "tt0256415",
+        "title": "Sweet Home Alabama",
+        "year": "2002",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMjEwMjIwMDQ4OV5BMl5BanBnXkFtZTYwNzc3OTY3._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMjEwMjIwMDQ4OV5BMl5BanBnXkFtZTYwNzc3OTY3._V1_.jpg",
+        "cast": "Reese Witherspoon, Patrick Dempsey",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Reese Witherspoon, Patrick Dempsey."
+      },
+      {
+        "id": "tt0141861",
+        "title": "Sweet Home",
+        "year": "1989",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNDczMmE0YTMtYzk5Yy00ZDlmLTgxYTEtMzkyNDRlZTVlZTRjXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BNDczMmE0YTMtYzk5Yy00ZDlmLTgxYTEtMzkyNDRlZTVlZTRjXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Nobuko Miyamoto, Shingo Yamashiro",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Nobuko Miyamoto, Shingo Yamashiro."
+      },
+      {
+        "id": "tt11012066",
+        "title": "Home Sweet Home Alone",
+        "year": "2021",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BODQ4NjUxZmItNGNlZC00ZGI1LWEyNDYtZjg5ZTk0ZGU5MTlhXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BODQ4NjUxZmItNGNlZC00ZGI1LWEyNDYtZjg5ZTk0ZGU5MTlhXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Ellie Kemper, Rob Delaney",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Ellie Kemper, Rob Delaney."
+      },
+      {
+        "id": "tt2802136",
+        "title": "Home Sweet Hell",
+        "year": "2015",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BODkxMDIyODMyN15BMl5BanBnXkFtZTgwMDc5MjkxNDE@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BODkxMDIyODMyN15BMl5BanBnXkFtZTgwMDc5MjkxNDE@._V1_.jpg",
+        "cast": "Katherine Heigl, Patrick Wilson",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Katherine Heigl, Patrick Wilson."
+      },
+      {
+        "id": "tt33244712",
+        "title": "Home Sweet Christmas",
+        "year": "2024",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BYzA4Y2IyZDYtYTY0ZC00MTc0LWE0NmMtNGVmNWU5MWUxZjk3XkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BYzA4Y2IyZDYtYTY0ZC00MTc0LWE0NmMtNGVmNWU5MWUxZjk3XkEyXkFqcGc@._V1_.jpg",
+        "cast": "Candace Cameron Bure, Cameron Mathison",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Candace Cameron Bure, Cameron Mathison."
+      },
+      {
+        "id": "tt29425792",
+        "title": "Home Sweet Home: Rebirth",
+        "year": "2025",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMzg3MjI1MGItMDM2OC00MzNkLWFmYmYtNzkxOTI2YTc5YjIwXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMzg3MjI1MGItMDM2OC00MzNkLWFmYmYtNzkxOTI2YTc5YjIwXkEyXkFqcGc@._V1_.jpg",
+        "cast": "William Moseley, Michele Morrone",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh William Moseley, Michele Morrone."
+      },
+      {
+        "id": "tt33183823",
+        "title": "Home Sweet Loan",
+        "year": "2024",
+        "type": "movie",
+        "typeLabel": "Film",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMTQ3MzY2NDEtZTlhOS00NjE4LWFmMDctYTI1MjhjZmY0MDFiXkEyXkFqcGc@._V1_.jpg",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMTQ3MzY2NDEtZTlhOS00NjE4LWFmMDctYTI1MjhjZmY0MDFiXkEyXkFqcGc@._V1_.jpg",
+        "cast": "Yunita Siregar, Derby Romero",
+        "genre": [
+          "Cinebox",
+          "Populer"
+        ],
+        "desc": "Karya sinematik dibintangi oleh Yunita Siregar, Derby Romero."
+      }
+    ]
+  },
+  "sweetHomeCuratedDetails": {
+    "status": 200,
+    "data": {
+      "imdb_id": "tt1160419",
+      "total_seasons": 3,
+      "season_numbers": [
+        1,
+        2,
+        3
+      ],
+      "seasons": {
+        "1": {
+          "season": 1,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Sweet Home S1 Episode 1"
+            },
+            {
+              "episode": 2,
+              "title": "Sweet Home S1 Episode 2"
+            },
+            {
+              "episode": 3,
+              "title": "Sweet Home S1 Episode 3"
+            },
+            {
+              "episode": 4,
+              "title": "Sweet Home S1 Episode 4"
+            },
+            {
+              "episode": 5,
+              "title": "Sweet Home S1 Episode 5"
+            },
+            {
+              "episode": 6,
+              "title": "Sweet Home S1 Episode 6"
+            },
+            {
+              "episode": 7,
+              "title": "Sweet Home S1 Episode 7"
+            },
+            {
+              "episode": 8,
+              "title": "Sweet Home S1 Episode 8"
+            },
+            {
+              "episode": 9,
+              "title": "Sweet Home S1 Episode 9"
+            },
+            {
+              "episode": 10,
+              "title": "Sweet Home S1 Episode 10"
+            }
+          ]
+        },
+        "2": {
+          "season": 2,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Sweet Home S2 Episode 1"
+            },
+            {
+              "episode": 2,
+              "title": "Sweet Home S2 Episode 2"
+            },
+            {
+              "episode": 3,
+              "title": "Sweet Home S2 Episode 3"
+            },
+            {
+              "episode": 4,
+              "title": "Sweet Home S2 Episode 4"
+            },
+            {
+              "episode": 5,
+              "title": "Sweet Home S2 Episode 5"
+            },
+            {
+              "episode": 6,
+              "title": "Sweet Home S2 Episode 6"
+            },
+            {
+              "episode": 7,
+              "title": "Sweet Home S2 Episode 7"
+            },
+            {
+              "episode": 8,
+              "title": "Sweet Home S2 Episode 8"
+            }
+          ]
+        },
+        "3": {
+          "season": 3,
+          "episodes": [
+            {
+              "episode": 1,
+              "title": "Sweet Home S3 Episode 1"
+            },
+            {
+              "episode": 2,
+              "title": "Sweet Home S3 Episode 2"
+            },
+            {
+              "episode": 3,
+              "title": "Sweet Home S3 Episode 3"
+            },
+            {
+              "episode": 4,
+              "title": "Sweet Home S3 Episode 4"
+            },
+            {
+              "episode": 5,
+              "title": "Sweet Home S3 Episode 5"
+            },
+            {
+              "episode": 6,
+              "title": "Sweet Home S3 Episode 6"
+            },
+            {
+              "episode": 7,
+              "title": "Sweet Home S3 Episode 7"
+            },
+            {
+              "episode": 8,
+              "title": "Sweet Home S3 Episode 8"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

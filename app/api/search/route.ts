@@ -19,8 +19,9 @@ export async function GET(request: Request) {
       signal: AbortSignal.timeout(6000)
     });
 
-    if (!res.ok) return NextResponse.json([]);
+    if (!res.ok) return NextResponse.json({ error: 'Sumber pencarian sedang tidak tersedia. Coba lagi.' }, { status: 502 });
     const data = await res.json();
+    if (data.d !== undefined && !Array.isArray(data.d)) throw new Error('Invalid search response');
     const items = data.d || [];
     const results = [];
 
@@ -30,7 +31,7 @@ export async function GET(request: Request) {
 
       let posterUrl = it.i?.imageUrl || `https://images.metahub.space/poster/small/${mid}/img`;
       const qType = it.q || 'feature';
-      const isSeries = ['TV series', 'TV mini-series', 'series', 'TV episode'].includes(qType);
+      const isSeries = ['TV series', 'TV mini-series', 'series', 'TV episode'].includes(qType) || ['tvSeries', 'tvMiniSeries', 'tvEpisode'].includes(it.qid);
       const cleanName = it.l || 'Unknown Title';
 
       results.push({
@@ -52,6 +53,7 @@ export async function GET(request: Request) {
     return NextResponse.json(results);
   } catch (err) {
     console.error('IMDb search error:', err);
-    return NextResponse.json([]);
+    const timeout = err instanceof Error && ['TimeoutError', 'AbortError'].includes(err.name);
+    return NextResponse.json({ error: 'Pencarian gagal dimuat. Periksa koneksi lalu coba lagi.' }, { status: timeout ? 504 : 502 });
   }
 }

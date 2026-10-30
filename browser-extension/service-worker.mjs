@@ -2,12 +2,14 @@ import {
   SETTINGS_KEY,
   RULE_ID,
   PLAYER_NAV_RULE_ID,
+  POPUP_SCRIPT_ID,
   sanitizeSettings,
   isConfiguredSite,
   isBlockedUrl,
   hasPlayerFrameAncestor,
   makeDomainRule,
   makePlayerNavigationRule,
+  makePopupContentScript,
 } from './settings.mjs';
 
 async function readSettings() {
@@ -17,6 +19,21 @@ async function readSettings() {
 
 async function syncDomainRule() {
   const settings = await readSettings();
+  const popupScripts = await chrome.scripting.getRegisteredContentScripts({ ids: [POPUP_SCRIPT_ID] });
+  if (settings.blockPlayerPopups) {
+    const wantedScript = makePopupContentScript();
+    if (popupScripts.length) {
+      // Refresh the definition on extension update as well as new installations.
+      if (Object.entries(wantedScript).some(([key, value]) =>
+        JSON.stringify(popupScripts[0][key]) !== JSON.stringify(value))) {
+        await chrome.scripting.updateContentScripts([wantedScript]);
+      }
+    } else {
+      await chrome.scripting.registerContentScripts([wantedScript]);
+    }
+  } else if (popupScripts.length) {
+    await chrome.scripting.unregisterContentScripts({ ids: [POPUP_SCRIPT_ID] });
+  }
   const tabs = await chrome.tabs.query({});
   const matches = await Promise.all(tabs.map(async tab => {
     if (!Number.isInteger(tab.id)) return null;
@@ -48,6 +65,7 @@ async function syncDomainRule() {
     activeTabCount: tabIds.length,
     domainRuleActive: Boolean(wanted.get(RULE_ID)),
     playerRuleActive: Boolean(wanted.get(PLAYER_NAV_RULE_ID)),
+    popupScriptActive: settings.blockPlayerPopups,
   };
 }
 

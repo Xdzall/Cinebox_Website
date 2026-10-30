@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { filterByGenre, isKorean, normalizeCatalogTree } from '../../../lib/catalog-metadata';
 import fs from 'fs';
 import path from 'path';
 
@@ -27,7 +28,7 @@ const POPULAR_TRAILERS: Record<string, string> = {
   'tt10366206': '2f5_Rj25k-k',  // John Wick Chapter 4
 };
 
-const KDRAMA_ASIAN_TITLES = [
+const KDRAMA_ASIAN_TITLES = normalizeCatalogTree([
   {
     id: "tt10919420",
     title: "Squid Game (오징어 게임)",
@@ -94,14 +95,14 @@ const KDRAMA_ASIAN_TITLES = [
     trailer_yt: ""
   },
   {
-    id: "tt1160419",
+    id: "tt11612120",
     title: "Sweet Home (스위트홈)",
     year: "2024",
     type: "tv",
     typeLabel: "Serial TV",
     rating: "8.3",
-    poster: "https://images.metahub.space/poster/small/tt1160419/img",
-    backdrop: "https://images.metahub.space/background/medium/tt1160419/img",
+    poster: "https://images.metahub.space/poster/small/tt11612120/img",
+    backdrop: "https://images.metahub.space/background/medium/tt11612120/img",
     desc: "Seorang remaja penyendiri yang pindah ke apartemen baru harus berjuang bersama penghuni lain saat manusia mulai berubah menjadi monster mengerikan.",
     genre: ["Drama Korea", "Horor", "Aksi"],
     trailer_yt: ""
@@ -132,7 +133,7 @@ const KDRAMA_ASIAN_TITLES = [
     genre: ["Anime", "Aksi", "Fantasi"],
     trailer_yt: ""
   }
-];
+]);
 
 let cachedState: any = {
   version: Date.now(),
@@ -152,7 +153,7 @@ try {
     const raw = fs.readFileSync(catalogFile, 'utf-8');
     const parsed = JSON.parse(raw);
     if (parsed.home) {
-      cachedState = { ...cachedState, ...parsed };
+      cachedState = { ...cachedState, ...normalizeCatalogTree(parsed) };
     }
   }
 } catch (e) {
@@ -194,6 +195,7 @@ async function fetchCinemetaCatalog(url: string, mtype = 'movie') {
         backdrop: it.background || it.poster,
         desc,
         genre: genres.slice(0, 3),
+        country: it.country || '',
         trailer_yt: POPULAR_TRAILERS[mid] || ''
       });
     }
@@ -380,12 +382,12 @@ export async function GET(request: Request) {
     const allS = state.rawSeries || [];
     const kwList = GENRE_MAP[genre] || [genre.toLowerCase()];
 
-    let genreM = filterByKeywords(allM, kwList);
-    let genreS = filterByKeywords(allS, kwList);
+    let genreM = filterByGenre(allM, kwList);
+    let genreS = filterByGenre(allS, kwList);
 
     if (genre === 'Korea') {
-      genreS = KDRAMA_ASIAN_TITLES;
-      genreM = [];
+      genreS = Array.from(new Map([...allS, ...KDRAMA_ASIAN_TITLES].filter(isKorean).map(it => [it.id, it])).values());
+      genreM = allM.filter(isKorean);
     }
 
     const genreTop = [...genreM, ...genreS].sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
@@ -395,11 +397,11 @@ export async function GET(request: Request) {
       view: `genre_${genre}`,
       title: `Genre ${genre} di Cinebox`,
       version: state.version,
-      featured: feat.length > 0 ? feat : (state.home?.featured || []).slice(0, 4),
+      featured: feat,
       sections: [
-        { id: `genre_${genre}_movies`, title: `🔥 Film ${genre} Terpopuler di IMDb`, items: genreM.length ? genreM.slice(0, 28) : allM.slice(0, 28) },
-        { id: `genre_${genre}_series`, title: `📺 Serial TV ${genre} Terpopuler di IMDb`, items: genreS.length ? genreS.slice(0, 28) : allS.slice(0, 28) },
-        { id: `genre_${genre}_top`, title: `⭐ Karya ${genre} Rating Tertinggi di IMDb`, items: genreTop.length ? genreTop.slice(0, 28) : [...allM, ...allS].slice(0, 28) }
+        { id: `genre_${genre}_movies`, title: `🔥 Film ${genre}`, items: genreM.slice(0, 28) },
+        { id: `genre_${genre}_series`, title: `📺 Serial TV ${genre}`, items: genreS.slice(0, 28) },
+        { id: `genre_${genre}_top`, title: `⭐ Pilihan ${genre} Berdasarkan Rating`, items: genreTop.slice(0, 28) }
       ]
     });
   }

@@ -3,6 +3,8 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
+    "test:audit": "node --test scripts/audit-regressions.test.cjs",
+    "test:guard": "node --test browser-extension/*.test.mjs",
     "pack:extension": "node scripts/pack-extension.mjs",
     "predev": "node scripts/pack-extension.mjs",
     "dev": "next dev -p 3000",

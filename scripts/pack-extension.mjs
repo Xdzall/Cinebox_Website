@@ -9,7 +9,6 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const source = join(root, 'browser-extension');
 const target = join(root, 'public', 'downloads', 'cinebox-player-guard.zip');
 const folder = 'cinebox-player-guard/';
-const skip = new Set(['settings.test.mjs']);
 
 const crcTable = Array.from({ length: 256 }, (_, n) => {
   let c = n;
@@ -27,7 +26,7 @@ const DOS_TIME = 0;
 const DOS_DATE = ((2026 - 1980) << 9) | (1 << 5) | 1;
 
 const files = readdirSync(source)
-  .filter(name => !skip.has(name) && statSync(join(source, name)).isFile())
+  .filter(name => !name.includes('.test.') && statSync(join(source, name)).isFile())
   .sort();
 
 const locals = [];

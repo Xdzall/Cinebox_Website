@@ -50,7 +50,7 @@ Semua server (VidAPI, VidLink, 2Embed, MultiEmbed) membuka tab iklan "clickunder
 - **Mencegat dari halaman Cinebox:** tab dibuka dari dalam iframe lintas origin, jadi halaman induk tidak bisa mencegahnya.
 - VidAPI tidak menyediakan opsi bebas iklan.
 
-Yang berhasil adalah pemblokiran di browser penonton. Di bawah pemutar, Cinebox mendeteksi apakah ekstensi **Cinebox Player Guard** terpasang: jika ya, tampil "Pemblokir iklan aktif"; jika belum, tampil tombol unduh dan panduan pemasangan. Pengguna HP diarahkan ke Brave atau Firefox + uBlock Origin karena Chrome di HP tidak mendukung ekstensi.
+Pemblokiran perlu dilakukan di browser penonton. Cinebox mendeteksi apakah ekstensi **Cinebox Player Guard** terpasang: jika ya, tampil "Player Guard terpasang" tanpa menjamin semua iklan terblokir; jika belum, tampil tombol unduh dan panduan pemasangan. Pengguna HP diarahkan ke Brave atau Firefox Android + uBlock Origin karena Chrome di HP tidak mendukung Player Guard.
 
 ### Subtitle
 
@@ -73,3 +73,9 @@ Folder [`browser-extension`](browser-extension/README.md) berisi ekstensi Chrome
 - `browser-extension/`: ekstensi opsional.
 
 Kualitas stream, hak tayang, iklan dalam player, dan pilihan subtitle bergantung pada penyedia masing-masing.
+
+## Perbaikan audit 30 Oktober 2026
+
+Status per tahap dan bukti verifikasi tersedia di [`docs/fixes-2026-10-30/report.md`](docs/fixes-2026-10-30/report.md). Jalankan `npm run test:audit` untuk regresi identitas, migrasi penyimpanan, kategori, pencarian, episode, dan URL navigasi.
+
+Halaman, genre, kata pencarian, dan filter jenis tersimpan dalam query URL sehingga refresh dan Back/Forward mempertahankan pilihan. Tahun serial menunjukkan tahun rilis pertama. Kategori Korea memakai negara utama produksi atau identitas curated; animasi serial tetap di kategori Animasi. Pemutar dan pilihan server tetap terlihat pada landscape pendek; fullscreen fallback tidak memindahkan atau mengganti iframe.

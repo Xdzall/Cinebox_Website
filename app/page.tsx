@@ -7,12 +7,13 @@ import Hero from '../components/Hero';
 import WatchModal from '../components/WatchModal';
 import PlayerGuide from '../components/PlayerGuide';
 import { MediaGrid, MediaRow, SkeletonGrid, SkeletonRow, type CardActions } from '../components/MediaCards';
-import { readStored, writeStored, STORAGE_KEYS } from '../lib/storage';
+import { readPersonalLists, writeStored, STORAGE_KEYS } from '../lib/storage';
+import { navigationUrl, parseNavigation, type NavigationState } from '../lib/navigation';
 import { GENRES, genreLabel, type CatalogData, type MovieItem, type NavTarget, type ViewName } from '../lib/types';
 
 type Toast = { id: number; msg: string; type: 'info' | 'success' | 'error' };
 
-const QUICK_SEARCHES = ['Aksi', 'Horor', 'Drama Korea', 'Anime', 'Marvel', 'Sci-Fi', 'Komedi'];
+const QUICK_GENRES = ['Aksi', 'Horor', 'Korea', 'Animasi', 'Sci-Fi', 'Komedi'];
 
 const genresOf = (item: MovieItem) =>
   Array.isArray(item.genre) ? item.genre : (item.genre || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -26,6 +27,7 @@ export default function CineboxHomePage() {
   const [loadError, setLoadError] = useState(false);
   const catalogRequestRef = useRef(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [navigationReady, setNavigationReady] = useState(false);
 
   // Personal lists (localStorage)
   const [myList, setMyList] = useState<MovieItem[]>([]);
@@ -38,6 +40,7 @@ export default function CineboxHomePage() {
   const [searchResults, setSearchResults] = useState<MovieItem[]>([]);
   const [searchFilter, setSearchFilter] = useState<'all' | 'movie' | 'tv'>('all');
   const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRequestRef = useRef(0);
@@ -55,9 +58,10 @@ export default function CineboxHomePage() {
   }, []);
 
   useEffect(() => {
-    setMyList(readStored<MovieItem[]>(STORAGE_KEYS.myList, []));
-    setLikedList(readStored<string[]>(STORAGE_KEYS.liked, []));
-    setWatchHistory(readStored<MovieItem[]>(STORAGE_KEYS.history, []));
+    const stored = readPersonalLists();
+    setMyList(stored.myList);
+    setLikedList(stored.liked);
+    setWatchHistory(stored.history);
   }, []);
 
   // Lock page scroll behind overlays.
@@ -154,8 +158,16 @@ export default function CineboxHomePage() {
   }, []);
 
   useEffect(() => {
-    loadCatalog(currentView, activeGenre);
-  }, [currentView, activeGenre, loadCatalog]);
+    if (navigationReady) loadCatalog(currentView, activeGenre);
+  }, [currentView, activeGenre, loadCatalog, navigationReady]);
+
+  const updateUrl = (changes: Partial<NavigationState>, replace = false) => {
+    const state = { view: currentView, genre: activeGenre, query: searchQuery, searchOpen, filter: searchFilter, ...changes };
+    const url = navigationUrl(state);
+    if (url !== window.location.pathname + window.location.search) {
+      window.history[replace ? 'replaceState' : 'pushState'](null, '', url);
+    }
+  };
 
   const resetSearch = () => {
     if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
@@ -164,9 +176,11 @@ export default function CineboxHomePage() {
     setSearchResults([]);
     setIsSearching(false);
     setSearchOpen(false);
+    setSearchError(false);
   };
 
   const handleNavigate = (target: NavTarget) => {
+    updateUrl({ view: target, genre: 'Semua', query: '', searchOpen: false });
     resetSearch();
     setCurrentView(target);
     setActiveGenre('Semua');
@@ -175,6 +189,7 @@ export default function CineboxHomePage() {
   };
 
   const handleGenre = (genre: string) => {
+    updateUrl({ view: 'genre', genre, query: '', searchOpen: false });
     resetSearch();
     setCurrentView('genre');
     setActiveGenre(genre);
@@ -186,6 +201,7 @@ export default function CineboxHomePage() {
     if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
     const query = value.trim();
     const requestId = ++searchRequestRef.current;
+    setSearchError(false);
     if (query.length < 2) {
       setSearchResults([]);
       setIsSearching(false);
@@ -195,22 +211,55 @@ export default function CineboxHomePage() {
     searchTimerRef.current = setTimeout(async () => {
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-        const results: MovieItem[] = res.ok ? await res.json() : [];
+        if (res.status === 401) { window.location.replace('/login'); return; }
+        if (!res.ok) throw new Error('Search unavailable');
+        const results: MovieItem[] = await res.json();
+        if (!Array.isArray(results)) throw new Error('Invalid search response');
         if (requestId === searchRequestRef.current) setSearchResults(results);
       } catch (err) {
-        if (requestId === searchRequestRef.current) setSearchResults([]);
+        if (requestId === searchRequestRef.current) {
+          setSearchResults([]);
+          setSearchError(true);
+        }
       } finally {
         if (requestId === searchRequestRef.current) setIsSearching(false);
       }
     }, 300);
   }, []);
 
+  useEffect(() => {
+    const restore = () => {
+      const state = parseNavigation(window.location.search);
+      setCurrentView(state.view);
+      setActiveGenre(state.genre);
+      setSearchQuery(state.query);
+      setSearchOpen(state.searchOpen);
+      setSearchFilter(state.filter);
+      setDrawerOpen(false);
+      setGuideOpen(false);
+      setWatchItem(null);
+      runSearch(state.query);
+      setNavigationReady(true);
+    };
+    restore();
+    window.addEventListener('popstate', restore);
+    return () => {
+      window.removeEventListener('popstate', restore);
+      if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+      searchRequestRef.current++;
+    };
+  }, [runSearch]);
+
   const handleSearchChange = (value: string) => {
+    updateUrl({ query: value, searchOpen: true }, true);
+    setSearchOpen(true);
     setSearchQuery(value);
     runSearch(value);
   };
 
   const openSearch = (open: boolean) => {
+    updateUrl({ searchOpen: open, ...(open ? {} : { query: '' }) });
+    if (!open) resetSearch();
     setSearchOpen(open);
     setDrawerOpen(false);
     if (open) {
@@ -221,6 +270,7 @@ export default function CineboxHomePage() {
   };
 
   const quickSearch = (term: string) => {
+    updateUrl({ query: term, searchOpen: true });
     setSearchQuery(term);
     runSearch(term);
   };
@@ -304,11 +354,11 @@ export default function CineboxHomePage() {
             <div className="page-heading">
               <div>
                 <h1 id="search-heading">{searchQuery.trim() ? <>Hasil untuk &ldquo;{searchQuery.trim()}&rdquo;</> : 'Cari film & serial'}</h1>
-                <p>{searchQuery.trim().length >= 2 && !isSearching ? `${filteredResults.length} judul ditemukan` : 'Ketik minimal 2 huruf untuk mencari.'}</p>
+                <p aria-live="polite">{searchError ? 'Sumber pencarian sedang tidak tersedia.' : searchQuery.trim().length >= 2 && !isSearching ? `${filteredResults.length} judul ditemukan` : 'Ketik minimal 2 huruf untuk mencari.'}</p>
               </div>
               <div className="segmented" role="group" aria-label="Filter jenis">
                 {([['all', 'Semua'], ['movie', 'Film'], ['tv', 'Serial TV']] as const).map(([value, label]) => (
-                  <button key={value} type="button" className={searchFilter === value ? 'active' : ''} aria-pressed={searchFilter === value} onClick={() => setSearchFilter(value)}>
+                  <button key={value} type="button" className={searchFilter === value ? 'active' : ''} aria-pressed={searchFilter === value} onClick={() => { updateUrl({ filter: value }, true); setSearchFilter(value); }}>
                     {label}
                   </button>
                 ))}
@@ -316,10 +366,11 @@ export default function CineboxHomePage() {
             </div>
 
             <div className="chip-row">
-              <span className="chip-row-label">Populer:</span>
-              {QUICK_SEARCHES.map(term => (
-                <button key={term} type="button" className="chip" onClick={() => quickSearch(term)}>{term}</button>
+              <span className="chip-row-label">Jelajahi genre:</span>
+              {QUICK_GENRES.map(genre => (
+                <button key={genre} type="button" className="chip" onClick={() => handleGenre(genre)}>{genreLabel(genre)}</button>
               ))}
+              <button type="button" className="chip" onClick={() => quickSearch('Marvel')}>Cari “Marvel”</button>
             </div>
 
             {isSearching ? (
@@ -328,6 +379,12 @@ export default function CineboxHomePage() {
               <div className="empty-state">
                 <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 <p>Cari berdasarkan judul, misalnya &ldquo;Interstellar&rdquo; atau &ldquo;Squid Game&rdquo;.</p>
+              </div>
+            ) : searchError ? (
+              <div className="empty-state" role="alert">
+                <i className="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <p>Pencarian gagal dimuat. Periksa koneksi lalu coba lagi.</p>
+                <button type="button" className="btn btn-light" onClick={() => runSearch(searchQuery)}>Coba lagi</button>
               </div>
             ) : filteredResults.length === 0 ? (
               <div className="empty-state">
@@ -401,7 +458,12 @@ export default function CineboxHomePage() {
                   <button type="button" className="btn btn-light" onClick={() => loadCatalog(currentView, activeGenre)}>Coba lagi</button>
                 </div>
               ) : (
-                catalog.sections?.map(section => (
+                catalog.sections?.map(section => section.items.length === 0 && currentView === 'genre' ? (
+                  <section className="media-row" key={section.id} aria-label={section.title}>
+                    <h2 className="row-title">{section.title}</h2>
+                    <p className="empty-note">Belum ada judul yang sesuai kategori ini dalam katalog.</p>
+                  </section>
+                ) : (
                   <MediaRow
                     key={section.id}
                     title={section.title}

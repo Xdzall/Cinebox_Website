@@ -29,12 +29,22 @@ function useCanHover() {
 export default function Hero({ featured, paused, isAdded, onPlay, onInfo, onToggleList }: HeroProps) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [rotationPaused, setRotationPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const [muted, setMuted] = useState(true);
   const [trailerId, setTrailerId] = useState('');
   const canHover = useCanHover();
   const hero = featured[index] || featured[0];
 
   useEffect(() => setIndex(0), [featured]);
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
 
   // Trailers only play on hover-capable devices; on touch they would cover the buttons.
   useEffect(() => {
@@ -51,10 +61,10 @@ export default function Hero({ featured, paused, isAdded, onPlay, onInfo, onTogg
   }, [hero, canHover]);
 
   useEffect(() => {
-    if (featured.length <= 1 || hovered || paused) return;
+    if (featured.length <= 1 || hovered || focused || paused || rotationPaused || reducedMotion) return;
     const timer = setInterval(() => setIndex(prev => (prev + 1) % featured.length), CYCLE_MS);
     return () => clearInterval(timer);
-  }, [featured.length, hovered, paused]);
+  }, [featured.length, hovered, focused, paused, rotationPaused, reducedMotion]);
 
   useEffect(() => {
     if (paused) return;
@@ -78,6 +88,8 @@ export default function Hero({ featured, paused, isAdded, onPlay, onInfo, onTogg
       aria-label="Sorotan"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setFocused(false); }}
     >
       <div key={hero.id} className="hero-backdrop" style={{ backgroundImage: `url('${hero.backdrop || hero.poster}')` }} />
 
@@ -130,19 +142,23 @@ export default function Hero({ featured, paused, isAdded, onPlay, onInfo, onTogg
 
       <div className="hero-controls">
         {featured.length > 1 && (
-          <div className="hero-dots" role="tablist" aria-label="Pilih sorotan">
+          <div className="hero-dots" role="group" aria-label="Pilih sorotan">
             {featured.map((item, idx) => (
               <button
                 key={item.id}
                 type="button"
-                role="tab"
-                aria-selected={idx === index}
+                aria-pressed={idx === index}
                 aria-label={`Sorotan ${idx + 1}: ${item.title}`}
                 className={`hero-dot ${idx === index ? 'active' : ''}`}
                 onClick={() => setIndex(idx)}
               />
             ))}
           </div>
+        )}
+        {featured.length > 1 && !reducedMotion && (
+          <button type="button" className="icon-btn hero-rotation" aria-label={rotationPaused ? 'Lanjutkan pergantian sorotan' : 'Jeda pergantian sorotan'} aria-pressed={rotationPaused} onClick={() => setRotationPaused(value => !value)}>
+            <i className={`fa-solid ${rotationPaused ? 'fa-play' : 'fa-pause'}`} aria-hidden="true"></i>
+          </button>
         )}
         {canHover && trailerId && (
           <button type="button" className="icon-btn hero-mute" onClick={() => setMuted(prev => !prev)} aria-label={muted ? 'Nyalakan suara trailer' : 'Matikan suara trailer'} title="Suara trailer (M)">

@@ -96,7 +96,7 @@ const ACCURATE_TV_METADATA: Record<string, { total_seasons: number; season_numbe
     }
   },
   // Sweet Home (Season 1: 10 eps, Season 2: 8 eps, Season 3: 8 eps)
-  'tt1160419': {
+  'tt11612120': {
     total_seasons: 3,
     season_numbers: [1, 2, 3],
     seasons: {

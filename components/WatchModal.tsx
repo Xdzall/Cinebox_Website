@@ -5,6 +5,7 @@ import { buildStreamServers, type StreamContext } from '../lib/stream-servers';
 import { FALLBACK_IMAGE, genreText, type MovieItem, type TvDetails } from '../lib/types';
 import { PosterImage } from './MediaCards';
 import PlayerGuardNotice from './PlayerGuardNotice';
+import { useModalFocus } from '../lib/use-modal-focus';
 
 interface WatchModalProps {
   item: MovieItem;
@@ -50,6 +51,12 @@ export default function WatchModal({
   const overlayRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [nativeFullscreen, setNativeFullscreen] = useState(false);
+  const fullscreenRef = useRef<HTMLButtonElement>(null);
+  const exitRef = useRef<HTMLButtonElement>(null);
+  useModalFocus(overlayRef, true, closeRef);
+  useModalFocus(stageRef, expanded || nativeFullscreen, exitRef);
 
   const servers = useMemo(
     () => (streamContext ? buildStreamServers(streamContext, season, episode) : []),
@@ -58,7 +65,6 @@ export default function WatchModal({
   const server = servers[serverIndex] || servers[0];
 
   useEffect(() => {
-    closeRef.current?.focus({ preventScroll: true });
     if (autoPlay) onRecordHistory(item, item.lastSeason || 1, item.lastEpisode || 1);
     // Runs once per opened title; the modal is re-mounted for every new title.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,8 +155,6 @@ export default function WatchModal({
   // The provider player hides its own fullscreen button on narrow screens, which leaves phones with
   // a ~220px tall iframe where the quality (⚙) menu is clipped. Our button gives the iframe the
   // whole screen: real fullscreen + landscape where supported, otherwise (iPhone) a CSS overlay.
-  const [expanded, setExpanded] = useState(false);
-
   const enterFullscreen = async () => {
     const stage = stageRef.current;
     if (stage && document.fullscreenEnabled && stage.requestFullscreen) {
@@ -168,10 +172,12 @@ export default function WatchModal({
   const exitFullscreen = () => {
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     setExpanded(false);
+    requestAnimationFrame(() => fullscreenRef.current?.focus({ preventScroll: true }));
   };
 
   useEffect(() => {
     const onChange = () => {
+      setNativeFullscreen(document.fullscreenElement === stageRef.current);
       if (!document.fullscreenElement) {
         try {
           screen.orientation?.unlock?.();
@@ -194,12 +200,12 @@ export default function WatchModal({
     const onKey = (event: KeyboardEvent) => {
       if (guideOpen) return;
       const target = event.target as HTMLElement | null;
-      if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
       if (event.key === 'Escape') {
         if (document.fullscreenElement) return;
-        if (expanded) setExpanded(false);
+        if (expanded) exitFullscreen();
         else onClose();
       } else if ((event.key === 'f' || event.key === 'F') && isPlaying) {
+        if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
         if (document.fullscreenElement || expanded) exitFullscreen();
         else void enterFullscreen();
       }
@@ -216,7 +222,7 @@ export default function WatchModal({
       : 'Putar film';
 
   return (
-    <div className="watch-overlay" ref={overlayRef} role="dialog" aria-modal="true" aria-labelledby="watch-title" onClick={event => event.target === event.currentTarget && onClose()}>
+    <div className={`watch-overlay ${expanded ? 'is-fullscreen' : ''}`} ref={overlayRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="watch-title" onClick={event => event.target === event.currentTarget && onClose()}>
       <div className="watch-dialog">
         <div className={`watch-sticky ${isPlaying ? 'is-playing' : ''}`}>
           <div className="watch-topbar">
@@ -234,8 +240,8 @@ export default function WatchModal({
           </div>
 
           <div className={`player-stage ${expanded ? 'is-expanded' : ''}`} ref={stageRef}>
-            {expanded && (
-              <button type="button" className="stage-exit" onClick={exitFullscreen}>
+            {(expanded || nativeFullscreen) && (
+              <button type="button" ref={exitRef} className="stage-exit" onClick={exitFullscreen}>
                 <i className="fa-solid fa-compress" aria-hidden="true"></i> Keluar layar penuh
               </button>
             )}
@@ -268,6 +274,7 @@ export default function WatchModal({
                   />
                 )}
                 <div className="player-preview-shade" />
+                <p className="preview-ad-note">Ketukan pada pemutar penyedia dapat membuka tab iklan. Tutup tab tersebut lalu kembali ke Cinebox.</p>
                 <button type="button" className="player-big-play" onClick={startPlaying} aria-label={playLabel}>
                   <i className="fa-solid fa-play" aria-hidden="true"></i>
                 </button>
@@ -279,10 +286,7 @@ export default function WatchModal({
               </div>
             )}
           </div>
-        </div>
-
-        <div className="player-toolbar">
-          <PlayerGuardNotice onOpenGuide={onOpenGuide} />
+          <div className="player-controls">
           <div className="server-row">
             <span className="server-label" id="server-label">Server</span>
             <div className="server-chips" role="radiogroup" aria-labelledby="server-label">
@@ -293,8 +297,18 @@ export default function WatchModal({
                   type="button"
                   role="radio"
                   aria-checked={index === serverIndex}
+                  tabIndex={index === serverIndex ? 0 : -1}
                   className={`server-chip ${index === serverIndex ? 'active' : ''}`}
                   onClick={() => setServerIndex(index)}
+                  onKeyDown={event => {
+                    const next = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? (index + 1) % servers.length
+                      : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? (index + servers.length - 1) % servers.length
+                      : event.key === 'Home' ? 0 : event.key === 'End' ? servers.length - 1 : null;
+                    if (next === null) return;
+                    event.preventDefault();
+                    setServerIndex(next);
+                    (event.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
+                  }}
                 >
                   {s.name}
                   {s.subtitle.preferredLanguage === 'id' && <span className="chip-tag">ID</span>}
@@ -304,10 +318,15 @@ export default function WatchModal({
             <button type="button" className="btn btn-small btn-outline server-next" onClick={nextServer} disabled={servers.length <= 1} title="Coba server berikutnya">
               <i className="fa-solid fa-rotate" aria-hidden="true"></i> <span>Ganti</span>
             </button>
-            <button type="button" className="btn btn-small btn-light stage-fullscreen" onClick={() => { if (!isPlaying) startPlaying(); void enterFullscreen(); }} title="Layar penuh (F)">
+            <button type="button" ref={fullscreenRef} className="btn btn-small btn-light stage-fullscreen" onClick={() => { if (!isPlaying) startPlaying(); void enterFullscreen(); }} title="Layar penuh (F)">
               <i className="fa-solid fa-expand" aria-hidden="true"></i> <span>Layar penuh</span>
             </button>
           </div>
+          </div>
+        </div>
+
+        <div className="player-toolbar">
+          <PlayerGuardNotice onOpenGuide={onOpenGuide} />
 
           {isTv && (
             <div className="episode-stepper">
@@ -330,6 +349,7 @@ export default function WatchModal({
               <span className="mobile-only"> Atur resolusi lewat ikon <i className="fa-solid fa-gear" aria-label="pengaturan"></i> di pemutar; tekan <strong>Layar penuh</strong> dulu agar menunya tidak terpotong.</span>
             </p>
           )}
+          <p className="server-note">Video macet setelah mengubah kualitas? Pilih Auto di pemutar atau tekan Ganti untuk mencoba server lain. Mengganti server memulai pemutar baru.</p>
         </div>
 
         <div className="watch-body">

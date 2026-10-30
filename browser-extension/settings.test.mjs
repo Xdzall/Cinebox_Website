@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   normalizeSiteOrigin,
   normalizeBlockedDomain,
@@ -10,7 +11,19 @@ import {
   makeDomainRule,
   makePlayerNavigationRule,
   PLAYER_HOSTS,
+  makePopupContentScript,
 } from './settings.mjs';
+
+test('early popup interception covers every permitted player host in the page world', () => {
+  const manifest = JSON.parse(readFileSync(new URL('./manifest.json', import.meta.url), 'utf8'));
+  const script = makePopupContentScript();
+  assert.deepEqual(script.matches, manifest.host_permissions);
+  assert.equal(script.runAt, 'document_start');
+  assert.equal(script.world, 'MAIN');
+  assert.equal(script.allFrames, true);
+  assert.equal(script.matchOriginAsFallback, true);
+  assert.equal(script.persistAcrossSessions, true);
+});
 
 test('site matching uses exact scheme, hostname, and port', () => {
   const settings = sanitizeSettings({ siteOrigins: ['http://localhost:3000'] });

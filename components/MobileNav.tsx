@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { GENRES, NAV_ITEMS, genreLabel, type NavTarget, type ViewName } from '../lib/types';
 import { isNavActive } from './Navbar';
+import { useModalFocus } from '../lib/use-modal-focus';
 
 interface MobileNavProps {
   drawerOpen: boolean;
@@ -35,15 +36,18 @@ export function MobileDrawer({
   useEffect(() => {
     // `inert` keeps the off-screen drawer out of the tab order (React 18 has no prop for it).
     drawerRef.current?.toggleAttribute('inert', !drawerOpen);
-    if (drawerOpen) closeRef.current?.focus();
   }, [drawerOpen]);
+  useModalFocus(drawerRef, drawerOpen, closeRef);
 
   return (
     <>
-      <div className={`drawer-backdrop ${drawerOpen ? 'open' : ''}`} onClick={onCloseDrawer} aria-hidden="true" />
+      <div className={`drawer-backdrop ${drawerOpen ? 'open' : ''}`} data-modal-backdrop onClick={onCloseDrawer} aria-hidden="true" />
       <aside
         className={`side-drawer ${drawerOpen ? 'open' : ''}`}
         aria-label="Menu navigasi"
+        role="dialog"
+        aria-modal={drawerOpen ? 'true' : undefined}
+        tabIndex={-1}
         ref={drawerRef}
       >
         <div className="drawer-header">

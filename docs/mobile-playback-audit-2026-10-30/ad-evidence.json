@@ -1,0 +1,9 @@
+{
+  "trigger": "VidLink Play control clicked while film was playing (pause)",
+  "destinationHost": "shopee.co.id",
+  "pausedEvidence": {
+    "muted": true,
+    "paused": true,
+    "time": 186.379959
+  }
+}

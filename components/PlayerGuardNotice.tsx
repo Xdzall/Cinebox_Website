@@ -15,12 +15,12 @@ export default function PlayerGuardNotice({ onOpenGuide }: { onOpenGuide: () => 
     }
   });
 
-  if (status === 'checking') return null;
+  if (status === 'checking') return <p className="guard-mini">Pemutar penyedia dapat membuka tab iklan. Tutup tab itu lalu kembali ke Cinebox.</p>;
 
   if (status === 'installed') {
     return (
       <p className="guard-ok" role="status">
-        <i className="fa-solid fa-shield-halved" aria-hidden="true"></i> Pemblokir iklan aktif — tab iklan dari pemutar otomatis diblokir.
+        <i className="fa-solid fa-shield-halved" aria-hidden="true"></i> Player Guard terpasang. Membantu mencegah tab iklan; iklan penyedia masih mungkin muncul.
       </p>
     );
   }
@@ -46,20 +46,22 @@ export default function PlayerGuardNotice({ onOpenGuide }: { onOpenGuide: () => 
       <div className="guard-text">
         <strong>Klik pada pemutar dapat membuka tab iklan (judi online).</strong>
         <span>
-          {status === 'missing'
-            ? 'Iklan ini berasal dari penyedia video. Pasang Cinebox Player Guard sekali saja untuk memblokirnya.'
+          {status === 'outdated'
+            ? 'Player Guard versi lama masih menutup tab setelah terbuka. Unduh versi terbaru untuk mencegah tab sejak pemutar dimuat.'
+            : status === 'missing'
+            ? 'Iklan berasal dari penyedia video. Player Guard membantu memblokir tab iklan. Jika tab terbuka, tutup lalu kembali ke Cinebox.'
             : status === 'mobile'
-              ? 'Chrome di HP tidak mendukung pemblokir. Tutup saja tab iklannya, atau tonton lewat browser Brave.'
-              : 'Browser ini tidak mendukung Player Guard. Pasang uBlock Origin untuk memblokirnya.'}
+              ? 'Chrome di HP tidak mendukung Player Guard. Tutup tab iklan lalu kembali ke Cinebox. Brave atau Firefox Android dengan uBlock Origin dapat membantu.'
+              : 'Browser ini tidak mendukung Player Guard. Pemblokir browser dapat membantu. Tutup tab iklan lalu kembali ke Cinebox.'}
         </span>
         <div className="guard-actions">
-          {status === 'missing' && (
+          {(status === 'missing' || status === 'outdated') && (
             <a className="btn btn-small btn-light" href={PLAYER_GUARD_DOWNLOAD} download>
-              <i className="fa-solid fa-download" aria-hidden="true"></i> Unduh ekstensi
+              <i className="fa-solid fa-download" aria-hidden="true"></i> {status === 'outdated' ? 'Unduh pembaruan' : 'Unduh ekstensi'}
             </a>
           )}
           <button type="button" className="btn btn-small btn-outline" onClick={onOpenGuide}>
-            {status === 'missing' ? 'Cara pasang' : 'Selengkapnya'}
+            {status === 'outdated' ? 'Cara memperbarui' : status === 'missing' ? 'Cara pasang' : 'Selengkapnya'}
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { PLAYER_GUARD_DOWNLOAD, usePlayerGuard } from '../lib/player-guard';
+import { useModalFocus } from '../lib/use-modal-focus';
 
 function CopyCode({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -23,11 +24,12 @@ function CopyCode({ text }: { text: string }) {
 
 export default function PlayerGuide({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useModalFocus(dialogRef, true, closeRef);
   const status = usePlayerGuard();
   const isMobile = status === 'mobile';
 
   useEffect(() => {
-    closeRef.current?.focus();
     const onKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -39,6 +41,9 @@ export default function PlayerGuide({ onClose }: { onClose: () => void }) {
         <i className="fa-solid fa-desktop" aria-hidden="true"></i> Komputer: Chrome atau Edge
         {status === 'installed' && <span className="guide-badge ok">Sudah terpasang</span>}
       </h4>
+      {status === 'outdated' && (
+        <p className="guide-note">Untuk memperbarui: unduh zip terbaru, ekstrak dan ganti isi folder ekstensi lama, lalu klik Reload pada kartu Player Guard di halaman ekstensi. Izinkan akses ke situs pemutar bila browser memintanya, lalu muat ulang Cinebox.</p>
+      )}
       <ol className="guide-steps">
         <li>
           Unduh ekstensinya:{' '}
@@ -50,7 +55,7 @@ export default function PlayerGuide({ onClose }: { onClose: () => void }) {
         <li>Buka alamat ini di tab baru: <CopyCode text="chrome://extensions" /> (di Edge: <CopyCode text="edge://extensions" />)</li>
         <li>Nyalakan <strong>Developer mode</strong> (pojok kanan atas di Chrome, menu kiri di Edge).</li>
         <li>Klik <strong>Load unpacked</strong>, lalu pilih folder <code>cinebox-player-guard</code>.</li>
-        <li>Muat ulang Cinebox. Di bawah pemutar akan muncul tulisan <strong>Pemblokir iklan aktif</strong>. Tidak ada yang perlu diatur.</li>
+        <li>Muat ulang Cinebox. Di bawah pemutar akan muncul tulisan <strong>Player Guard terpasang</strong>. Versi terbaru mencegah permintaan membuka tab sejak pemutar dimuat; iklan penyedia masih mungkin muncul.</li>
       </ol>
     </section>
   );
@@ -72,7 +77,7 @@ export default function PlayerGuide({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="guide-overlay" onClick={onClose}>
-      <div className="guide-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title" onClick={event => event.stopPropagation()}>
+      <div className="guide-dialog" ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="guide-title" onClick={event => event.stopPropagation()}>
         <div className="guide-head">
           <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
           <div>

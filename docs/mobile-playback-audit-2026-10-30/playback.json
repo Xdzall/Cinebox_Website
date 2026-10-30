@@ -1,0 +1,17 @@
+{
+  "portrait": {
+    "currentTime": 19.749946,
+    "duration": 8553.4,
+    "error": null,
+    "paused": false,
+    "readyState": 4,
+    "videoHeight": 1080,
+    "videoWidth": 1920
+  },
+  "afterLandscape": {
+    "currentTime": 20.169244,
+    "duration": 8553.4,
+    "paused": false,
+    "readyState": 4
+  }
+}

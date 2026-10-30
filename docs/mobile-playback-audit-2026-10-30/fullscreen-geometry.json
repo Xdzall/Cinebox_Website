@@ -1,0 +1,79 @@
+{
+  "elements": [
+    {
+      "rect": {
+        "bottom": 390.3999938964844,
+        "height": 390.3999938964844,
+        "left": 0,
+        "right": 844,
+        "top": 0,
+        "width": 844,
+        "x": 0,
+        "y": 0
+      },
+      "selector": "watch-overlay",
+      "transform": "none"
+    },
+    {
+      "rect": {
+        "bottom": 1311.5,
+        "height": 1783.5,
+        "left": 16,
+        "right": 820,
+        "top": -472,
+        "width": 804,
+        "x": 16,
+        "y": -472
+      },
+      "selector": "watch-dialog",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "rect": {
+        "bottom": -81.60000610351562,
+        "height": 390.3999938964844,
+        "left": 16,
+        "right": 860,
+        "top": -472,
+        "width": 844,
+        "x": 16,
+        "y": -472
+      },
+      "selector": "player-stage is-expanded",
+      "transform": "none"
+    },
+    {
+      "rect": {
+        "bottom": -434.3999996185303,
+        "height": 31.600000381469727,
+        "left": 363.8999938964844,
+        "right": 512.0999908447266,
+        "top": -466,
+        "width": 148.1999969482422,
+        "x": 363.8999938964844,
+        "y": -466
+      },
+      "selector": "stage-exit",
+      "transform": "matrix(1, 0, 0, 1, -74.1, 0)"
+    },
+    {
+      "rect": {
+        "bottom": -322,
+        "height": 150,
+        "left": 16,
+        "right": 860,
+        "top": -472,
+        "width": 844,
+        "x": 16,
+        "y": -472
+      },
+      "selector": "IFRAME",
+      "transform": "none"
+    }
+  ],
+  "fullscreen": null,
+  "viewport": {
+    "height": 390,
+    "width": 844
+  }
+}
